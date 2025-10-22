@@ -1,0 +1,1 @@
+draw_triangle(x + dcos(image_angle) * 10, y - dsin(image_angle) * 10 - planeHeight, x + dcos(image_angle + 120) * 10, y - dsin(image_angle + 120) * 10 - planeHeight, x + dcos(image_angle - 120) * 10, y - dsin(image_angle - 120) * 10 - planeHeight, true);

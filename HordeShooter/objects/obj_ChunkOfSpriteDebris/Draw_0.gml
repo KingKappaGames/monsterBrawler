@@ -1,0 +1,1 @@
+draw_sprite_general(sprite_index, image_index, drawX, drawY, drawWidth, drawHeight, x - drawWidth / 2, y - airHeight - (drawHeight / 2), image_xscale, image_yscale, image_angle, image_blend, image_blend, image_blend, image_blend, image_alpha);
