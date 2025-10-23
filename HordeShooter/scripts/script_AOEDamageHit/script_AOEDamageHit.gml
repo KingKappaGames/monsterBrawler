@@ -10,11 +10,6 @@
 ///@param targets This is what to hit. Includes enemies and many types of game objects that are destructable. 
 ///@param exclusions Array of whitelisted instance ids
 function script_AOEDamageHit(allegianceSet = allegiance, xx = x, yy = y, radius = 0, damage = 0, knockbackStrength = 0, knockbackDirection = undefined, knockbackHeight = 0, stun = undefined, targets = obj_creature, exclusions = []){
-	var _calcDir = 1;
-	if(knockbackDirection != -1) { // cancel out the need to get direction if one has been passed already
-		_calcDir = 0;
-	}
-		
 	var _hitList = ds_list_create();
 	var _hitCount = collision_circle_list(xx, yy, radius, targets, false, true, _hitList, false); // not ordered idk
 	

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"OWP_scripts",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"OWP_scripts",
+  "parent":{
+    "name":"OpenWorldParticles",
+    "path":"folders/Extensions/OpenWorldParticles.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

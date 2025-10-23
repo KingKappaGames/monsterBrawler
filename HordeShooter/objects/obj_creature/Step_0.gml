@@ -4,18 +4,20 @@ slowdown();
 
 if(x < 0) {
 	x = 2;
-} else if(x > room_width) {
-	x = room_width - 2;
+} else if(x > room_width * 2) {
+	x = room_width * 2 - 2;
 }
 
 if(y < 0) {
 	y = 2;
-} else if(y > room_height) {
-	y = room_height - 2;
+} else if(y > room_height * 2) {
+	y = room_height * 2 - 2;
 }
 
 heightChange = min(10, heightChange); // keep it from doing absurd things..
 height = min(500, height);
+
+depth = -y - height;
 
 //
 //dashCooldown--;

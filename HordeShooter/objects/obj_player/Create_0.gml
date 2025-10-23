@@ -124,7 +124,7 @@ SM.add("idle", {
 		}
 		
 		if(keyboard_check_pressed(vk_alt)) {
-			script_spawnCreature(obj_creature, 1 + irandom(10), mouse_x, mouse_y);
+			script_spawnCreature(choose(obj_barbarian, obj_knight), 1 + irandom(10), mouse_x, mouse_y);
 		}
 		
 		if(keyboard_check_released(ord("M"))) {

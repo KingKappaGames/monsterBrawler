@@ -181,7 +181,7 @@ SM.add("knockdown", {
 				hspeed *= bounceHorizontalSpeedtMult;
 				vspeed *= bounceHorizontalSpeedtMult;
 				heightChange = min(12, heightChange * bounceHeightMult);
-				script_createParticles(x, y, global.partDust, 10, #af8a61);
+				OWP_createPartDepthExtColor(global.partDust, x, y, 10, #af8a61,, sprite_width * .3, 4);
 				height = 0;
 			} else {
 				hspeed *= bounceHorizontalSpeedtMult;
