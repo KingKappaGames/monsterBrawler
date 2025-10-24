@@ -11,12 +11,13 @@ function __InputConfigVerbs()
 		RIGHTCLICK,
 		MIDDLECLICK,
 		JUMP,
-		GRENADE,
         ACCEPT,
         CANCEL,
         ACTION,
         SPECIAL,
         PAUSE,
+		CAMERAZOOMIN,
+		CAMERAZOOMOUT,
     }
     
     enum INPUT_CLUSTER
@@ -40,6 +41,8 @@ function __InputConfigVerbs()
         InputDefineVerb(INPUT_VERB.ACTION,  "action",      vk_enter,            gp_face3);
         InputDefineVerb(INPUT_VERB.SPECIAL, "special",     vk_shift,            gp_face4);
         InputDefineVerb(INPUT_VERB.PAUSE,   "pause",       vk_escape,           gp_start);
+        InputDefineVerb(INPUT_VERB.CAMERAZOOMIN,   "cameraZoomIn",       vk_add,           gp_padu);
+        InputDefineVerb(INPUT_VERB.CAMERAZOOMOUT,   "cameraZoomOut",       vk_subtract,           gp_padd);
     }
     
     //Define a cluster of verbs for moving around

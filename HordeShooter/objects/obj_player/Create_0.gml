@@ -41,7 +41,7 @@ weaponType = 1; //1 machine gun, 2 rockets, 3 ???
 fireRate = 20;
 shotDelay = 0;
 damage = 1;
-shotSpeed = 15;
+shotSpeed = 1;
 
 spreadMinimum = 0;
 spread = 3;
@@ -53,20 +53,6 @@ recoil = 0;
 mortaring = 0;
 mortarXstart = 0;
 mortarYstart = 0;
-
-shootBullet = function() {
-	var _bulletType = obj_bullet;
-	var _spawnArea = 0;
-	if(weaponType == 2) {
-		_bulletType = obj_rocket;
-		_spawnArea = 50;
-	}
-	
-	var _shot = script_createAttack(_bulletType, x + dcos(directionAiming) * 16 + irandom_range(-_spawnArea, _spawnArea), y - dsin(directionAiming) * 16 + irandom_range(-_spawnArea, _spawnArea), directionAiming + random_range(-spread, spread), shotSpeed, 120,,, damage);
-
-	spread += 1;
-	recoil += 2;
-}
 
 cameraOne = camera_create_view(0, 0, 1920, 1080);
 view_set_camera(0, cameraOne); //view_camera[0] or [1] worked
@@ -113,7 +99,7 @@ SM.add("idle", {
 		
 		if(keyboard_check_released(ord("G"))) {
 			repeat(1 + irandom(2)) {
-				script_createAttack(obj_grenade, x, y, directionAiming + irandom_range(-40, 40), random_range(8, 10), 99999999);
+				script_createAttack(obj_grenade, x, y, directionAiming + irandom_range(-40, 40), random_range(1, 1.2), 5);
 			}
 		}
 		
@@ -225,6 +211,26 @@ refreshCondition = function() {
 
 spawn = function() {
 	//stuff to do on creation (after create event and all, last step)
+}
+
+shootBullet = function() {
+	var _bulletType = obj_bullet;
+	var _spawnArea = 0;
+	if(weaponType == 2) {
+		_bulletType = obj_rocket;
+		_spawnArea = 50;
+	} else if(weaponType == 3) {
+		_bulletType = obj_sprayPush;
+		_spawnArea = 0;
+	} else if(weaponType == 4) {
+		_bulletType = obj_fireBolt;
+		_spawnArea = 0;
+	}
+	
+	var _shot = script_createAttack(_bulletType, x + dcos(directionAiming) * 16 + irandom_range(-_spawnArea, _spawnArea), y - dsin(directionAiming) * 16 + irandom_range(-_spawnArea, _spawnArea), directionAiming + random_range(-spread, spread), shotSpeed,,,, damage);
+
+	spread += 1;
+	recoil += 2;
 }
 
 movementControls = function() {

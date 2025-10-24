@@ -19,7 +19,7 @@ previousEdgeY = previousCamY - sysUpdateRange;
 
 currentSysEdge = 0;
 
-global.sysBottom = part_system_create();
+global.sysBottom = part_system_create(); // these two over/under layers can be removed if you want to do your own or whatever, they're not part of the whole moving depth system, just delete this and the pause/resume calls below and you're good
 part_system_depth(global.sysBottom, 5000); // bottom, where ever that is V  (not part of the moving system! But often times you will want a particle layer that goes under everything)
 
 global.sysTop = part_system_create();

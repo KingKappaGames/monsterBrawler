@@ -26,7 +26,7 @@ SM.add("attack", {
 			var _aimDir = irandom(360);
 			for(var _i = 0; _i < 18; _i++) {
 				_aimDir += 20;
-				script_createAttack(obj_bullet, x + lengthdir_x(16, _aimDir), y + lengthdir_y(16, _aimDir), _aimDir, 17, 25,,, damage, knockback,, 5);
+				script_createAttack(obj_bullet, x + lengthdir_x(16, _aimDir), y + lengthdir_y(16, _aimDir), _aimDir, .8, 2,,, damage, knockback,, 5);
 			}
 		}
     },

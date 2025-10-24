@@ -1,4 +1,4 @@
-function script_createAttack(type, xx, yy, directionSet, speedSet, durationSet, sourceSet = id, allegianceSet = undefined, damageMult = 1, knockbackMult = 1, knockbackHeightMult = 1, stunMult = 1) {
+function script_createAttack(type, xx, yy, directionSet, speedMult = 1, durationMult = 1, sourceSet = id, allegianceSet = undefined, damageMult = 1, knockbackMult = 1, knockbackHeightMult = 1, stunMult = 1) {
 	allegianceSet ??= sourceSet.allegiance;
 	
 	var _attack = instance_create_depth(xx, yy, -yy, type);
@@ -6,10 +6,11 @@ function script_createAttack(type, xx, yy, directionSet, speedSet, durationSet, 
 	with(_attack) {
 		source = sourceSet;
 		allegiance = allegianceSet;
-		duration = durationSet;
-		durationMax = durationSet;
+		durationMax *= durationMult;
+		duration = durationMax;
 		
-		motion_set(directionSet, speedSet);
+		direction = directionSet;
+		speed *= speedMult;
 		
 		damage *= damageMult;
 		stun *= stunMult;

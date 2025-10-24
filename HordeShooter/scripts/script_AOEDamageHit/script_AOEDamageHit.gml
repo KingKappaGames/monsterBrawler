@@ -9,7 +9,7 @@
 ///@param stun This includes the strength of the stun and the verticality of the stun.
 ///@param targets This is what to hit. Includes enemies and many types of game objects that are destructable. 
 ///@param exclusions Array of whitelisted instance ids
-function script_AOEDamageHit(allegianceSet = allegiance, xx = x, yy = y, radius = 0, damage = 0, knockbackStrength = 0, knockbackDirection = undefined, knockbackHeight = 0, stun = undefined, targets = obj_creature, exclusions = []){
+function script_AOEDamageHit(allegianceSet = allegiance, xx = x, yy = y, radius = 0, damage = 0, knockbackStrength = 0, knockbackDirection = undefined, knockbackHeight = 0, stun = undefined, targets = obj_creature, exclusions = [], func = undefined){
 	var _hitList = ds_list_create();
 	var _hitCount = collision_circle_list(xx, yy, radius, targets, false, true, _hitList, false); // not ordered idk
 	
@@ -27,8 +27,6 @@ function script_AOEDamageHit(allegianceSet = allegiance, xx = x, yy = y, radius 
 					}
 								
 					var _aoeDropOff = clamp(1 - (point_distance(xx, yy, x, y) / radius), .1, 1); // this is what would determine the damage at a given distance, could be switched to an equation or some other sort of adjustment
-				
-					knockbackDirection ??= point_direction(xx, yy, x, y);
 			
 					var _knockbackDone = knockbackStrength * _aoeDropOff;
 					
@@ -37,8 +35,11 @@ function script_AOEDamageHit(allegianceSet = allegiance, xx = x, yy = y, radius 
 					} else {
 						stun *= _aoeDropOff;
 					}
-			
-					takeDamage(ceil(damage * _aoeDropOff), knockbackDirection, _knockbackDone, knockbackHeight * _aoeDropOff, stun);
+					if(!is_undefined(func)) {
+						func(_aoeDropOff, id);
+					}
+					
+					takeDamage(ceil(damage * _aoeDropOff), is_undefined(knockbackDirection) ? point_direction(xx, yy, x, y) : knockbackDirection, _knockbackDone, knockbackHeight * _aoeDropOff, stun);
 					_hits[_hitNum] = id; // add to the hit registry
 					_hitNum++;
 				}

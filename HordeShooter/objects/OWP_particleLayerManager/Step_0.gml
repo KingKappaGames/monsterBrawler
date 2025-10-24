@@ -9,6 +9,6 @@ if(OWPshowDebug) {
 	mouseLayer = _sysIndex;
 	
 	if(mouse_check_button(mb_middle)) {
-		OWP_createPartDepth(debugPart, mouse_x, mouse_y, 1, choose(c_red, c_blue, c_green));
+		OWP_createPart(debugPart, mouse_x, mouse_y, 1, choose(c_red, c_blue, c_green));
 	}
 }

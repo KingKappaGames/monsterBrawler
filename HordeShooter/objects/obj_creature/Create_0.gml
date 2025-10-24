@@ -7,6 +7,9 @@ knockbackHeight = 1;
 stun = 10;
 
 attackRange = 50;
+attackRangeRangedMax = 450;
+attackRangeRangedMin = 240;
+attackCreateDist = 15; // this is the distance from the origin that spells and attacks are placed, aka the maw, aka the reach, aka the start distance of a spell from it's castor
 
 hspeed = 0;
 vspeed = 0;
@@ -40,6 +43,8 @@ agroId = noone;
 agroRange = 1200;
 
 deathSound = snd_crunch;
+
+burning = 0;
 
 #region STATE MACHINE SET UP
 
@@ -90,9 +95,7 @@ SM.add("chase", {
 						directionFacing = 1;
 					}
 					
-					if(point_distance(x, y, agroId.x, agroId.y) < attackRange) {
-						SM.change("attack");
-					}
+					determineAttack(); // sets state if done
 					
 					if(irandom(45) == 0) {
 						agroId = script_findAgroTarget();
@@ -122,10 +125,35 @@ SM.add("attack", {
 		if(stateTimer <= 0) {
 			SM.change("chase");
 		} else if(stateTimer == round(stateTimerMax * .5)) {
-			var _lethal = agroId.takeDamage(irandom_range(3, 4), point_direction(x, y, agroId.x, agroId.y), random_range(3, 10), random(6));
-			if(_lethal) {
-				agroId = noone;
+			if(point_distance(x, y, agroId.x, agroId.y) < 60) {
+				var _lethal = agroId.takeDamage(irandom_range(3, 4), point_direction(x, y, agroId.x, agroId.y), random_range(4, 10), random(7));
+				
+				audio_play_sound(choose(snd_smack, snd_smack2, snd_smack3), 0, 0, random_range(.5, 1), 0, random_range(.8, 1.25));
+				
+				if(_lethal) {
+					agroId = noone;
+				}
 			}
+		}
+    },
+	leave: function() {
+		image_angle = 0;
+	}
+});
+
+SM.add("attackRanged", {
+    enter: function(duration = 40) {
+		//die animation
+		script_setEventTimer(duration);
+		image_angle = 10;
+    },
+    step: function() {
+		stateTimer--;
+		if(stateTimer <= 0) {
+			SM.change("chase");
+		} else if(stateTimer == round(stateTimerMax * .5)) {
+			var _attackDir = directionTo(agroId);
+			script_createAttack(obj_acidBolt, x + lengthdir_x(attackCreateDist, _attackDir), y + lengthdir_y(attackCreateDist, _attackDir), _attackDir);
 		}
     },
 	leave: function() {
@@ -181,7 +209,8 @@ SM.add("knockdown", {
 				hspeed *= bounceHorizontalSpeedtMult;
 				vspeed *= bounceHorizontalSpeedtMult;
 				heightChange = min(12, heightChange * bounceHeightMult);
-				OWP_createPartDepthExtColor(global.partDust, x, y, 10, #af8a61,, sprite_width * .3, 4);
+				OWP_createPartExtColor(global.partDust, x, y, 10, #af8a61,, sprite_width * .3, 4);
+				audio_play_sound(snd_fallBonk, 0, 0, 1 + sqrt(abs(heightChange)) * .5);
 				height = 0;
 			} else {
 				hspeed *= bounceHorizontalSpeedtMult;
@@ -201,6 +230,25 @@ SM.add("knockdown", {
 	},
 });
 
+determineAttack = function() {
+	var _state = "none";
+	var _targetDist = point_distance(x, y, agroId.x, agroId.y);
+	if(_targetDist < attackRange) {
+		if(irandom(15) == 0) {
+			_state = "attack";
+		}
+	} else if(_targetDist < attackRangeRangedMax && _targetDist > attackRangeRangedMin) {
+		if(irandom(500) == 0) {
+			_state = "attackRanged";
+		}
+	}
+	
+	if(_state != "none") {
+		SM.change(_state);
+	}
+	
+	return _state; // state names randomly chosen, in theory they could probably just call the SM.change themselves but idk man
+}
 
 slowdown = function() {
 	if(height > 0) {
@@ -228,9 +276,15 @@ spawn = function() {
 /// @param {real} force 
 /// @param {real} heightForce 
 /// @returns {bool} LETHAL
-takeDamage = function(damage, direction, force, heightForce, stun = undefined, makeHitNumber = true) {
+takeDamage = function(damage, direction, force, heightForce, stun = undefined, makeHitNumber = true, doEffects = true) {
 	Health -= damage;
+	
 	script_createHitNum(damage);
+	
+	if(doEffects) {
+		part_type_speed(global.partStarMini, 3.5, 5.5, -.15, 0);
+		OWP_createPartExt(global.partStarMini, x, y, 2 + damage,, 10, 10, 1);
+	}
 	
 	stun ??= power(damage + force, 1);
 	poise -= stun;

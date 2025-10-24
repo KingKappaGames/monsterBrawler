@@ -1,1 +1,1 @@
-draw_circle(x, y, radius, true);
+drawCircleWidth(x, y, radius, max(0, radius - width), 32, image_blend, image_alpha, innerAlpha);

@@ -1,43 +1,27 @@
-xChange = 0;
-yChange = 0;
-damage = .6;
+event_inherited();
 
-tracking = 380;
+damage = 3;
+knockback = 7;
+knockbackHeight = 4;
+stun = 60;
+
+durationMax = 240;
+
+speed = 10;
+
+hitSingle = true;
+
+tracking = 150;
 
 part_particles_create(global.sys, x, y, global.sparksParts, 5)
 
 hitEnemy = function(hitId) {
-	with(obj_zombro) {
-		var _dist = point_distance(x, y, other.x, other.y)
-		if(_dist < 300) {
-			var _hitDir = point_direction(other.x, other.y, x, y);
-			var _mag = sqr((300 - _dist) / 300);
-			xChange += dcos(_hitDir) * _mag * 10;
-			yChange -= dsin(_hitDir) * _mag * 10;
-			Health -= other.damage * _mag;
-			script_createHitNum(other.damage * _mag);
-			if(Health < 0) {
-				instance_destroy();
-			}
-		}
-	}
 	
-	with(obj_mother) {
-		var _dist = point_distance(x, y, other.x, other.y)
-		if(_dist < 300) {
-			var _hitDir = point_direction(other.x, other.y, x, y);
-			var _mag = sqr((300 - _dist) / 300);
-			xChange += dcos(_hitDir) * _mag * 10;
-			yChange -= dsin(_hitDir) * _mag * 10;
-			Health -= other.damage * _mag;
-			script_createHitNum(other.damage);
-			if(Health < 0) {
-				instance_destroy();
-			}
-		}
-	}
-	
-	part_particles_create(global.sys, x, y, global.sparksPartsWide, 9);
-	
+}
+
+hit = function() {
+	script_AOEDamageHit(,,, 200, damage, knockback,, knockbackHeight, stun);
+	part_particles_create(global.sys, x, y, global.sparksPartsWide, 300);
+	script_createEffectWave(x, y, 50, 10, 30, .84,, 10, -.25);
 	instance_destroy();
 }

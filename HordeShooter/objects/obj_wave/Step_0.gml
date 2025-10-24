@@ -1,7 +1,8 @@
 if(duration > 0) {
 	duration--;
-	radius += increase;
-	increase *= .88;
+	radius += increaseFlat;
+	radius *= increaseMult;
+	width += widthChange;
 } else {
 	instance_destroy();
 }
