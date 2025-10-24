@@ -220,10 +220,10 @@ shootBullet = function() {
 		_bulletType = obj_rocket;
 		_spawnArea = 50;
 	} else if(weaponType == 3) {
-		_bulletType = obj_sprayPush;
+		_bulletType = obj_fireJet;
 		_spawnArea = 0;
 	} else if(weaponType == 4) {
-		_bulletType = obj_fireBolt;
+		_bulletType = obj_iceBolt;
 		_spawnArea = 0;
 	}
 	

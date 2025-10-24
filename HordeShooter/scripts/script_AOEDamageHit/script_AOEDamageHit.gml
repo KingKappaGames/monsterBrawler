@@ -25,7 +25,7 @@ function script_AOEDamageHit(allegianceSet = allegiance, xx = x, yy = y, radius 
 							continue; // if is NOT friendly (and only creatures can be friendly) then skip this creature
 						}
 					}
-								
+					
 					var _aoeDropOff = clamp(1 - (point_distance(xx, yy, x, y) / radius), .1, 1); // this is what would determine the damage at a given distance, could be switched to an equation or some other sort of adjustment
 			
 					var _knockbackDone = knockbackStrength * _aoeDropOff;

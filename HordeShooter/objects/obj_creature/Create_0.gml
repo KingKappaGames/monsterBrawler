@@ -25,6 +25,7 @@ moveSpeed = .62;
 moveSpeedAir = .4;
 jumpSpeed = 3;
 knockbackMult = 1;
+knockbackMultBase = 1;
 
 canMove = true;
 intangible = false; // cannot be hit or affected by effects (different than i frames i think?)
@@ -45,6 +46,8 @@ agroRange = 1200;
 deathSound = snd_crunch;
 
 burning = 0;
+acidic = 0;
+frozen = 0; // state
 
 #region STATE MACHINE SET UP
 
@@ -227,6 +230,35 @@ SM.add("knockdown", {
 	leave: function() {
 		image_angle = 0;
 		poise = poiseMax;
+	},
+});
+
+SM.add("frozen", {
+    enter: function(duration = 270) {
+		//frozen animation
+		frozen = duration;
+		burning = 0; // no burning while frozen in a block of ice bro
+		knockbackMult = 0; // don't move while frozen
+		friction = 100;
+    },
+    step: function() {
+		if(irandom(30) == 0) {
+			OWP_createPart(global.partThickHaze, x + irandom_range(-sprite_width * .4, sprite_width * .4), y + irandom_range(-sprite_height * .4, sprite_height * .4), 1, #bbffff, -y - 20);
+		}
+		
+		frozen--;
+		if(frozen <= 0) {
+			SM.change("knockdown");
+		}
+    },
+	leave: function() {
+		OWP_createPartExtColor(global.partBreak, x, y, 40, #bbffff,, sprite_width * .4, 20, 4);
+		audio_play_sound(snd_iceBreak, 0, 0);
+		
+		knockbackMult = knockbackMultBase; // don't move while frozen
+		friction = 0;
+		
+		motion_add(irandom(360), random(3));
 	},
 });
 

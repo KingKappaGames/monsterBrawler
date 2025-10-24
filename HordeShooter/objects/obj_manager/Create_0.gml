@@ -1,5 +1,7 @@
 randomize();
 
+audio_master_gain(.8); // wtf why is it so loud
+
 global.manager = id;
 
 #macro grav .14
@@ -196,13 +198,23 @@ part_type_orientation(_thickTrail, 0, 360, 0, 0, false);
 part_type_gravity(_thickTrail, -.03, 270);
 
 global.partFlamePuffs = part_type_create();
-var _diamondFire = global.partFlamePuffs;
-part_type_life(_diamondFire, 40, 40);
-part_type_sprite(_diamondFire, spr_flamePuff, 1, 1, 0);
-part_type_size(_diamondFire, 3, 4, -.1, 0);
-part_type_speed(_diamondFire, 0, .3, -.05, 0);
-part_type_direction(_diamondFire, 0, 180, 0, 0);
-part_type_gravity(_diamondFire, .14, 90);
+var _firePuff = global.partFlamePuffs;
+part_type_life(_firePuff, 40, 40);
+part_type_sprite(_firePuff, spr_flamePuff, 1, 1, 0);
+part_type_size(_firePuff, 3, 4, -.1, 0);
+part_type_speed(_firePuff, 0, .3, -.05, 0);
+part_type_direction(_firePuff, 0, 180, 0, 0);
+part_type_gravity(_firePuff, .14, 90);
+
+global.partSnowTrail = part_type_create();
+var _snowTrail = global.partSnowTrail;
+part_type_life(_snowTrail, 100, 100);
+part_type_sprite(_snowTrail, spr_snowFlake16, 0, 0, 0);
+part_type_size(_snowTrail, 1.5, 2.5, -.02, 0);
+part_type_speed(_snowTrail, 0.2, .3, 0, 0);
+part_type_direction(_snowTrail, 0, 360, 0, 20);
+part_type_orientation(_snowTrail, 0, 360, 0, 0, false);
+part_type_alpha2(_snowTrail, 1, 0);
 
 global.partThickHaze = part_type_create();
 var _thickHaze = global.partThickHaze;

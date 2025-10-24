@@ -9,6 +9,10 @@ draw_sprite_ext(sprite_index, image_index, x, y - height, directionFacing * imag
 
 shader_reset();
 
+if(frozen) {
+	draw_sprite_ext(spr_iceBlock, 0, x, y, sprite_width / 32, sprite_height / 32, 0, c_white, .9);
+}
+
 if(global.showDebug) {
 	draw_line(x, y, x, y - Health * 3);
 	draw_text_transformed(x, y - Health * 3 - 10, Health, .75, .75, 0);

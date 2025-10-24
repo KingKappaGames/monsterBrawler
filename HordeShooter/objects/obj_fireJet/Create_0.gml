@@ -2,23 +2,23 @@ if (live_call()) return live_result;
 
 event_inherited();
 
-audio_play_sound(snd_acidSplash, 0, 0);
+audio_play_sound(snd_firePuff, 0, 0);
 
-damage = 2;
+damage = 1;
 knockback = .8;
 knockbackHeight = 0;
 stun = 10;
 
-durationMax = 18;
+durationMax = 17;
 
-speed = 20;
+speed = 21;
 
-hitRadius = 60;
+hitRadius = 57;
 hitSingle = false;
 hitStopOn = false;
 
 hitEnemy = function(hitId) {
-	hitId.burning = max(300, hitId.burning);
+	hitId.burning = max(480, hitId.burning);
 	hitId.takeDamage(damage, direction, knockback, knockbackHeight, stun);
 }
 

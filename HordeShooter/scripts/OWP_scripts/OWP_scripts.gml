@@ -28,8 +28,9 @@ function OWP_createPartExt(part, xx, yy, quantity, createDepth = undefined, plac
 			
 			createDepth ??= -_y;
 			
+			_depth = createDepth;
 			if(depthRange != 0) {
-				_depth = createDepth + random_range(-depthRange, depthRange);
+				 _depth += random_range(-depthRange, depthRange);
 			}
 			
 			_layer = (currentSysEdge + ((-_depth) - previousEdgeY) div sysSpacing) % sysCount;
@@ -73,8 +74,9 @@ function OWP_createPartExtColor(part, xx, yy, quantity, color = undefined, creat
 			
 			createDepth ??= -_y;
 			
+			_depth = createDepth;
 			if(depthRange != 0) {
-				_depth = createDepth + random_range(-depthRange, depthRange);
+				 _depth += random_range(-depthRange, depthRange);
 			}
 			
 			_layer = (currentSysEdge + ((-_depth) - previousEdgeY) div sysSpacing) % sysCount;
