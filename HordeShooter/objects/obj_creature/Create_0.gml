@@ -11,6 +11,8 @@ attackRangeRangedMax = 450;
 attackRangeRangedMin = 240;
 attackCreateDist = 15; // this is the distance from the origin that spells and attacks are placed, aka the maw, aka the reach, aka the start distance of a spell from it's castor
 
+meleeAttackType = obj_attackMeleeSwing;
+
 hspeed = 0;
 vspeed = 0;
 speedDecay = .84;
@@ -29,6 +31,8 @@ knockbackMultBase = 1;
 
 canMove = true;
 intangible = false; // cannot be hit or affected by effects (different than i frames i think?)
+
+hitFlash = 0;
 
 directionFacing = choose(-1, 1);
 
@@ -58,9 +62,25 @@ SM = new SnowState("idle");
 
 SM.add("idle", {
     enter: function() {
-		
+		sprite_index = spr_playerIdle;
+		image_index = 0;
+		image_speed = 2.5;
     },
     step: function() {
+		if(speed > 1) {
+			if(sprite_index != spr_playerRun) {
+				sprite_index = spr_playerRun;
+				image_index = 0;
+				image_speed = 10;
+			}
+		} else {
+			if(sprite_index != spr_playerIdle) {
+				sprite_index = spr_playerIdle;
+				image_index = 0;
+				image_speed = 2.5;
+			}
+		}
+		
 		if(Health <= 0) {
 			die();
 		} else {
@@ -79,7 +99,9 @@ SM.add("idle", {
 
 SM.add("chase", {
     enter: function() {
-		
+		sprite_index = spr_playerRun;
+		image_index = 0;
+		image_speed = 10;
     },
     step: function() {
 		if(Health <= 0) {
@@ -117,6 +139,43 @@ SM.add("chase", {
 	},
 });
 
+SM.add("melee", {
+	enter: function(duration = undefined, type = obj_attackMeleeSwing) {
+		if(instance_exists(agroId)) {
+			meleeAttackType = type;
+			if(type == obj_attackMeleeSwing) {
+				duration = 14;
+			} else {
+				duration = 14;
+			}
+			
+			script_setEventTimer(duration);
+			
+			script_setAnimation(spr_playerHit, 0, 1, 14, true);
+			
+			directionFacing = x > agroId.x ? -1 : 1;
+		} else {
+			SM.change("idle");
+		}
+    },
+    step: function() {
+		stateTimer--;
+		if(stateTimer <= 0) {
+			SM.change("chase");
+		} else if(stateTimer == round(stateTimerMax * .5)) {
+			if(instance_exists(agroId)) {
+				var _attackDir = point_direction(x, y, agroId.x, agroId.y);
+				script_createMeleeAttack(meleeAttackType, x + lengthdir_x(20, _attackDir), y + lengthdir_y(20, _attackDir), _attackDir,,,, irandom_range(4, 6));
+			} else {
+				SM.change("idle");
+			}
+		}
+    },
+	leave: function() {
+		
+	}
+});
+
 SM.add("attack", {
     enter: function(duration = 30) {
 		//die animation
@@ -129,13 +188,13 @@ SM.add("attack", {
 			SM.change("chase");
 		} else if(stateTimer == round(stateTimerMax * .5)) {
 			if(point_distance(x, y, agroId.x, agroId.y) < 60) {
-				var _lethal = agroId.takeDamage(irandom_range(3, 4), point_direction(x, y, agroId.x, agroId.y), random_range(4, 10), random(7));
+				var _attackDir = point_direction(x, y, agroId.x, agroId.y);
+				script_createMeleeAttack(obj_attackMeleeSwing, x + lengthdir_x(20, _attackDir), y + lengthdir_y(20, _attackDir), _attackDir,,,, irandom_range(4, 6));
+				//var _lethal = agroId.takeDamage(irandom_range(3, 4), point_direction(x, y, agroId.x, agroId.y), random_range(4, 10), random(7));
 				
-				audio_play_sound(choose(snd_smack, snd_smack2, snd_smack3), 0, 0, random_range(.5, 1), 0, random_range(.8, 1.25));
-				
-				if(_lethal) {
-					agroId = noone;
-				}
+				//if(_lethal) {
+					//agroId = noone;
+				//}
 			}
 		}
     },
@@ -168,7 +227,10 @@ SM.add("die", {
     enter: function(duration = 60) {
 		//die animation
 		script_setEventTimer(duration);
-		image_angle = 90;
+		sprite_index = spr_playerIdle;
+		image_index = 0;
+		image_speed = 0;
+		image_angle = 180 + 90 * directionFacing;
     },
     step: function() {
 		stateTimer--;
@@ -236,6 +298,7 @@ SM.add("knockdown", {
 SM.add("frozen", {
     enter: function(duration = 270) {
 		//frozen animation
+		image_speed = 0;
 		frozen = duration;
 		burning = 0; // no burning while frozen in a block of ice bro
 		knockbackMult = 0; // don't move while frozen
@@ -255,6 +318,7 @@ SM.add("frozen", {
 		OWP_createPartExtColor(global.partBreak, x, y, 40, #bbffff,, sprite_width * .4, 20, 4);
 		audio_play_sound(snd_iceBreak, 0, 0);
 		
+		frozen = 0;
 		knockbackMult = knockbackMultBase; // don't move while frozen
 		friction = 0;
 		
@@ -267,7 +331,7 @@ determineAttack = function() {
 	var _targetDist = point_distance(x, y, agroId.x, agroId.y);
 	if(_targetDist < attackRange) {
 		if(irandom(15) == 0) {
-			_state = "attack";
+			_state = "melee";
 		}
 	} else if(_targetDist < attackRangeRangedMax && _targetDist > attackRangeRangedMin) {
 		if(irandom(500) == 0) {
@@ -314,6 +378,8 @@ takeDamage = function(damage, direction, force, heightForce, stun = undefined, m
 	script_createHitNum(damage);
 	
 	if(doEffects) {
+		hitFlash = max(hitFlash, 7);
+		
 		part_type_speed(global.partStarMini, 3.5, 5.5, -.15, 0);
 		OWP_createPartExt(global.partStarMini, x, y, 2 + damage,, 10, 10, 1);
 	}

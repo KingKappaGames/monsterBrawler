@@ -2,6 +2,7 @@ event_inherited();
 
 allegiance = E_allegiance.knight;
 
-HealthMax = 15;
+HealthMax = 24;
 
-sprite_index = Sprite1;
+sprite_index = spr_playerIdle;
+image_blend = c_ltgray;

@@ -1,0 +1,1 @@
+draw_text_transformed_color(view_wport[0] - 100, 20, fps_real, 1, 1, 0, c_red, c_red, c_red, c_red, .7);

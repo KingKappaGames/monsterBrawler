@@ -2,7 +2,7 @@ event_inherited();
 
 allegiance = E_allegiance.knight;
 
-HealthMax = 75;
+HealthMax = 60;
 poiseMax = 500;
 
 attackRange = 150;
@@ -11,8 +11,9 @@ damage = 5;
 knockback = 4;
 
 sprite_index = spr_rager;
+image_blend = c_blue;
 
-SM.add("attack", {
+SM.add("attackRanged", {
     enter: function(duration = 30) {
 		//die animation
 		script_setEventTimer(duration);

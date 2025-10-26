@@ -9,9 +9,9 @@ knockback = .8;
 knockbackHeight = 0;
 stun = 10;
 
-durationMax = 17;
+durationMax = 13;
 
-speed = 21;
+speed = 20;
 
 hitRadius = 57;
 hitSingle = false;

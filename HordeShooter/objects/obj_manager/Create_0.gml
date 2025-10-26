@@ -250,3 +250,7 @@ part_type_size(_itemGlimmer, .6, .9, -.004, 0);
 part_type_speed(_itemGlimmer, 0.2, .4, -.001, 0);
 part_type_direction(_itemGlimmer, 0, 360, 0, 0);
 part_type_gravity(_itemGlimmer, -.003, 270);
+
+repeat(250) {
+	instance_create_depth(irandom_range(-500, room_width * 2 + 500), irandom_range(-500, room_height * 2 + 500), 0, obj_visual);
+}

@@ -2,7 +2,7 @@ event_inherited();
 
 allegiance = E_allegiance.barbarian;
 
-HealthMax = 50;
+HealthMax = 40;
 poiseMax = 500;
 
 attackRange = 120;
@@ -14,6 +14,7 @@ knockback = 1.5;
 knockbackHeight = 1.5;
 
 sprite_index = spr_darkOne;
+image_blend = c_black;
 
 SM.add("attack", {
     enter: function(duration = 45) {

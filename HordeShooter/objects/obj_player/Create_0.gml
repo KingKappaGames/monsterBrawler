@@ -28,7 +28,7 @@ poiseMax = 80;
 poise = poiseMax;
 
 allegiance = E_allegiance.player;
-sprite_index = spr_rager;
+sprite_index = spr_playerIdle;
 
 deathSound = snd_crunch;
 
@@ -63,6 +63,8 @@ view_visible[0] = true;
 view_wport[0] = 1920;
 view_hport[0] = 1080;
 
+surface_resize(application_surface, 1920, 1080);
+
 global.cam = view_camera[0];
 
 #endregion
@@ -74,10 +76,26 @@ stateTimerMax = 0;
 
 SM.add("idle", {
     enter: function() {
-		
+		sprite_index = spr_playerIdle;
+		image_index = 0;
+		image_speed = 2.5;
     },
     step: function() {
 		movementControls();
+		
+		if(speed > 1) {
+			if(sprite_index != spr_playerRun) {
+				sprite_index = spr_playerRun;
+				image_index = 0;
+				image_speed = 10;
+			}
+		} else {
+			if(sprite_index != spr_playerIdle) {
+				sprite_index = spr_playerIdle;
+				image_index = 0;
+				image_speed = 2.5;
+			}
+		}
 		
 		if(InputCheck(INPUT_VERB.JUMP)) {
 			SM.change("jump");
@@ -94,7 +112,8 @@ SM.add("idle", {
 		}
 		
 		if(mouse_check_button_released(mb_right)) {
-			instance_create_depth(mouse_x, mouse_y, depth, obj_smiteBeam);
+			SM.change("melee",,, "basic");
+			//instance_create_depth(mouse_x, mouse_y, depth, obj_smiteBeam);
 		}
 		
 		if(keyboard_check_released(ord("G"))) {
@@ -111,6 +130,13 @@ SM.add("idle", {
 		
 		if(keyboard_check_pressed(vk_alt)) {
 			script_spawnCreature(choose(obj_barbarian, obj_knight), 1 + irandom(10), mouse_x, mouse_y);
+		}
+		
+		if(keyboard_check_pressed(vk_f7)) {
+			script_spawnCreature(obj_darkPriest, 1 + irandom(10), mouse_x, mouse_y);
+		}
+		if(keyboard_check_pressed(vk_f8)) {
+			script_spawnCreature(obj_priest, 1 + irandom(10), mouse_x, mouse_y);
 		}
 		
 		if(keyboard_check_released(ord("M"))) {
@@ -138,6 +164,10 @@ SM.add("die", {
     enter: function(duration = 120) {
 		//die animation
 		script_setEventTimer(duration);
+		sprite_index = spr_playerIdle;
+		image_index = 0;
+		image_speed = 0;
+		image_angle = 180 + 90 * directionFacing;
     },
     step: function() {
 		stateTimer--;
@@ -168,37 +198,33 @@ SM.add("jump", {
 	},
 });
 
-SM.add("knockdown", {
-    enter: function(duration = 30) {
-		//animation set to knockdown image
+SM.add("melee", {
+	enter: function(duration = undefined, type = obj_attackMeleeSwing) {
+		meleeAttackType = type;
+		if(type == obj_attackMeleeSwing) {
+			duration = 14;
+		} else {
+			duration = 14;
+		}
+		
 		script_setEventTimer(duration);
-		image_angle = 90;
+		
+		script_setAnimation(spr_playerHit, 0, 1, 14, true);
+		
+		directionFacing = x > mouse_x ? -1 : 1;
     },
     step: function() {
-		height += heightChange;
-		heightChange -= grav;
-		if(height <= 0) {
-			if(heightChange < -.5) {
-				hspeed *= bounceHorizontalSpeedtMult;
-				vspeed *= bounceHorizontalSpeedtMult;
-				heightChange *= bounceHeightMult;
-				height = 0;
-			} else {
-				hspeed *= bounceHorizontalSpeedtMult;
-				vspeed *= bounceHorizontalSpeedtMult;
-				heightChange = 0;
-				height = 0;
-				stateTimer--;
-				if(stateTimer <= 0) {
-					SM.change("idle");
-				}
-			}
+		stateTimer--;
+		if(stateTimer <= 0) {
+			SM.change("idle");
+		} else if(stateTimer == round(stateTimerMax * .5)) {
+			var _mouseDir = point_direction(x, y, mouse_x, mouse_y);
+			script_createMeleeAttack(meleeAttackType, x + lengthdir_x(20, _mouseDir), y + lengthdir_y(20, _mouseDir), _mouseDir,,,, irandom_range(4, 6));
 		}
     },
 	leave: function() {
-		image_angle = 0;
-		poise = poiseMax;
-	},
+		
+	}
 });
 
 
@@ -240,9 +266,11 @@ movementControls = function() {
 	
 	if(InputCheck(INPUT_VERB.RIGHT)) {
 		hspeed += _speed;
+		directionFacing = 1;
 	}
 	if(InputCheck(INPUT_VERB.LEFT)) {
 		hspeed -= _speed;
+		directionFacing = -1;
 	}
 	if(InputCheck(INPUT_VERB.UP)) {
 		vspeed -= _speed;

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"script_createMeleeAttack",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"script_createMeleeAttack",
+  "parent":{
+    "name":"combat",
+    "path":"folders/Scripts/combat.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
