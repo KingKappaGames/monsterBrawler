@@ -10,6 +10,6 @@ durationMax = 10;
 hitFunc = undefined;
 
 damage = 1;
-knockback = 5;
-knockbackHeight = 3;
+knockback = 4;
+knockbackHeight = 4;
 stun = 35;

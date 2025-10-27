@@ -29,7 +29,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_iceBlock",
+    "path":"sprites/spr_iceBlock/spr_iceBlock.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

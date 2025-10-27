@@ -29,6 +29,9 @@ jumpSpeed = 3;
 knockbackMult = 1;
 knockbackMultBase = 1;
 
+npcAroundList = ds_list_create();
+npcAroundCount = 0;
+
 canMove = true;
 intangible = false; // cannot be hit or affected by effects (different than i frames i think?)
 
@@ -45,7 +48,7 @@ if(allegiance == E_allegiance.barbarian) {
 }
 
 agroId = noone;
-agroRange = 1200;
+agroRange = 900;
 
 deathSound = snd_crunch;
 
@@ -111,8 +114,70 @@ SM.add("chase", {
 				if(agroId.Health <= 0) {
 					agroId = noone;
 				} else {
-					var _dirMove = point_direction(x, y, agroId.x, agroId.y) + dsin(current_time * .031) * 35 + dsin(current_time * .057) * 25 - dsin(current_time * .117) * 20;
+					var _dirMove = point_direction(x, y, agroId.x, agroId.y) + dsin(current_time * .041) * 30 + dsin(current_time * .067) * 21 - dsin(current_time * .137) * 18;
 					motion_add(_dirMove, moveSpeed);
+					
+					#region steering behavior movement
+					if(irandom(6) == 0) {
+						ds_list_clear(npcAroundList)
+						npcAroundCount = collision_circle_list(x, y, 500, obj_creature, false, true, npcAroundList, true); // get nearby npcs
+						var _avoidedNpcCount = 0;
+							
+						#region avoiding stuff (janky?)
+						var _avoiding = true; // as you go up check the avoid vs approach difference to see if you should check for this
+					
+						
+						if(npcAroundCount > 0) {
+							var _approachX = 0;
+							var _approachY = 0;
+						
+							var _initialSpeedX = hspeed;
+							var _initialSpeedY = vspeed; // hold and clear speed to allow use of built in speed adding functions (this structure doesn't make much sense but let's you use the way faster motion scripts in a place where performance is an issue so.. For the best)
+							speed = 0;
+							
+							var _avoidDir = 0;
+							var _avoidDist = 0;
+							
+							var _enemy, _enemyX, _enemyY;
+							#endregion
+							
+							for(var _i = 0; _i < npcAroundCount; _i++) {
+								_enemy = npcAroundList[| _i];
+								_enemyX = _enemy.x;
+								_enemyY = _enemy.y;
+								
+								_approachX += _enemyX;
+								_approachY += _enemyY;
+								
+								if(_avoiding) {
+									_avoidDist = point_distance(_enemyX, _enemyY, x, y);
+									if(_avoidDist < 75) {
+										_avoidDir = point_direction(_enemyX, _enemyY, x, y);
+										
+										motion_add(_avoidDir, 45 / max(power(_avoidDist, .75), 1.75));
+									} else {
+										_avoidedNpcCount = _i;
+										_avoiding = false;
+									}
+								}
+							}
+					
+							_approachX /= npcAroundCount;
+							_approachY /= npcAroundCount;
+							
+							if(_avoidedNpcCount > 0) {
+								speed = min(speed / _avoidedNpcCount, .7);
+							}
+							
+							var _approachDir = point_direction(x, y, _approachX, _approachY);
+							var _approachDist = point_distance(x, y, _approachX, _approachY); // move towars center of mass
+							motion_add(_approachDir, _approachDist / 20_000);
+							
+							hspeed += _initialSpeedX;
+							vspeed += _initialSpeedY;
+						}
+					}
+					#endregion
 					
 					if(_dirMove > 90 && _dirMove < 270) {
 						directionFacing = -1;
@@ -270,7 +335,7 @@ SM.add("knockdown", {
 		height += heightChange;
 		heightChange -= grav;
 		if(height <= 0) {
-			if(heightChange < -.5) {
+			if(heightChange < -.7) {
 				hspeed *= bounceHorizontalSpeedtMult;
 				vspeed *= bounceHorizontalSpeedtMult;
 				heightChange = min(12, heightChange * bounceHeightMult);

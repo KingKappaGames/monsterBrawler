@@ -1,31 +1,28 @@
 randomize();
 
-audio_master_gain(.8); // wtf why is it so loud
+audio_master_gain(.8); // why is it so loud
 
 global.manager = id;
 
-#macro grav .14
+#macro grav .18
 
 autoSpawn = false;
 
 global.showDebug = false;
 
-global.cameraScale = 1;
+global.cameraScale = .5;
 #macro camWidthBase 1920
 #macro camHeightBase 1080
 
 #region allegiances
 
+#macro allegianceCount 3
+
 enum E_allegiance {
 	player = 0, 
 	barbarian = 1,
 	knight = 2, 
-	/*, //3
-	reachesApostle, 
-	mortalist // 5*/
 }
-
-#macro allegianceCount 3
 
 global.allegianceGrid = ds_grid_create(allegianceCount, allegianceCount); // each faction x each faction, gives the result of each combination
 var _grid = global.allegianceGrid;
@@ -62,9 +59,98 @@ for(var _mirrorI = 0; _mirrorI < _filledCount; _mirrorI++) {
 for(var _sameToSameI = 0; _sameToSameI < allegianceCount; _sameToSameI++) {
 	_grid[# _sameToSameI, _sameToSameI] = 1; // reflexive views should always be positive, aka, no in fighting... Although... I suppose a type of person that fights others of its kind is possible.. for now nah though
 }
-
 #endregion
 
+#region gmRoomLoader stuff
+
+#macro roomSize 1800
+#macro roomCreateBuffer 50
+#macro roomDestroyBuffer 80
+
+RoomLoader.DataInit(rm_mapPlaza);
+RoomLoader.DataInit(rm_mapField);
+RoomLoader.DataInit(rm_mapForest);
+
+roomGrid = array_create(50);
+for(var _i = 0; _i < 50; _i++) {
+	roomGrid[_i] = array_create(50, 0);
+}
+
+function updateRooms() {
+	var _cam = view_camera[0];
+	var _camX = camera_get_view_x(_cam) + roomSize * 1000;
+	var _camY = camera_get_view_y(_cam) + roomSize * 1000;
+	var _camW = camera_get_view_width(_cam);
+	var _camH = camera_get_view_height(_cam);
+	var _camRight = _camX + _camW;
+	var _camBottom = _camY + _camH;
+	
+	//if(roomGrid[_roomX][_roomY] == 0) { // in theory the center room should never loaded (except when tp'ing maybe?)
+		//roomGrid[_roomX][_roomY] = RoomLoader.Load(rm_mapField, (_roomX - 25) * roomSize, (_roomY - 25) * roomSize);
+	//}
+	
+	var _roomX, _roomY, _roomPrevX, _roomPrevY, _hold;
+	
+	_roomX = 25 + (_camX - roomCreateBuffer) div roomSize - 1000; // top left
+	_roomY = 25 + (_camY - roomCreateBuffer) div roomSize - 1000;
+	if(roomGrid[_roomX][_roomY] == 0) {
+		roomGrid[_roomX][_roomY] = RoomLoader.Load(choose(rm_mapField, rm_mapForest, rm_mapPlaza), (_roomX - 25) * roomSize, (_roomY - 25) * roomSize);
+	}
+	_roomPrevX = 25 + (_camX - roomDestroyBuffer) div roomSize - 1000;
+	_roomPrevY = 25 + (_camY - roomDestroyBuffer) div roomSize - 1000;
+	if(_roomPrevX != _roomX || _roomPrevY != _roomY) { // targeting "lone" tile without creation insentive, aka not in range of creator but in range of destroyer, destroyer will always be opposed by the presence of creator here, the tiles are too big to overlap in any other way. Poetic.
+		if(roomGrid[_roomPrevX][_roomPrevY] != 0) {
+			roomGrid[_roomPrevX][_roomPrevY].Cleanup();
+			roomGrid[_roomPrevX][_roomPrevY] = 0;
+		}
+	}
+	
+	
+	_roomX = 25 + (_camX + _camW + roomCreateBuffer) div roomSize - 1000; // top right
+	_roomY = 25 + (_camY - roomCreateBuffer) div roomSize - 1000;
+	if(roomGrid[_roomX][_roomY] == 0) {
+		roomGrid[_roomX][_roomY] = RoomLoader.Load(rm_mapField, (_roomX - 25) * roomSize, (_roomY - 25) * roomSize);
+	}
+	_roomPrevX = 25 + (_camX + _camW + roomDestroyBuffer) div roomSize - 1000;
+	_roomPrevY = 25 + (_camY - roomDestroyBuffer) div roomSize - 1000;
+	if(_roomPrevX != _roomX || _roomPrevY != _roomY) {
+		if(roomGrid[_roomPrevX][_roomPrevY] != 0) {
+			roomGrid[_roomPrevX][_roomPrevY].Cleanup();
+			roomGrid[_roomPrevX][_roomPrevY] = 0;
+		}
+	}
+	
+	_roomX = 25 + (_camX + _camW + roomCreateBuffer) div roomSize - 1000; // bottom right
+	_roomY = 25 + (_camY + _camH + roomCreateBuffer) div roomSize - 1000;
+	if(roomGrid[_roomX][_roomY] == 0) {
+		roomGrid[_roomX][_roomY] = RoomLoader.Load(rm_mapField, (_roomX - 25) * roomSize, (_roomY - 25) * roomSize);
+	}
+	_roomPrevX = 25 + (_camX + _camW + roomDestroyBuffer) div roomSize - 1000;
+	_roomPrevY = 25 + (_camY + _camH + roomDestroyBuffer) div roomSize - 1000;
+	if(_roomPrevX != _roomX || _roomPrevY != _roomY) {
+		if(roomGrid[_roomPrevX][_roomPrevY] != 0) {
+			roomGrid[_roomPrevX][_roomPrevY].Cleanup();
+			roomGrid[_roomPrevX][_roomPrevY] = 0;
+		}
+	}
+	
+	_roomX = 25 + (_camX - roomCreateBuffer) div roomSize - 1000; // bottom left
+	_roomY = 25 + (_camY + _camH + roomCreateBuffer) div roomSize - 1000;
+	if(roomGrid[_roomX][_roomY] == 0) {
+		roomGrid[_roomX][_roomY] = RoomLoader.Load(rm_mapField, (_roomX - 25) * roomSize, (_roomY - 25) * roomSize);
+	}
+	_roomPrevX = 25 + (_camX - roomDestroyBuffer) div roomSize - 1000;
+	_roomPrevY = 25 + (_camY + _camH + roomDestroyBuffer) div roomSize - 1000;
+	if(_roomPrevX != _roomX || _roomPrevY != _roomY) {
+		if(roomGrid[_roomPrevX][_roomPrevY] != 0) {
+			roomGrid[_roomPrevX][_roomPrevY].Cleanup();
+			roomGrid[_roomPrevX][_roomPrevY] = 0;
+		}
+	}
+}
+#endregion
+
+#region particle stuff
 
 global.sys = part_system_create();
 part_system_depth(global.sys, -500);
@@ -251,6 +337,8 @@ part_type_speed(_itemGlimmer, 0.2, .4, -.001, 0);
 part_type_direction(_itemGlimmer, 0, 360, 0, 0);
 part_type_gravity(_itemGlimmer, -.003, 270);
 
-repeat(250) {
-	instance_create_depth(irandom_range(-500, room_width * 2 + 500), irandom_range(-500, room_height * 2 + 500), 0, obj_visual);
-}
+#endregion
+
+//repeat(250) {
+	//instance_create_depth(irandom_range(-500, room_width * 2 + 500), irandom_range(-500, room_height * 2 + 500), 0, obj_visual);
+//}

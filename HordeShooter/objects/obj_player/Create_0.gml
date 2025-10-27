@@ -13,10 +13,10 @@ height = 0;
 bounceHorizontalSpeedtMult = .8;
 bounceHeightMult = -.4;
 
-moveSpeed = 2.50;
+moveSpeed = 2.0;
 moveSpeedAir = 1.1;
 
-jumpSpeed = 5.4;
+jumpSpeed = 4.6;
 knockbackMult = 1;
 
 canMove = true;
@@ -32,7 +32,10 @@ sprite_index = spr_playerIdle;
 
 deathSound = snd_crunch;
 
-#region goofy values
+meleeHitFunc = function(targetId, sourceId) {
+	targetId.allegiance = sourceId.allegiance;
+	//targetId.image_blend = randomColor(0, 255, 0);
+}
 
 var sec = game_get_speed(gamespeed_fps)
 
@@ -54,20 +57,19 @@ mortaring = 0;
 mortarXstart = 0;
 mortarYstart = 0;
 
-cameraOne = camera_create_view(0, 0, 1920, 1080);
+cameraOne = camera_create_view(0, 0, 960, 540);
 view_set_camera(0, cameraOne); //view_camera[0] or [1] worked
 
-view_enabled = 1;
+view_enabled = true;
 view_visible[0] = true;
 
 view_wport[0] = 1920;
 view_hport[0] = 1080;
 
 surface_resize(application_surface, 1920, 1080);
+window_set_size(1920, 1080);
 
 global.cam = view_camera[0];
-
-#endregion
 
 #region STATE MACHINE SET UP
 
@@ -219,7 +221,7 @@ SM.add("melee", {
 			SM.change("idle");
 		} else if(stateTimer == round(stateTimerMax * .5)) {
 			var _mouseDir = point_direction(x, y, mouse_x, mouse_y);
-			script_createMeleeAttack(meleeAttackType, x + lengthdir_x(20, _mouseDir), y + lengthdir_y(20, _mouseDir), _mouseDir,,,, irandom_range(4, 6));
+			script_createMeleeAttack(meleeAttackType, x + lengthdir_x(20, _mouseDir), y + lengthdir_y(20, _mouseDir), _mouseDir,,,, irandom_range(4, 6),,,, meleeHitFunc);
 		}
     },
 	leave: function() {

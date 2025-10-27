@@ -11,7 +11,7 @@ if(keyboard_check_released(ord("F"))) { window_set_fullscreen(1 - window_get_ful
 var _camScaleChange = InputCheck(INPUT_VERB.CAMERAZOOMOUT) - InputCheck(INPUT_VERB.CAMERAZOOMIN);
 if(_camScaleChange != 0) {
 	var _cam = view_camera[0];
-	global.cameraScale = clamp(global.cameraScale * (1 + _camScaleChange * .01), .1, 2);
+	global.cameraScale = clamp(global.cameraScale * (1 + _camScaleChange * .01), .1, .75);
 	var _scaleVal = global.cameraScale;
 
 	var _centerX = camera_get_view_x(_cam) + camera_get_view_width(_cam) / 2;
@@ -22,13 +22,15 @@ if(_camScaleChange != 0) {
 }
 
 if(autoSpawn) {
-	if(irandom(10) == 0) {
-		if(irandom(30) == 0 && instance_number(obj_knight) > 10) {
+	if(irandom(20) == 0) {
+		if(irandom(40) == 0 && instance_number(obj_knight) > 10) {
 			script_spawnCreature(obj_darkPriest, irandom_range(1, 5),,, true); // spawn powerful unit to offset battle
-		} else if(irandom(30) == 0 && instance_number(obj_barbarian) > 10) {
+		} else if(irandom(26) == 0 && instance_number(obj_barbarian) > 10) {
 			script_spawnCreature(obj_priest, irandom_range(1, 5),,, true); // spawn powerful unit to offset battle
 		} else {
 			script_spawnCreature(choose(obj_barbarian, obj_knight), irandom_range(1, 5),,, true);
 		}
 	}
 }
+
+updateRooms();

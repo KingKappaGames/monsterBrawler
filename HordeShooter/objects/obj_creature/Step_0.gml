@@ -26,18 +26,6 @@ if(acidic > 0) {
 	acidic--;
 }
 
-if(x < 0) {
-	x = 2;
-} else if(x > room_width * 2) {
-	x = room_width * 2 - 2;
-}
-
-if(y < 0) {
-	y = 2;
-} else if(y > room_height * 2) {
-	y = room_height * 2 - 2;
-}
-
 if(poise < poiseMax) {
 	poise++;
 }

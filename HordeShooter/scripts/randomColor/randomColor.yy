@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"randomColor",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"randomColor",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
