@@ -11,6 +11,8 @@ speed = 12;
 
 hitSingle = true;
 
+heightHitRange = 20;
+
 part_particles_create(global.sys, x, y, global.sparksParts, 3);
 
 //hitEnemy = function(hitId) {
@@ -20,7 +22,7 @@ part_particles_create(global.sys, x, y, global.sparksParts, 3);
 hit = function() {
 	part_particles_create(global.sys, x, y, global.sparksParts, 3);
 	
-	audio_play_sound(choose(snd_Blap, snd_blip, snd_click), 0, 0);
+	audio_play_sound(choose(snd_blip, snd_click), 0, 0, 1, undefined, random_range(.7, 1.4));
 	
 	instance_destroy();
 }

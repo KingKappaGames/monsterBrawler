@@ -1,7 +1,7 @@
 timer++;
 
 if(timer % 3 == 0) {
-	hitIds = array_concat(hitIds, script_MeleeHitBoxRotated(allegiance, x, y, image_angle, thickness, length, damage, knockback, image_angle, knockbackHeight, stun, hitFunc,, hitIds));
+	hitIds = array_concat(hitIds, script_MeleeHitBoxRotated(allegiance, x, y, image_angle, thickness, length, height, heightHitRange, damage, knockback, image_angle, knockbackHeight, stun, hitFunc,, hitIds));
 	if(!hasHitSomething) {
 		if(array_length(hitIds) > 0) {
 			hasHitSomething = true;

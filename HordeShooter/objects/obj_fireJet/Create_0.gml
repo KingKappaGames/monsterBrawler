@@ -5,15 +5,16 @@ event_inherited();
 audio_play_sound(snd_firePuff, 0, 0);
 
 damage = 1;
-knockback = .8;
+knockback = 1.2;
 knockbackHeight = 0;
-stun = 10;
+stun = 12;
 
 durationMax = 13;
 
 speed = 20;
 
-hitRadius = 57;
+hitRadius = 50;
+heightHitRange = 60;
 hitSingle = false;
 hitStopOn = false;
 

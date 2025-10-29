@@ -1,4 +1,4 @@
-function script_createMeleeAttack(type, xx, yy, directionSet, durationMult = 1, sourceSet = id, allegianceSet = undefined, damageMult = 1, knockbackMult = 1, knockbackHeightMult = 1, stunMult = 1, hitFuncSet = undefined) {
+function script_createMeleeAttack(type, xx, yy, directionSet, heightSet = height, durationMult = 1, sourceSet = id, allegianceSet = undefined, damageMult = 1, knockbackMult = 1, knockbackHeightMult = 1, stunMult = 1, hitFuncSet = undefined) {
 	allegianceSet ??= sourceSet.allegiance;
 	
 	var _depth = sourceSet.depth;
@@ -18,8 +18,8 @@ function script_createMeleeAttack(type, xx, yy, directionSet, durationMult = 1, 
 		duration = durationMax;
 		
 		image_angle = directionSet;
-		
 		image_speed = image_number / (durationMax / 60);
+		height = heightSet;
 		
 		damage *= damageMult;
 		stun *= stunMult;

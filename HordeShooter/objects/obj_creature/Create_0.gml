@@ -25,7 +25,7 @@ bounceHeightMult = -.4;
 
 moveSpeed = .62;
 moveSpeedAir = .4;
-jumpSpeed = 3;
+jumpSpeed = 6;
 knockbackMult = 1;
 knockbackMultBase = 1;
 
@@ -55,6 +55,10 @@ deathSound = snd_crunch;
 burning = 0;
 acidic = 0;
 frozen = 0; // state
+
+trailPart = -1;
+trailDuration = 0;
+trailPartColor = c_white;
 
 #region STATE MACHINE SET UP
 
@@ -185,10 +189,14 @@ SM.add("chase", {
 						directionFacing = 1;
 					}
 					
-					determineAttack(); // sets state if done
-					
-					if(irandom(45) == 0) {
-						agroId = script_findAgroTarget();
+					if(irandom(120) == 0) {
+						SM.change("jump");
+					} else {
+						determineAttack(); // sets state if done
+						
+						if(irandom(45) == 0) {
+							agroId = script_findAgroTarget();
+						}
 					}
 				}
 			} else {
@@ -230,7 +238,7 @@ SM.add("melee", {
 		} else if(stateTimer == round(stateTimerMax * .5)) {
 			if(instance_exists(agroId)) {
 				var _attackDir = point_direction(x, y, agroId.x, agroId.y);
-				script_createMeleeAttack(meleeAttackType, x + lengthdir_x(20, _attackDir), y + lengthdir_y(20, _attackDir), _attackDir,,,, irandom_range(4, 6));
+				script_createMeleeAttack(meleeAttackType, x + lengthdir_x(20, _attackDir), y + lengthdir_y(20, _attackDir), _attackDir, height,,,, irandom_range(4, 6));
 			} else {
 				SM.change("idle");
 			}
@@ -254,7 +262,7 @@ SM.add("attack", {
 		} else if(stateTimer == round(stateTimerMax * .5)) {
 			if(point_distance(x, y, agroId.x, agroId.y) < 60) {
 				var _attackDir = point_direction(x, y, agroId.x, agroId.y);
-				script_createMeleeAttack(obj_attackMeleeSwing, x + lengthdir_x(20, _attackDir), y + lengthdir_y(20, _attackDir), _attackDir,,,, irandom_range(4, 6));
+				script_createMeleeAttack(obj_attackMeleeSwing, x + lengthdir_x(20, _attackDir), y + lengthdir_y(20, _attackDir), _attackDir, height,,,, irandom_range(4, 6));
 				//var _lethal = agroId.takeDamage(irandom_range(3, 4), point_direction(x, y, agroId.x, agroId.y), random_range(4, 10), random(7));
 				
 				//if(_lethal) {
@@ -279,8 +287,10 @@ SM.add("attackRanged", {
 		if(stateTimer <= 0) {
 			SM.change("chase");
 		} else if(stateTimer == round(stateTimerMax * .5)) {
-			var _attackDir = directionTo(agroId);
-			script_createAttack(obj_acidBolt, x + lengthdir_x(attackCreateDist, _attackDir), y + lengthdir_y(attackCreateDist, _attackDir), _attackDir);
+			if(instance_exists(agroId)) {
+				var _attackDir = directionTo(agroId);
+				script_createAttack(obj_acidBolt, x + lengthdir_x(attackCreateDist, _attackDir), y + lengthdir_y(attackCreateDist, _attackDir), _attackDir, height);
+			}
 		}
     },
 	leave: function() {
@@ -302,6 +312,9 @@ SM.add("die", {
 		if(stateTimer <= 0) {
 			audio_play_sound(deathSound, 0, 0);
 			script_disintegrateObject(,, sprite_width / 4, sprite_height / 4);
+			if(irandom(10) == 0) {
+				script_createPickup(x, y + 5, obj_pickup);
+			}
 			instance_destroy();
 		}
     },
@@ -411,6 +424,8 @@ determineAttack = function() {
 	return _state; // state names randomly chosen, in theory they could probably just call the SM.change themselves but idk man
 }
 
+#endregion
+
 slowdown = function() {
 	if(height > 0) {
 		hspeed *= speedDecayAir;
@@ -438,7 +453,7 @@ spawn = function() {
 /// @param {real} heightForce 
 /// @returns {bool} LETHAL
 takeDamage = function(damage, direction, force, heightForce, stun = undefined, makeHitNumber = true, doEffects = true) {
-	Health -= damage;
+	Health = min(HealthMax, Health - damage);
 	
 	script_createHitNum(damage);
 	
@@ -474,3 +489,25 @@ takeDamage = function(damage, direction, force, heightForce, stun = undefined, m
 die = function() {
 	SM.change("die");
 }
+
+#region magic functions
+jumpMagicHitFunc = function(damageAOEDropOff, targetId) {
+	if(.5 + random(.5) < damageAOEDropOff) {
+		targetId.SM.change("frozen");
+	}
+}
+
+doJumpMagic = function() {
+	trailPart = global.partTrailChunk;
+	trailDuration = 45;
+	trailPartColor = #cfdfff;
+	
+	audio_play_sound(snd_iceSpellImpact, 0, 0);
+	script_AOEDamageHit(,,, 200, 10, 5,, 5, 200,,, jumpMagicHitFunc);
+	OWP_createPartExtColor(global.partThickHaze, x, y, 5, #bbffff,, 70, 0, 1);
+	part_type_speed(global.partStar, 2, 5, -.125, 0);
+	OWP_createPartExtColor(global.partStar, x, y, 20, #ccffff,, 20, 20, 5);
+	part_type_speed(global.partOverwrittenTrailer, 3, 5, 0, 0);
+	OWP_createPartExt(global.partOverwrittenTrailer, x, y, 12,, 0, 10, 1);
+}
+#endregion

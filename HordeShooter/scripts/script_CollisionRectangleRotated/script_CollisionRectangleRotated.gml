@@ -5,13 +5,15 @@
 /// @param directionCheck
 /// @param thickness
 /// @param length
+/// @param heightSet
+/// @param heightRange
 /// @param notMe
 /// @param ordered
 /// @param allegianceSet This function checks the possible targets against their agro to only hit the targets that should be hit, aka enemies or such.
 /// @param targets the things to check with "with" so type arrays specific id. Has to be related to game object.
 ///@param exclusions A white list of instances (just instances?) to not hit
 #endregion
-function script_CollisionRectangleRotated(startX, startY, directionCheck, thickness, length, notMe, ordered = false, allegianceSet = undefined, targets = obj_creature, exclusions = []){
+function script_CollisionRectangleRotated(startX, startY, directionCheck, thickness, length, heightSet, heightRange, notMe, ordered = false, allegianceSet = undefined, targets = obj_creature, exclusions = []){
 	if(object_is_ancestor(object_index, obj_attack)) {
 		var _self = source; // get source Id for thing being used, so spells won't hit their creator
 		allegianceSet ??= source.allegiance;
@@ -29,15 +31,17 @@ function script_CollisionRectangleRotated(startX, startY, directionCheck, thickn
 	for(var _hitI = 0; _hitI < _hitCount; _hitI++) { // for each collided game object
 		with(_hitList[| _hitI]) {
 			if(!intangible) {
-				if(!array_contains(exclusions, id)) { // if this target is not in the exclusions passed in (don't hit white listed things, basically)
-					if(object_is_ancestor(object_index, obj_creature)) {
-						if(script_judgeAllegiance(allegianceSet, allegiance) > .5) {
-							continue; // if is NOT friendly (and only creatures can be friendly) then skip this creature
+				if(abs(heightSet - height) < heightRange) {
+					if(!array_contains(exclusions, id)) { // if this target is not in the exclusions passed in (don't hit white listed things, basically)
+						if(object_is_ancestor(object_index, obj_creature)) {
+							if(script_judgeAllegiance(allegianceSet, allegiance) > .5) {
+								continue; // if is NOT friendly (and only creatures can be friendly) then skip this creature
+							}
 						}
+					
+						_hits[_hitNum] = id; // add to the hit registry
+						_hitNum++;
 					}
-				
-					_hits[_hitNum] = id; // add to the hit registry
-					_hitNum++;
 				}
 			}
 		}

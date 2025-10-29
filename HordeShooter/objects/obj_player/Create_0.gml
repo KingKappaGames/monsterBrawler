@@ -1,12 +1,12 @@
 event_inherited();
 
-HealthMax = 10000000000000;
+HealthMax = 100;
 Health = HealthMax;
 
 hspeed = 0;
 vspeed = 0;
 speedDecay = .78;
-speedDecayAir = .92;
+speedDecayAir = .91;
 
 heightChange = 0;
 height = 0;
@@ -14,9 +14,9 @@ bounceHorizontalSpeedtMult = .8;
 bounceHeightMult = -.4;
 
 moveSpeed = 2.0;
-moveSpeedAir = 1.1;
+moveSpeedAir = .6;
 
-jumpSpeed = 4.6;
+jumpSpeed = 4.2;
 knockbackMult = 1;
 
 canMove = true;
@@ -31,11 +31,6 @@ allegiance = E_allegiance.player;
 sprite_index = spr_playerIdle;
 
 deathSound = snd_crunch;
-
-meleeHitFunc = function(targetId, sourceId) {
-	targetId.allegiance = sourceId.allegiance;
-	//targetId.image_blend = randomColor(0, 255, 0);
-}
 
 var sec = game_get_speed(gamespeed_fps)
 
@@ -83,78 +78,30 @@ SM.add("idle", {
 		image_speed = 2.5;
     },
     step: function() {
-		movementControls();
-		
-		if(speed > 1) {
-			if(sprite_index != spr_playerRun) {
-				sprite_index = spr_playerRun;
-				image_index = 0;
-				image_speed = 10;
-			}
+		if(Health <= 0) {
+			die();
 		} else {
-			if(sprite_index != spr_playerIdle) {
-				sprite_index = spr_playerIdle;
-				image_index = 0;
-				image_speed = 2.5;
+			movementControls();
+			
+			if(speed > 1) {
+				if(sprite_index != spr_playerRun) {
+					sprite_index = spr_playerRun;
+					image_index = 0;
+					image_speed = 10;
+				}
+			} else {
+				if(sprite_index != spr_playerIdle) {
+					sprite_index = spr_playerIdle;
+					image_index = 0;
+					image_speed = 2.5;
+				}
 			}
-		}
-		
-		if(InputCheck(INPUT_VERB.JUMP)) {
-			SM.change("jump");
-		}
-		
-		if(mouse_check_button(mb_left)) {
-			shotDelay--;
-			if(shotDelay <= 0) {
-				shotDelay = 60 / fireRate;
-				shootBullet();
+			
+			if(InputCheck(INPUT_VERB.JUMP)) {
+				SM.change("jump");
 			}
-		} else if(mouse_check_button_released(mb_left)) {
-			shotDelay = 60 / fireRate;
-		}
-		
-		if(mouse_check_button_released(mb_right)) {
-			SM.change("melee",,, "basic");
-			//instance_create_depth(mouse_x, mouse_y, depth, obj_smiteBeam);
-		}
-		
-		if(keyboard_check_released(ord("G"))) {
-			repeat(1 + irandom(2)) {
-				script_createAttack(obj_grenade, x, y, directionAiming + irandom_range(-40, 40), random_range(1, 1.2), 5);
-			}
-		}
-		
-		if(keyboard_check_pressed(ord("M"))) {
-			mortaring = 1;
-			mortarXstart = mouse_x;
-			mortarYstart = mouse_y;
-		}
-		
-		if(keyboard_check_pressed(vk_alt)) {
-			script_spawnCreature(choose(obj_barbarian, obj_knight), 1 + irandom(10), mouse_x, mouse_y);
-		}
-		
-		if(keyboard_check_pressed(vk_f7)) {
-			script_spawnCreature(obj_darkPriest, 1 + irandom(10), mouse_x, mouse_y);
-		}
-		if(keyboard_check_pressed(vk_f8)) {
-			script_spawnCreature(obj_priest, 1 + irandom(10), mouse_x, mouse_y);
-		}
-		
-		if(keyboard_check_released(ord("M"))) {
-			var _plane = instance_create_depth(0, 0, 0, obj_plane);
-			_plane.startRunX = mortarXstart;
-			_plane.startRunY = mortarYstart;
-			_plane.endRunX = mouse_x;
-			_plane.endRunY = mouse_y;
-			_plane.getRoute();
-			mortaring = 0;
-		}
-		
-		spread *= spreadDecay;
-		recoil *= 1 - (1 - spreadDecay) * 5;
-		if(spread < spreadMinimum) {
-			spread = spreadMinimum;
+			
+			weaponControls();
 		}
     },
 	leave: function() {
@@ -179,18 +126,58 @@ SM.add("die", {
 			SM.change("idle");
 		}
     },
+	leave: function() {
+		//die animation
+		image_angle = 0;
+		Health = HealthMax;
+		poise = poiseMax;
+    },
 });
 
 SM.add("jump", {
     enter: function() {
 		//jump animation
-		heightChange = jumpSpeed;
-		poise *= .75;
+		script_setAnimation(spr_playerJumpStart, 0, 1, 5, true);
+		script_setEventTimer(5);
     },
     step: function() {
+		if(stateTimer > 0) {
+			stateTimer--;
+			if(stateTimer <= 0) {
+				if(keyboard_check(vk_shift)) {
+					heightChange = jumpSpeed * 1.5;
+					poise *= .4;
+					
+					doJumpMagic();
+				} else {
+					heightChange = jumpSpeed;
+					poise *= .4;
+				}
+				SM.change("float");
+			}
+		}
+    },
+	leave: function() {
+		
+	},
+});
+
+SM.add("float", {
+    enter: function() {
+		script_setAnimation(spr_playerJumpRise, 0, 3);
+    },
+    step: function() {
+		var _heightChangePrev = heightChange;
 		height += heightChange;
 		heightChange -= grav;
+		
+		if(_heightChangePrev > 0 && heightChange <= 0) {
+			script_setAnimation(spr_playerJumpFall, 0, 3);
+		}
+		
 		movementControls();
+		weaponControls();
+		
 		if(height <= 0) {
 			SM.change("idle");
 		}
@@ -218,10 +205,14 @@ SM.add("melee", {
     step: function() {
 		stateTimer--;
 		if(stateTimer <= 0) {
-			SM.change("idle");
+			if(height > 0) {
+				SM.change("float");
+			} else {
+				SM.change("idle");
+			}
 		} else if(stateTimer == round(stateTimerMax * .5)) {
 			var _mouseDir = point_direction(x, y, mouse_x, mouse_y);
-			script_createMeleeAttack(meleeAttackType, x + lengthdir_x(20, _mouseDir), y + lengthdir_y(20, _mouseDir), _mouseDir,,,, irandom_range(4, 6),,,, meleeHitFunc);
+			script_createMeleeAttack(meleeAttackType, x + lengthdir_x(20, _mouseDir), y + lengthdir_y(20, _mouseDir), _mouseDir, height,,,, irandom_range(4, 6),,,, meleeHitFunc);
 		}
     },
 	leave: function() {
@@ -255,7 +246,7 @@ shootBullet = function() {
 		_spawnArea = 0;
 	}
 	
-	var _shot = script_createAttack(_bulletType, x + dcos(directionAiming) * 16 + irandom_range(-_spawnArea, _spawnArea), y - dsin(directionAiming) * 16 + irandom_range(-_spawnArea, _spawnArea), directionAiming + random_range(-spread, spread), shotSpeed,,,, damage);
+	var _shot = script_createAttack(_bulletType, x + dcos(directionAiming) * 16 + irandom_range(-_spawnArea, _spawnArea), y - dsin(directionAiming) * 16 + irandom_range(-_spawnArea, _spawnArea), directionAiming + random_range(-spread, spread), height, shotSpeed,,,, damage);
 
 	spread += 1;
 	recoil += 2;
@@ -282,6 +273,8 @@ movementControls = function() {
 	}
 }
 
+baseTakeDamageFunc = takeDamage;
+
 /// @desc RETURNS LETHAL
 /// @param {real} damage 
 /// @param {real} direction 
@@ -289,34 +282,79 @@ movementControls = function() {
 /// @param {real} heightForce 
 /// @returns {bool} LETHAL
 takeDamage = function(damage, direction, force, heightForce) {
-	Health -= damage;
+	//more stuff (inheriting)
 	
-	poise -= power(damage + force, 1);
+	baseTakeDamageFunc(damage, direction, force, heightForce);
 	
-	if(poise <= 0) {
-		if(SM.get_current_state() != "die") {
-			SM.change("knockdown");
-		}
-		
-		hspeed += lengthdir_x(force * 1.5 * knockbackMult, direction);
-		vspeed += lengthdir_y(force * 1.5 * knockbackMult, direction);
-		heightChange += heightForce;
-	} else {
-		hspeed += lengthdir_x(force * knockbackMult, direction);
-		vspeed += lengthdir_y(force * knockbackMult, direction);
-	}
-	
-	if(Health <= 0) {
-		if(SM.get_current_state() != "die") {
-			die();
-			
-			return true;
-		}
-	}
-	
-	return false;
+	// more stuff (inheriting)
 }
 
 die = function() {
 	SM.change("die");
+}
+
+meleeHitFunc = function(targetId, sourceId) {
+	if(irandom(10) == 0) {
+		targetId.image_blend = #ffb8b8;
+		targetId.allegiance = sourceId.allegiance;
+		
+	}
+	//targetId.image_blend = randomColor(0, 255, 0);
+}
+
+jumpMagicHitFunc = function(damageAOEDropOff, targetId) {
+	if(.5 + random(.5) < damageAOEDropOff) {
+		targetId.SM.change("frozen");
+	}
+}
+
+doJumpMagic = function() {
+	trailPart = global.partTrailChunk;
+	trailDuration = 55;
+	trailPartColor = #cfdfff;
+	
+	audio_play_sound(snd_iceSpellImpact, 0, 0);
+	script_AOEDamageHit(,,, 200, 10, 5,, 5, 200,,, jumpMagicHitFunc);
+	OWP_createPartExtColor(global.partThickHaze, x, y, 5, #bbffff,, 70, 0, 1);
+	part_type_speed(global.partStar, 2, 5, -.125, 0);
+	OWP_createPartExtColor(global.partStar, x, y, 20, #ccffff,, 20, 20, 5);
+	part_type_speed(global.partOverwrittenTrailer, 3, 5, 0, 0);
+	OWP_createPartExt(global.partOverwrittenTrailer, x, y, 12,, 0, 10, 1);
+}
+
+weaponControls = function() {
+	if(mouse_check_button(mb_left)) {
+		shotDelay--;
+		if(shotDelay <= 0) {
+			shotDelay = 60 / fireRate;
+			shootBullet();
+		}
+	} else if(mouse_check_button_released(mb_left)) {
+		shotDelay = 60 / fireRate;
+	}
+	
+	if(mouse_check_button_released(mb_right)) {
+		SM.change("melee",,, "basic");
+		//instance_create_depth(mouse_x, mouse_y, depth, obj_smiteBeam);
+	}
+	
+	if(keyboard_check_released(ord("G"))) {
+		repeat(1 + irandom(2)) {
+			script_createAttack(obj_grenade, x, y, directionAiming + irandom_range(-40, 40), height, random_range(1, 1.2), 5);
+		}
+	}
+	
+	if(keyboard_check_pressed(ord("M"))) {
+		mortaring = 1;
+		mortarXstart = mouse_x;
+		mortarYstart = mouse_y;
+	} else if(keyboard_check_released(ord("M"))) {
+		var _plane = instance_create_depth(0, 0, 0, obj_plane);
+		_plane.startRunX = mortarXstart;
+		_plane.startRunY = mortarYstart;
+		_plane.endRunX = mouse_x;
+		_plane.endRunY = mouse_y;
+		_plane.getRoute();
+		mortaring = 0;
+	}
 }

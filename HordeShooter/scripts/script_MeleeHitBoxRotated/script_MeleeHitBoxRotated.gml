@@ -7,6 +7,8 @@
 ///@param directionCheck          
 ///@param thickness
 ///@param length
+///@param heightSet The height of the attack in the game's "z" axis
+///@param heightRange The range of heights to hit from current height (vs targets)
 ///@param damage array that contains |dmgArr-blockable-absolute-statusInfo-status%Dec-itemResponsible|
 ///@param knockbackStrength The strength of pushback on whatever thing gets hit.
 ///@param knockbackDirection The direction of the pushback on the hit thing.
@@ -16,8 +18,8 @@
 ///@param targets This value is passed through to the collision scripts that game maker uses, so it can be keywords, objects, arrays, tile sets, ect. Direct transfer so whatever gm uses goes here
 ///@param {ARRAY} exclusions This is an array of white listed instances that if the hit id is contained will not hit
 #endregion
-function script_MeleeHitBoxRotated(allegianceOverride, startX, startY, directionCheck, thickness, length, damage, knockbackStrength, knockbackDirection, knockbackHeight, stun = -1, hitFunc = undefined, targets = obj_creature, exclusions = []){	
-	var _hitThings = script_CollisionRectangleRotated(startX, startY, directionCheck, thickness, length, true, 0, allegianceOverride, targets, exclusions); // get hits that match game values, agro, hitbox, ect, so this is an entirely filtered list besides attempt hit I suppose
+function script_MeleeHitBoxRotated(allegianceOverride, startX, startY, directionCheck, thickness, length, heightSet, heightRange, damage, knockbackStrength, knockbackDirection, knockbackHeight, stun = -1, hitFunc = undefined, targets = obj_creature, exclusions = []){	
+	var _hitThings = script_CollisionRectangleRotated(startX, startY, directionCheck, thickness, length, heightSet, heightRange, true, 0, allegianceOverride, targets, exclusions); // get hits that match game values, agro, hitbox, ect, so this is an entirely filtered list besides attempt hit I suppose
 	var _hits = []; // the net hits after attempt hit check
 	
 	for(var _i = array_length(_hitThings) - 1; _i >= 0; _i--) { // agro handled in collision script or no?

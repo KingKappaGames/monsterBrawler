@@ -239,11 +239,12 @@ part_type_orientation(_starMini, 0, 360, 3, 5, false);
 
 global.partRadialShimmer = part_type_create();
 var _radialShimmer = global.partRadialShimmer;
-part_type_life(_radialShimmer, 110, 130);
+part_type_life(_radialShimmer, 60, 60);
 part_type_sprite(_radialShimmer, spr_roundBeamShape, false, false, false);
-part_type_size(_radialShimmer, .2, .4, -.004, 0); // limiting factor hopefully
-part_type_speed(_radialShimmer, 1, 1.9, -.02, 0); // do override this when you want though, should be set per effect in game
+part_type_size(_radialShimmer, 1, 1.4, -.047, 0); // limiting factor hopefully
+part_type_speed(_radialShimmer, 2.7, 4.3, -.035, 0); // do override this when you want though, should be set per effect in game
 part_type_direction(_radialShimmer, 0, 360, 0, 0);
+part_type_orientation(_radialShimmer, 0, 0, 0, 0, true);
 
 global.partRoundTrail = part_type_create();
 var _roundTrail = global.partRoundTrail;
@@ -302,6 +303,15 @@ part_type_direction(_snowTrail, 0, 360, 0, 20);
 part_type_orientation(_snowTrail, 0, 360, 0, 0, false);
 part_type_alpha2(_snowTrail, 1, 0);
 
+global.partTrailChunk = part_type_create();
+var _chunkTrail = global.partTrailChunk;
+part_type_life(_chunkTrail, 80, 80);
+part_type_sprite(_chunkTrail, spr_chunk8, 0, 0, 0);
+part_type_size(_chunkTrail, 2.7, 3.3, -.042, 0);
+part_type_speed(_chunkTrail, 0.24, .5, -.005, 0);
+part_type_direction(_chunkTrail, 0, 360, 0, 20);
+part_type_orientation(_chunkTrail, 0, 360, 0, 0, false);
+
 global.partThickHaze = part_type_create();
 var _thickHaze = global.partThickHaze;
 part_type_life(_thickHaze, 90, 140);
@@ -321,12 +331,12 @@ part_type_gravity(_bloodSpurt, .02, 270);
 
 global.partRush = part_type_create();
 var _rushPart = global.partRush;
-part_type_life(_rushPart, 60, 72);
+part_type_life(_rushPart, 120, 120);
 part_type_shape(_rushPart, pt_shape_square);
-part_type_size(_rushPart, .8, 1.1, -.008, 0);
+part_type_size(_rushPart, .8, .9, -.007, 0);
 part_type_orientation(_rushPart, 0, 360, 0, 0, false);
 part_type_gravity(_rushPart, .04, 270);
-part_type_blend(_rushPart, true);
+part_type_blend(_rushPart, false);
 
 global.partItemGlimmer = part_type_create();
 var _itemGlimmer = global.partItemGlimmer;

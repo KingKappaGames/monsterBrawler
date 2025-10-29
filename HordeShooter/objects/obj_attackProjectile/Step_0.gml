@@ -9,12 +9,14 @@ for(var _i = 0; _i < _hitCount; _i++) {
 	
 	if(source != _hitId) {
 		if(script_judgeAllegiance(allegiance, _hitId.allegiance) < .5) {
-			hitEnemy(_hitId);
-			
-			_hitSomething = true;
-			
-			if(hitSingle) {
-				break;
+			if(abs(height - _hitId.height) < heightHitRange) {
+				hitEnemy(_hitId);
+				
+				_hitSomething = true;
+				
+				if(hitSingle) {
+					break;
+				}
 			}
 		}
 	}

@@ -2,6 +2,12 @@ SM.step();
 
 slowdown();
 
+if(trailDuration > 0) {
+	trailDuration--;
+	
+	OWP_createPart(trailPart, x + irandom_range(-6, 6), bbox_bottom + irandom_range(-6, 6) - height, 1, trailPartColor, -y);
+}
+
 hitFlash--;
 
 if(burning > 0) {

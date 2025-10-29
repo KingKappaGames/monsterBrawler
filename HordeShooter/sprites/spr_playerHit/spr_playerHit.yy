@@ -1,10 +1,10 @@
 {
   "$GMSprite":"",
   "%Name":"spr_playerHit",
-  "bboxMode":0,
+  "bboxMode":2,
   "bbox_bottom":63,
-  "bbox_left":14,
-  "bbox_right":54,
+  "bbox_left":24,
+  "bbox_right":50,
   "bbox_top":16,
   "collisionKind":1,
   "collisionTolerance":0,

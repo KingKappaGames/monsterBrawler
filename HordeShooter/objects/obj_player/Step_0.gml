@@ -29,7 +29,28 @@ if(keyboard_check_released(ord("R"))) {
 		
 		fireRate = 20;
 		shotDelay = 0;
-		damage = 1;
+		damage = 3;
 		shotSpeed = 1;
 	}
+}
+
+spread *= spreadDecay;
+recoil *= 1 - (1 - spreadDecay) * 5;
+if(spread < spreadMinimum) {
+	spread = spreadMinimum;
+}
+
+if(keyboard_check_released(vk_f1)) {
+	script_createPickup(mouse_x, mouse_y, obj_pickup);
+}
+
+if(keyboard_check_pressed(vk_alt)) {
+	script_spawnCreature(choose(obj_barbarian, obj_knight), 1 + irandom(10), mouse_x, mouse_y);
+}
+
+if(keyboard_check_pressed(vk_f7)) {
+	script_spawnCreature(obj_darkPriest, 1 + irandom(10), mouse_x, mouse_y);
+}
+if(keyboard_check_pressed(vk_f8)) {
+	script_spawnCreature(obj_priest, 1 + irandom(10), mouse_x, mouse_y);
 }

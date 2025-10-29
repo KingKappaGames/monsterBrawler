@@ -29,7 +29,7 @@ SM.add("attack", {
 		} else if(abs(stateTimer - round(stateTimerMax * .5)) == 0) {
 			if(instance_exists(agroId)) {
 				var _aimDir = point_direction(x, y, agroId.x, agroId.y);
-				script_createAttack(obj_grenade, agroId.x, agroId.y, 0, 0, 2,,, damage, knockback, knockbackHeight, 5);
+				script_createAttack(obj_grenade, agroId.x, agroId.y, 0, height, 0, 2,,, damage, knockback, knockbackHeight, 5);
 			}
 		}
     },
@@ -51,7 +51,7 @@ SM.add("attackRanged", {
 		} else if(abs(stateTimer - round(stateTimerMax * .5)) == 0) {
 			if(instance_exists(agroId)) {
 				var _aimDir = point_direction(x, y, agroId.x, agroId.y);
-				script_createAttack(obj_fireJet, x + lengthdir_x(attackCreateDist, _aimDir), y + lengthdir_y(attackCreateDist, _aimDir), _aimDir, 1.3, .8,,, damage, knockback, knockbackHeight, 5);
+				script_createAttack(obj_fireJet, x + lengthdir_x(attackCreateDist, _aimDir), y + lengthdir_y(attackCreateDist, _aimDir), _aimDir, height, 1.3, .8,,, damage, knockback, knockbackHeight, 5);
 			}
 		}
     },
