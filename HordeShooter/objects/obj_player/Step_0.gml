@@ -40,6 +40,10 @@ if(spread < spreadMinimum) {
 	spread = spreadMinimum;
 }
 
+if(keyboard_check_released(ord("H"))) {
+	script_createAttackRadiant(obj_radiantAttack, x, y, 0,, 10, 32, 110, .66, c_blue);
+}
+
 if(keyboard_check_released(vk_f1)) {
 	script_createPickup(mouse_x, mouse_y, obj_pickup);
 }

@@ -1,3 +1,5 @@
+global.timer++;
+
 if(keyboard_check_released(ord("O"))) {
 	autoSpawn = !autoSpawn;
 }

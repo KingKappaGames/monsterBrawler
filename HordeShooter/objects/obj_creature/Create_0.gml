@@ -132,6 +132,7 @@ SM.add("chase", {
 				if(agroId.Health <= 0) {
 					agroId = noone;
 				} else {
+					
 					var _dirMove = point_direction(x, y, agroId.x, agroId.y) + dsin(current_time * .041) * 30 + dsin(current_time * .067) * 21 - dsin(current_time * .137) * 18;
 					motion_add(_dirMove, moveSpeed);
 					
@@ -206,12 +207,13 @@ SM.add("chase", {
 					if(irandom(600) == 0) {
 						SM.change("jump");
 					} else {
-						determineAttack(); // sets state if done
-						
 						if(irandom(45) == 0) {
 							agroId = script_findAgroTarget();
+						} else {
+							determineAttack(); // sets state if done
 						}
 					}
+					
 				}
 			} else {
 				agroId = script_findAgroTarget();

@@ -4,6 +4,8 @@ audio_master_gain(.8); // why is it so loud
 
 global.manager = id;
 
+global.timer = 0;
+
 #macro grav .18
 
 autoSpawn = false;
