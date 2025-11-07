@@ -1,5 +1,5 @@
 {
-  "$GMSprite":"",
+  "$GMSprite":"v2",
   "%Name":"spr_playerIdle",
   "bboxMode":2,
   "bbox_bottom":62,
@@ -12,8 +12,8 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"1fa688ab-4ffe-4e7c-b0db-9393c48a1eab","name":"1fa688ab-4ffe-4e7c-b0db-9393c48a1eab","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"","%Name":"09319a75-a3e4-4c61-b437-ccbb9d6a23f2","name":"09319a75-a3e4-4c61-b437-ccbb9d6a23f2","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"1fa688ab-4ffe-4e7c-b0db-9393c48a1eab","name":"1fa688ab-4ffe-4e7c-b0db-9393c48a1eab","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"09319a75-a3e4-4c61-b437-ccbb9d6a23f2","name":"09319a75-a3e4-4c61-b437-ccbb9d6a23f2","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
@@ -32,7 +32,7 @@
   "origin":4,
   "parent":{
     "name":"player",
-    "path":"folders/Sprites/player.yy",
+    "path":"folders/Sprites/humanSpriteSets/player.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

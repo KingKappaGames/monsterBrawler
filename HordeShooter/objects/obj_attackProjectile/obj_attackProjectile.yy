@@ -10,8 +10,8 @@
   "name":"obj_attackProjectile",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"attacks",
+    "path":"folders/Objects/attacks.yy",
   },
   "parentObjectId":{
     "name":"obj_attack",

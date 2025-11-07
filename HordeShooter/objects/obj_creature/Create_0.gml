@@ -1,6 +1,7 @@
 HealthMax = 25;
 Health = HealthMax;
 
+meleeDamage = 5;
 damage = 1;
 knockback = 1;
 knockbackHeight = 1;
@@ -15,7 +16,7 @@ meleeAttackType = obj_attackMeleeSwing;
 
 hspeed = 0;
 vspeed = 0;
-speedDecay = .84;
+speedDecay = .8;
 speedDecayAir = .98;
 
 heightChange = 0;
@@ -23,7 +24,7 @@ height = 0;
 bounceHorizontalSpeedtMult = .8;
 bounceHeightMult = -.4;
 
-moveSpeed = .62;
+moveSpeed = .52;
 moveSpeedAir = .4;
 jumpSpeed = 6;
 knockbackMult = 1;
@@ -56,9 +57,22 @@ burning = 0;
 acidic = 0;
 frozen = 0; // state
 
+alwaysBurning = false;
+
 trailPart = -1;
 trailDuration = 0;
 trailPartColor = c_white;
+
+#region animations
+
+animIdle = spr_playerIdle;
+animRun = spr_swampMonsterRun;
+animHit = spr_playerHit;
+animJumpStart = spr_playerJumpStart;
+animRise = spr_playerJumpRise;
+animFall = spr_playerJumpFall;
+
+#endregion
 
 #region STATE MACHINE SET UP
 
@@ -69,20 +83,20 @@ SM = new SnowState("idle");
 
 SM.add("idle", {
     enter: function() {
-		sprite_index = spr_playerIdle;
+		sprite_index = animIdle;
 		image_index = 0;
 		image_speed = 2.5;
     },
     step: function() {
 		if(speed > 1) {
-			if(sprite_index != spr_playerRun) {
-				sprite_index = spr_playerRun;
+			if(sprite_index != animRun) {
+				sprite_index = animRun;
 				image_index = 0;
 				image_speed = 10;
 			}
 		} else {
-			if(sprite_index != spr_playerIdle) {
-				sprite_index = spr_playerIdle;
+			if(sprite_index != animIdle) {
+				sprite_index = animIdle;
 				image_index = 0;
 				image_speed = 2.5;
 			}
@@ -106,7 +120,7 @@ SM.add("idle", {
 
 SM.add("chase", {
     enter: function() {
-		sprite_index = spr_playerRun;
+		sprite_index = animRun;
 		image_index = 0;
 		image_speed = 10;
     },
@@ -189,7 +203,7 @@ SM.add("chase", {
 						directionFacing = 1;
 					}
 					
-					if(irandom(120) == 0) {
+					if(irandom(600) == 0) {
 						SM.change("jump");
 					} else {
 						determineAttack(); // sets state if done
@@ -224,7 +238,7 @@ SM.add("melee", {
 			
 			script_setEventTimer(duration);
 			
-			script_setAnimation(spr_playerHit, 0, 1, 14, true);
+			script_setAnimation(animHit, 0, 1, 14, true);
 			
 			directionFacing = x > agroId.x ? -1 : 1;
 		} else {
@@ -238,7 +252,7 @@ SM.add("melee", {
 		} else if(stateTimer == round(stateTimerMax * .5)) {
 			if(instance_exists(agroId)) {
 				var _attackDir = point_direction(x, y, agroId.x, agroId.y);
-				script_createMeleeAttack(meleeAttackType, x + lengthdir_x(20, _attackDir), y + lengthdir_y(20, _attackDir), _attackDir, height,,,, irandom_range(4, 6));
+				script_createMeleeAttack(meleeAttackType, x + lengthdir_x(20, _attackDir), y + lengthdir_y(20, _attackDir), _attackDir, height,,,, irandom_range(meleeDamage * .8, meleeDamage * 1.2));
 			} else {
 				SM.change("idle");
 			}
@@ -302,7 +316,7 @@ SM.add("die", {
     enter: function(duration = 60) {
 		//die animation
 		script_setEventTimer(duration);
-		sprite_index = spr_playerIdle;
+		sprite_index = animIdle;
 		image_index = 0;
 		image_speed = 0;
 		image_angle = 180 + 90 * directionFacing;

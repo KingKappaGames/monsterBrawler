@@ -10,8 +10,8 @@
   "name":"obj_priest",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"creatureTree",
+    "path":"folders/Objects/creatureTree.yy",
   },
   "parentObjectId":{
     "name":"obj_creature",

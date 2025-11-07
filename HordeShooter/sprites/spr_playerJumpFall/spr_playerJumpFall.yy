@@ -1,5 +1,5 @@
 {
-  "$GMSprite":"",
+  "$GMSprite":"v2",
   "%Name":"spr_playerJumpFall",
   "bboxMode":2,
   "bbox_bottom":64,
@@ -12,8 +12,8 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"62ff956b-0130-4581-8e9a-5e772530ef24","name":"62ff956b-0130-4581-8e9a-5e772530ef24","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"","%Name":"5b29fe0e-1b7d-40a8-9237-c135e619659d","name":"5b29fe0e-1b7d-40a8-9237-c135e619659d","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"62ff956b-0130-4581-8e9a-5e772530ef24","name":"62ff956b-0130-4581-8e9a-5e772530ef24","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"5b29fe0e-1b7d-40a8-9237-c135e619659d","name":"5b29fe0e-1b7d-40a8-9237-c135e619659d","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
@@ -32,7 +32,7 @@
   "origin":4,
   "parent":{
     "name":"player",
-    "path":"folders/Sprites/player.yy",
+    "path":"folders/Sprites/humanSpriteSets/player.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

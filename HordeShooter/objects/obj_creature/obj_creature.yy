@@ -12,8 +12,8 @@
   "name":"obj_creature",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"creatureTree",
+    "path":"folders/Objects/creatureTree.yy",
   },
   "parentObjectId":null,
   "persistent":false,

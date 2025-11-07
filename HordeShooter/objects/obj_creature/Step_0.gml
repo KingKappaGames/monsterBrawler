@@ -10,11 +10,11 @@ if(trailDuration > 0) {
 
 hitFlash--;
 
-if(burning > 0) {
+if(burning > 0 || alwaysBurning) {
 	if(irandom(5) == 0) {
 		OWP_createPart(global.partFlamePuffs, x + irandom_range(-sprite_width * .4, sprite_width * .4), y - height - sprite_height * .6 + irandom_range(-sprite_height * .4, sprite_height * .4), 1, c_orange, -y - 30);
 		
-		if(irandom(4) == 0) {
+		if(!alwaysBurning && irandom(4) == 0) {
 			takeDamage(1, 0, 0, 0, 0,, false);
 		}
 	}

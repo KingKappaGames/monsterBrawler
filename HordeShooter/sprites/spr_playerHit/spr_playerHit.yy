@@ -1,5 +1,5 @@
 {
-  "$GMSprite":"",
+  "$GMSprite":"v2",
   "%Name":"spr_playerHit",
   "bboxMode":2,
   "bbox_bottom":63,
@@ -12,11 +12,11 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"0b64f859-9b48-4bdf-b797-fe898ecd6e87","name":"0b64f859-9b48-4bdf-b797-fe898ecd6e87","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"","%Name":"1685aec9-7662-4d15-96ed-2e4702df056d","name":"1685aec9-7662-4d15-96ed-2e4702df056d","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"","%Name":"e9677336-f286-4f2a-b97b-75d9d358194a","name":"e9677336-f286-4f2a-b97b-75d9d358194a","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"","%Name":"bd7c0bbe-8fd1-45ea-bece-12597fbc7b54","name":"bd7c0bbe-8fd1-45ea-bece-12597fbc7b54","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"","%Name":"7ecaac01-a2a1-4c6f-912d-5abdbd0ff05c","name":"7ecaac01-a2a1-4c6f-912d-5abdbd0ff05c","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"0b64f859-9b48-4bdf-b797-fe898ecd6e87","name":"0b64f859-9b48-4bdf-b797-fe898ecd6e87","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"1685aec9-7662-4d15-96ed-2e4702df056d","name":"1685aec9-7662-4d15-96ed-2e4702df056d","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"e9677336-f286-4f2a-b97b-75d9d358194a","name":"e9677336-f286-4f2a-b97b-75d9d358194a","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"bd7c0bbe-8fd1-45ea-bece-12597fbc7b54","name":"bd7c0bbe-8fd1-45ea-bece-12597fbc7b54","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"7ecaac01-a2a1-4c6f-912d-5abdbd0ff05c","name":"7ecaac01-a2a1-4c6f-912d-5abdbd0ff05c","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
@@ -35,7 +35,7 @@
   "origin":4,
   "parent":{
     "name":"player",
-    "path":"folders/Sprites/player.yy",
+    "path":"folders/Sprites/humanSpriteSets/player.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

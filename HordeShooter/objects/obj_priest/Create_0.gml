@@ -2,16 +2,28 @@ event_inherited();
 
 allegiance = E_allegiance.knight;
 
-HealthMax = 60;
+HealthMax = 65;
 poiseMax = 500;
 
 attackRange = 150;
 
 damage = 5;
+meleeDamage = 10;
 knockback = 4;
 
-sprite_index = spr_rager;
-image_blend = c_blue;
+#region animations
+
+animIdle = spr_monkIdle;
+animRun = spr_monkRun;
+animHit = spr_monkHit;
+animJumpStart = spr_monkJumpStart;
+animRise = spr_monkJumpRise;
+animFall = spr_monkJumpFall;
+
+sprite_index = animIdle;
+image_blend = #94daff;
+
+#endregion
 
 SM.add("attackRanged", {
     enter: function(duration = 30) {

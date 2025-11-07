@@ -11,8 +11,8 @@
   "name":"obj_mother",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"deprecated",
+    "path":"folders/Objects/deprecated.yy",
   },
   "parentObjectId":null,
   "persistent":false,

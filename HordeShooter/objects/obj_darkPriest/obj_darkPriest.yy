@@ -10,8 +10,8 @@
   "name":"obj_darkPriest",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"creatureTree",
+    "path":"folders/Objects/creatureTree.yy",
   },
   "parentObjectId":{
     "name":"obj_creature",
@@ -34,10 +34,7 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":{
-    "name":"spr_darkOne",
-    "path":"sprites/spr_darkOne/spr_darkOne.yy",
-  },
+  "spriteId":null,
   "spriteMaskId":null,
   "visible":true,
 }

@@ -1,11 +1,15 @@
 //draw_circle(x, y, 10, true)
-draw_ellipse_color(x - sprite_width * .3, y + 15, x + sprite_width * .3, y + 25, #111111, #111111, false); // shadow
+//draw_ellipse_color(x - sprite_width * .3, y + 15, x + sprite_width * .3, y + 25, #111111, #111111, false); // shadow
 
 if(hitFlash > 0) {
 	shader_set(shd_hitFlash);
 } else {
 	shader_set(shd_brightness);
-	shader_set_uniform_f(shader_get_uniform(shd_brightness, "strength"), -min(.8, burning * .02));
+	if(alwaysBurning) {
+		shader_set_uniform_f(shader_get_uniform(shd_brightness, "strength"), 0);
+	} else {
+		shader_set_uniform_f(shader_get_uniform(shd_brightness, "strength"), -min(.8, burning * .02));
+	}
 }
 
 draw_sprite_ext(sprite_index, image_index, x, y - height, directionFacing * image_xscale, image_yscale, image_angle, image_blend, image_alpha);

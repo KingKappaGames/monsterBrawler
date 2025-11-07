@@ -9,12 +9,23 @@ attackRange = 120;
 attackRangeRangedMin = 150;
 attackRangeRangedMax = 240;
 
+meleeDamage = 5;
 damage = 2;
 knockback = 1.5;
 knockbackHeight = 1.5;
 
-sprite_index = spr_darkOne;
-image_blend = c_black;
+#region animation
+
+animIdle = spr_monkIdle;
+animRun = spr_monkRun;
+animHit = spr_monkHit;
+animJumpStart = spr_monkJumpStart;
+animRise = spr_monkJumpRise;
+animFall = spr_monkJumpFall;
+
+sprite_index = animIdle;
+image_blend = #222222;
+#endregion
 
 SM.add("attack", {
     enter: function(duration = 45) {

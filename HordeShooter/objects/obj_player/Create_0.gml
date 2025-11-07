@@ -27,8 +27,21 @@ directionFacing = choose(-1, 1);
 poiseMax = 80;
 poise = poiseMax;
 
+meleeDamage = 5;
+
 allegiance = E_allegiance.player;
-sprite_index = spr_playerIdle;
+
+#region animations
+
+animIdle = spr_playerIdle;
+animRun = spr_playerRun;
+animHit = spr_playerHit;
+animJumpStart = spr_playerJumpStart;
+animRise = spr_playerJumpRise;
+animFall = spr_playerJumpFall;
+
+sprite_index = animIdle;
+#endregion
 
 deathSound = snd_crunch;
 
@@ -73,7 +86,7 @@ stateTimerMax = 0;
 
 SM.add("idle", {
     enter: function() {
-		sprite_index = spr_playerIdle;
+		sprite_index = animIdle;
 		image_index = 0;
 		image_speed = 2.5;
     },
@@ -84,14 +97,14 @@ SM.add("idle", {
 			movementControls();
 			
 			if(speed > 1) {
-				if(sprite_index != spr_playerRun) {
-					sprite_index = spr_playerRun;
+				if(sprite_index != animRun) {
+					sprite_index = animRun;
 					image_index = 0;
 					image_speed = 10;
 				}
 			} else {
-				if(sprite_index != spr_playerIdle) {
-					sprite_index = spr_playerIdle;
+				if(sprite_index != animIdle) {
+					sprite_index = animIdle;
 					image_index = 0;
 					image_speed = 2.5;
 				}
@@ -113,7 +126,7 @@ SM.add("die", {
     enter: function(duration = 120) {
 		//die animation
 		script_setEventTimer(duration);
-		sprite_index = spr_playerIdle;
+		sprite_index = animIdle;
 		image_index = 0;
 		image_speed = 0;
 		image_angle = 180 + 90 * directionFacing;
@@ -137,7 +150,7 @@ SM.add("die", {
 SM.add("jump", {
     enter: function() {
 		//jump animation
-		script_setAnimation(spr_playerJumpStart, 0, 1, 5, true);
+		script_setAnimation(animJumpStart, 0, 1, 5, true);
 		script_setEventTimer(5);
     },
     step: function() {
@@ -164,7 +177,7 @@ SM.add("jump", {
 
 SM.add("float", {
     enter: function() {
-		script_setAnimation(spr_playerJumpRise, 0, 3);
+		script_setAnimation(animJumpStart, 0, 3);
     },
     step: function() {
 		var _heightChangePrev = heightChange;
@@ -172,7 +185,7 @@ SM.add("float", {
 		heightChange -= grav;
 		
 		if(_heightChangePrev > 0 && heightChange <= 0) {
-			script_setAnimation(spr_playerJumpFall, 0, 3);
+			script_setAnimation(animFall, 0, 3);
 		}
 		
 		movementControls();
@@ -198,7 +211,7 @@ SM.add("melee", {
 		
 		script_setEventTimer(duration);
 		
-		script_setAnimation(spr_playerHit, 0, 1, 14, true);
+		script_setAnimation(animHit, 0, 1, 14, true);
 		
 		directionFacing = x > mouse_x ? -1 : 1;
     },
@@ -212,7 +225,7 @@ SM.add("melee", {
 			}
 		} else if(stateTimer == round(stateTimerMax * .5)) {
 			var _mouseDir = point_direction(x, y, mouse_x, mouse_y);
-			script_createMeleeAttack(meleeAttackType, x + lengthdir_x(20, _mouseDir), y + lengthdir_y(20, _mouseDir), _mouseDir, height,,,, irandom_range(4, 6),,,, meleeHitFunc);
+			script_createMeleeAttack(meleeAttackType, x + lengthdir_x(20, _mouseDir), y + lengthdir_y(20, _mouseDir), _mouseDir, height,,,, irandom_range(meleeDamage * .8, meleeDamage * 1.2),,,, meleeHitFunc);
 		}
     },
 	leave: function() {

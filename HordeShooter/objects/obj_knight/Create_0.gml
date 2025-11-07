@@ -3,6 +3,18 @@ event_inherited();
 allegiance = E_allegiance.knight;
 
 HealthMax = 24;
+meleeDamage = 5;
 
-sprite_index = spr_playerIdle;
-image_blend = c_ltgray;
+#region animations
+
+animIdle = spr_knightIdle;
+animRun = spr_knightRun;
+animHit = spr_knightHi;
+animJumpStart = spr_knightJumpStart;
+animRise = spr_knightJumpRise;
+animFall = spr_knightJumpFall;
+
+sprite_index = animIdle;
+image_blend = #dddddd;
+
+#endregion
