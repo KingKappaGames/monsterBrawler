@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"script_setSkeletonAnimation",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"script_setSkeletonAnimation",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

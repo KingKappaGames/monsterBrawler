@@ -15,15 +15,8 @@ knockback = 1.5;
 knockbackHeight = 1.5;
 
 #region animation
+useSkeletonAnimations = true;
 
-animIdle = spr_monkIdle;
-animRun = spr_monkRun;
-animHit = spr_monkHit;
-animJumpStart = spr_monkJumpStart;
-animRise = spr_monkJumpRise;
-animFall = spr_monkJumpFall;
-
-sprite_index = animIdle;
 image_blend = #222222;
 #endregion
 

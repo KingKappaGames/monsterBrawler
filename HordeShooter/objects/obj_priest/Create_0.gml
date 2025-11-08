@@ -16,15 +16,8 @@ attackRangeRangedMax = 180;
 attackRangeRangedMin = 110;
 
 #region animations
+useSkeletonAnimations = true;
 
-animIdle = spr_monkIdle;
-animRun = spr_monkRun;
-animHit = spr_monkHit;
-animJumpStart = spr_monkJumpStart;
-animRise = spr_monkJumpRise;
-animFall = spr_monkJumpFall;
-
-sprite_index = animIdle;
 image_blend = #94daff;
 
 #endregion

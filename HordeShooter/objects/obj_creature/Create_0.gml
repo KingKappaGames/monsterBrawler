@@ -44,9 +44,6 @@ poiseMax = 80;
 poise = poiseMax;
 
 allegiance = choose(E_allegiance.barbarian, E_allegiance.knight);
-if(allegiance == E_allegiance.barbarian) {
-	sprite_index = Sprite3;
-}
 
 agroId = noone;
 agroRange = 900;
@@ -64,14 +61,67 @@ trailDuration = 0;
 trailPartColor = c_white;
 
 #region animations
-
-animIdle = spr_playerIdle;
-animRun = spr_swampMonsterRun;
-animHit = spr_playerHit;
-animJumpStart = spr_playerJumpStart;
-animRise = spr_playerJumpRise;
-animFall = spr_playerJumpFall;
-
+	useSkeletonAnimations = false;
+	
+	skeletonAnimation = E_animation.idle;
+	
+	animIdle = E_animation.idle;
+	animRun = E_animation.run;
+	animHit = E_animation.hit;
+	animJumpStart = E_animation.jumpBegin; // So... this is the default value of these common good variables, the way I see it is that all creatures will override these values IF they are actual animation creatures, if not then they keep the default skeleton animation values... Maybe this is stupid, fix if stupid
+	animRise = E_animation.rise;
+	animFall = E_animation.fall;
+	
+	bodySurf = -1;
+	
+	getBodySurf = function() {
+		if(!surface_exists(bodySurf)) {
+			bodySurf = surface_create(128, 128); // is 128 always the size?
+		}
+		
+		return bodySurf;
+	}
+	
+	skeletonData = [
+		[ // frames
+			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsIdle, 0], [spr_flameMonsterHands, 0] ], // head, body, leg, hands (4 pieces for now)
+			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsIdle, 1], [spr_flameMonsterHands, 0] ],
+		],
+		
+		[ // frames
+			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsRun, 0], [spr_flameMonsterHands, 0] ],
+			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsRun, 1], [spr_flameMonsterHands, 0] ],
+			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsRun, 2], [spr_flameMonsterHands, 0] ],
+			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsRun, 3], [spr_flameMonsterHands, 0] ],
+		],
+		
+		[ // frames
+			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsHit, 0], [spr_flameMonsterHands, 0] ],
+			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsHit, 1], [spr_flameMonsterHands, 0] ],
+			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsHit, 2], [spr_flameMonsterHands, 0] ],
+			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsHit, 3], [spr_flameMonsterHands, 0] ],
+			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsHit, 4], [spr_flameMonsterHands, 0] ],
+		],
+		
+		[ // frames
+			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsJumpStart, 0], [spr_flameMonsterHands, 0] ],
+			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsJumpStart, 1], [spr_flameMonsterHands, 0] ],
+			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsJumpStart, 2], [spr_flameMonsterHands, 0] ],
+			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsJumpStart, 3], [spr_flameMonsterHands, 0] ],
+		],
+		
+		[ // frames
+			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsJumpRise, 0], [spr_flameMonsterHands, 0] ],
+			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsJumpRise, 1], [spr_flameMonsterHands, 0] ],
+		],
+		
+		[ // frames
+			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsJumpFall, 0], [spr_flameMonsterHands, 0] ],
+			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsJumpFall, 1], [spr_flameMonsterHands, 0] ],
+		]
+	]
+	
+	//perhaps create set of x/y for just the 4 body parts to set to that they can be lerped or accelerated towards goals (and away from forces like attacks) but eh
 #endregion
 
 #region STATE MACHINE SET UP
@@ -83,22 +133,16 @@ SM = new SnowState("idle");
 
 SM.add("idle", {
     enter: function() {
-		sprite_index = animIdle;
-		image_index = 0;
-		image_speed = 2.5;
+		(useSkeletonAnimations ? script_setSkeletonAnimation : script_setAnimation)(animIdle, 0, 2.5);
     },
     step: function() {
 		if(speed > 1) {
-			if(sprite_index != animRun) {
-				sprite_index = animRun;
-				image_index = 0;
-				image_speed = 10;
+			if((useSkeletonAnimations ? skeletonAnimation : sprite_index) != animRun) {
+				(useSkeletonAnimations ? script_setSkeletonAnimation : script_setAnimation)(animRun, 0, 10);
 			}
 		} else {
-			if(sprite_index != animIdle) {
-				sprite_index = animIdle;
-				image_index = 0;
-				image_speed = 2.5;
+			if((useSkeletonAnimations ? skeletonAnimation : sprite_index) != animIdle) {
+				(useSkeletonAnimations ? script_setSkeletonAnimation : script_setAnimation)(animIdle, 0, 2.5);
 			}
 		}
 		
@@ -120,9 +164,7 @@ SM.add("idle", {
 
 SM.add("chase", {
     enter: function() {
-		sprite_index = animRun;
-		image_index = 0;
-		image_speed = 10;
+		(useSkeletonAnimations ? script_setSkeletonAnimation : script_setAnimation)(animRun, 0, 10);
     },
     step: function() {
 		if(Health <= 0) {
@@ -240,7 +282,8 @@ SM.add("melee", {
 			
 			script_setEventTimer(duration);
 			
-			script_setAnimation(animHit, 0, 1, 14, true);
+			
+			(useSkeletonAnimations ? script_setSkeletonAnimation : script_setAnimation)(animHit, 0, 1, 14, true);
 			
 			directionFacing = x > agroId.x ? -1 : 1;
 		} else {
@@ -318,9 +361,7 @@ SM.add("die", {
     enter: function(duration = 60) {
 		//die animation
 		script_setEventTimer(duration);
-		sprite_index = animIdle;
-		image_index = 0;
-		image_speed = 0;
+		(useSkeletonAnimations ? script_setSkeletonAnimation : script_setAnimation)(animIdle, 0, 0);
 		image_angle = 180 + 90 * directionFacing;
     },
     step: function() {
