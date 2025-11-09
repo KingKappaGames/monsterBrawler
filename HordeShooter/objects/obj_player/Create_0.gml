@@ -161,7 +161,7 @@ SM.add("jump", {
 
 SM.add("float", {
     enter: function() {
-		(useSkeletonAnimations ? script_setSkeletonAnimation : script_setAnimation)(animJumpStart, 0, 3);
+		(useSkeletonAnimations ? script_setSkeletonAnimation : script_setAnimation)(animRise, 0, 3);
     },
     step: function() {
 		var _heightChangePrev = heightChange;
@@ -239,7 +239,7 @@ shootBullet = function() {
 		_bulletType = obj_fireJet;
 		_spawnArea = 0;
 	} else if(weaponType == 4) {
-		_bulletType = obj_iceBolt;
+		_bulletType = obj_starBolt;
 		_spawnArea = 0;
 	}
 	
@@ -320,25 +320,23 @@ doJumpMagic = function() {
 }
 
 weaponControls = function() {
-	if(mouse_check_button(mb_left)) {
+	if(mouse_check_button(mb_right)) {
 		shotDelay--;
 		if(shotDelay <= 0) {
 			shotDelay = 60 / fireRate;
 			shootBullet();
 		}
-	} else if(mouse_check_button_released(mb_left)) {
+	} else if(mouse_check_button_released(mb_right)) {
 		shotDelay = 60 / fireRate;
 	}
 	
-	if(mouse_check_button_released(mb_right)) {
+	if(mouse_check_button_released(mb_left)) {
 		SM.change("melee",,, "basic");
 		//instance_create_depth(mouse_x, mouse_y, depth, obj_smiteBeam);
 	}
 	
-	if(keyboard_check_released(ord("G"))) {
-		repeat(1 + irandom(2)) {
-			script_createAttack(obj_grenade, x, y, directionAiming + irandom_range(-40, 40), height, random_range(1, 1.2), 5);
-		}
+	if(keyboard_check_released(ord("J"))) {
+		
 	}
 	
 	if(keyboard_check_pressed(ord("M"))) {

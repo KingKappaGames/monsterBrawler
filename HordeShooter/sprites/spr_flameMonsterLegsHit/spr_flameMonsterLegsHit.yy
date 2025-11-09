@@ -30,7 +30,7 @@
   "origin":4,
   "parent":{
     "name":"flame monster pieces",
-    "path":"folders/Sprites/humanSpriteSets/flame monster/flame monster pieces.yy",
+    "path":"folders/Sprites/humanSpriteSets/bodyPieces/flame monster pieces.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

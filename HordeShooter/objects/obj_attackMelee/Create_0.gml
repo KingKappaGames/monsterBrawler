@@ -12,3 +12,5 @@ hitFunc = undefined;
 timer = 0;
 
 hasHitSomething = false;
+
+verticalFlip = 1; // like directionFlip but for vertical

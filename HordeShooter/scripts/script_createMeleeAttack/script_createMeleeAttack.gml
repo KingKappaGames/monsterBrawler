@@ -21,6 +21,10 @@ function script_createMeleeAttack(type, xx, yy, directionSet, heightSet = height
 		image_speed = image_number / (durationMax / 60);
 		height = heightSet;
 		
+		if(directionSet > 90 && directionSet < 270) {
+			verticalFlip = -1;
+		}
+		
 		damage *= damageMult;
 		stun *= stunMult;
 		knockback *= knockbackMult;

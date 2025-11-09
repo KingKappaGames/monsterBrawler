@@ -20,7 +20,7 @@ global.cameraScale = .5;
 
 global.animations = [spr_refIdle, spr_refRun, spr_refHit, spr_refJumpStart, spr_refJumpRise, spr_refJumpFall];
 
-#macro bodyPartCount 4
+#macro bodyPartCount 6
 
 enum E_animation {
 	idle = 0,
@@ -33,40 +33,40 @@ enum E_animation {
 
 global.skeletonRigData = [
 	[ // frames
-		[ [0, 0, 360], [0, 0, 360], [0, 0, 360], [0, 0, 360] ], // head, body, leg, hands (4 pieces for now)
-		[ [0, 0, 360], [0, 0, 360], [0, 0, 360], [0, 0, 360] ],
+		[ [13, 0, 40], [13, 0, 0], [-15, 0, 0], [1, -18, -3], [0, -1, 0], [0, -18, 360] ],
+		[ [13, 1, 30], [13, 1, 0], [-14, 2, 0], [1, -17, 3], [0, 0, 0], [0, -18, 360] ],
 	],
 	
-	[ // frames
-		[ [0, 0, 360], [0, 0, 360], [0, 0, 360], [0, 0, 360] ],
-		[ [0, 0, 360], [0, 0, 360], [0, 0, 360], [0, 0, 360] ],
-		[ [0, 0, 360], [0, 0, 360], [0, 0, 360], [0, 0, 360] ],
-		[ [0, 0, 360], [0, 0, 360], [0, 0, 360], [0, 0, 360] ],
-	],
-	
-	[ // frames
-		[ [0, 0, 360], [0, 0, 360], [0, 0, 360], [0, 0, 360] ],
-		[ [0, 0, 360], [0, 0, 360], [0, 0, 360], [0, 0, 360] ],
-		[ [0, 0, 360], [0, 0, 360], [0, 0, 360], [0, 0, 360] ],
-		[ [0, 0, 360], [0, 0, 360], [0, 0, 360], [0, 0, 360] ],
-		[ [0, 0, 360], [0, 0, 360], [0, 0, 360], [0, 0, 360] ],
-	],
-	
-	[ // frames
-		[ [0, 0, 360], [0, 0, 360], [0, 0, 360], [0, 0, 360] ],
-		[ [0, 0, 360], [0, 0, 360], [0, 0, 360], [0, 0, 360] ],
-		[ [0, 0, 360], [0, 0, 360], [0, 0, 360], [0, 0, 360] ],
-		[ [0, 0, 360], [0, 0, 360], [0, 0, 360], [0, 0, 360] ],
-	],
-	
-	[ // frames
-		[ [0, 0, 360], [0, 0, 360], [0, 0, 360], [0, 0, 360] ],
-		[ [0, 0, 360], [0, 0, 360], [0, 0, 360], [0, 0, 360] ],
-	],
-	
-	[ // frames
-		[ [0, 0, 360], [0, 0, 360], [0, 0, 360], [0, 0, 360] ],
-		[ [0, 0, 360], [0, 0, 360], [0, 0, 360], [0, 0, 360] ],
+	[ // frames        
+		[ [13, 0, 65], [13, 0, 0], [-10, -1, 0], [2, -17, 3], [1, 0, 360], [0, -18, 360] ],
+		[ [13, 1, 63], [13, 1, 0], [-10, 1, 0], [2, -16, -2], [1, 1, 360], [0, -18, 360] ],
+		[ [13, 3, 60], [13, 2, 0], [-10, 3, 0], [2, -15, 3], [1, 2, 360], [0, -18, 360] ],
+		[ [13, 1, 63], [13, 1, 0], [-10, 2, 0], [2, -17, -2], [1, 0, 360], [0, -18, 360] ],
+	],                                    
+	                                      
+	[ // frames                           
+		[ [12, -14, 140], [12, -14, 0], [-15, -2, 0], [0, -17, 360], [0, 0, 360], [0, -18, 360] ],
+		[ [23, -10, 85], [23, -10, 0], [-17, -6, 0], [6, -16, 360], [1, 1, 360], [0, -18, 360] ],
+		[ [22, 5, 25], [22, 5, 0], [-22, -10, 0], [8, -14, 360], [2, 1, 360], [0, -18, 360] ],
+		[ [17, 8, -25], [17, 8, 0], [-19, -4, 0], [6, -16, 360], [1, 0, 360], [0, -18, 360] ],
+		[ [14, 3, -75], [14, 3, 0], [-15, -2, 0], [0, -17, 360], [0, 0, 360], [0, -18, 360] ],
+	],                                    
+	                                      
+	[ // frames                           
+		[ [17, 3, 60], [17, 3, 0], [-12, 0, 0], [1, -16, 360], [0, 0, 360], [0, -18, 360] ],
+		[ [17, 0, 40], [17, 0, 0], [-11, 0, 0], [2, -15, 360], [1, 1, 360], [0, -18, 360] ],
+		[ [17, -6, 10], [17, -6, 0], [-9, 0, 0], [3, -14, 360], [2, 2, 360], [0, -18, 360] ],
+		[ [17, -11, 20], [17, -11, 0], [-6, 0, 0], [2, -15, 360], [1, 1, 360], [0, -18, 360] ],
+	],                                   
+	                                     
+	[ // frames                          
+		[ [16, -12, 30], [16, -12, 0], [-14, -12, 0], [2, -17, 360], [1, 0, 360], [0, -18, 360] ],
+		[ [18, -13, 45], [18, -13, 0], [-15, -12, 0], [2, -17, 360], [1, 0, 360], [0, -18, 360] ],
+	],                                   
+	                                     
+	[ // frames                          
+		[ [17, -14, 70], [17, -14, 0], [-16, -16, 0], [2, -17, 360], [1, 0, 360], [0, -18, 360] ],
+		[ [17, -14, 80], [17, -14, 0], [-15, -16, 0], [2, -17, 360], [1, 0, 360], [0, -18, 360] ],
 	]
 ]
 
@@ -342,6 +342,16 @@ part_type_direction(_thickTrail, 0, 360, 0, 0);
 part_type_orientation(_thickTrail, 0, 360, 0, 0, false);
 part_type_gravity(_thickTrail, -.03, 270);
 
+global.partThickTrailMini = part_type_create();
+var _thickTrailMini = global.partThickTrailMini;
+part_type_life(_thickTrailMini, 50, 70);
+part_type_shape(_thickTrailMini, pt_shape_square);
+part_type_size(_thickTrailMini, .1, .2, -.005, 0);
+part_type_speed(_thickTrailMini, 0.0, .2, -.002, 0);
+part_type_direction(_thickTrailMini, 0, 360, 0, 0);
+part_type_orientation(_thickTrailMini, 0, 360, 0, 0, false);
+part_type_gravity(_thickTrailMini, -.03, 270);
+
 global.partFlamePuffs = part_type_create();
 var _firePuff = global.partFlamePuffs;
 part_type_life(_firePuff, 40, 40);
@@ -404,6 +414,19 @@ part_type_size(_itemGlimmer, .6, .9, -.004, 0);
 part_type_speed(_itemGlimmer, 0.2, .4, -.001, 0);
 part_type_direction(_itemGlimmer, 0, 360, 0, 0);
 part_type_gravity(_itemGlimmer, -.003, 270);
+
+global.basicSmoothTrail = part_type_create(); // basic white, size and alpha fade trail
+var _smoothTrail = global.basicSmoothTrail;
+part_type_life(_smoothTrail, 28, 28);
+part_type_shape(_smoothTrail, pt_shape_disk);
+part_type_size_x(_smoothTrail, .3, .3, 0, 0);
+part_type_size_y(_smoothTrail, .2, .2, -.01, 0);
+part_type_gravity(_smoothTrail, .0, 90);
+part_type_speed(_smoothTrail, 0, 0, 0, 0);
+part_type_direction(_smoothTrail, 0, 360, 0, 0);
+part_type_orientation(_smoothTrail, 0, 360, 0, 0, 0);
+part_type_color1(_smoothTrail, #ffffff);
+part_type_alpha3(_smoothTrail, 1, 1, 0);
 
 #endregion
 

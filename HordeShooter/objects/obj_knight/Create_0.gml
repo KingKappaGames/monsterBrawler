@@ -8,6 +8,6 @@ meleeDamage = 5;
 #region animations
 useSkeletonAnimations = true;
 
-image_blend = #dddddd;
+image_blend = #9999ff;
 
 #endregion

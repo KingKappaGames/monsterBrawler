@@ -1,5 +1,16 @@
 depth = -y;
 
+if(homingDuration > 0) {
+	homingDuration--;
+	
+	if(instance_exists(homingTargetId)) {
+		var _directionChange = angle_difference(point_direction(x, y, homingTargetId.x, homingTargetId.y), direction) * .02 * homingStrengthMult;
+		direction += _directionChange;
+	} else {
+		homingTargetId = script_findAgroTarget(source, homingRange, false, obj_creature, allegiance, x + hspeed * 20, y + vspeed * 20);
+	}
+}
+
 var _hitCount = collision_circle_list(x, y, hitRadius, obj_creature, false, false, hitList, false);
 
 var _hitId;

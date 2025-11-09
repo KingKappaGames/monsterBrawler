@@ -11,5 +11,5 @@ hitFunc = undefined;
 
 damage = 1;
 knockback = 4;
-knockbackHeight = 4;
-stun = 35;
+knockbackHeight = 5;
+stun = 50;

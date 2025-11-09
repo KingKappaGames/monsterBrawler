@@ -81,44 +81,33 @@ trailPartColor = c_white;
 		
 		return bodySurf;
 	}
-	
+	 
+	skeletonBasicItem = choose(spr_swordFantasy, spr_swordBranch, spr_swordBlackPoker, spr_swordIce);
+	skeletonBasicHandRightSprite = spr_flameMonsterHandRight;
+	skeletonBasicHandLeftSprite = spr_flameMonsterHandRight;
+	skeletonBasicHeadSprite = spr_flameMonsterHead;
+	skeletonBasicBodySprite = spr_flameMonsterBody;
+
 	skeletonData = [
-		[ // frames
-			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsIdle, 0], [spr_flameMonsterHands, 0] ], // head, body, leg, hands (4 pieces for now)
-			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsIdle, 1], [spr_flameMonsterHands, 0] ],
-		],
-		
-		[ // frames
-			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsRun, 0], [spr_flameMonsterHands, 0] ],
-			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsRun, 1], [spr_flameMonsterHands, 0] ],
-			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsRun, 2], [spr_flameMonsterHands, 0] ],
-			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsRun, 3], [spr_flameMonsterHands, 0] ],
-		],
-		
-		[ // frames
-			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsHit, 0], [spr_flameMonsterHands, 0] ],
-			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsHit, 1], [spr_flameMonsterHands, 0] ],
-			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsHit, 2], [spr_flameMonsterHands, 0] ],
-			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsHit, 3], [spr_flameMonsterHands, 0] ],
-			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsHit, 4], [spr_flameMonsterHands, 0] ],
-		],
-		
-		[ // frames
-			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsJumpStart, 0], [spr_flameMonsterHands, 0] ],
-			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsJumpStart, 1], [spr_flameMonsterHands, 0] ],
-			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsJumpStart, 2], [spr_flameMonsterHands, 0] ],
-			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsJumpStart, 3], [spr_flameMonsterHands, 0] ],
-		],
-		
-		[ // frames
-			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsJumpRise, 0], [spr_flameMonsterHands, 0] ],
-			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsJumpRise, 1], [spr_flameMonsterHands, 0] ],
-		],
-		
-		[ // frames
-			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsJumpFall, 0], [spr_flameMonsterHands, 0] ],
-			[ [spr_flameMonsterHead, 0], [spr_flameMonsterBody, 0], [spr_flameMonsterLegsJumpFall, 1], [spr_flameMonsterHands, 0] ],
-		]
+			[ [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsIdle, 0] ],
+			  [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsIdle, 1] ], ],
+			[ [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsRun, 0] ],
+			  [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsRun, 1] ],
+			  [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsRun, 2] ],
+			  [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsRun, 3] ], ],
+			[ [ [-1, 0], [-1, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsHit, 0] ],
+			  [ [-1, 0], [-1, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsHit, 1] ],
+			  [ [-1, 0], [-1, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsHit, 2] ],
+			  [ [-1, 0], [-1, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsHit, 3] ],
+			  [ [-1, 0], [-1, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsHit, 4] ], ],
+			[ [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsJumpStart, 0] ],
+			  [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsJumpStart, 1] ],
+			  [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsJumpStart, 2] ],
+			  [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsJumpStart, 3] ], ],
+			[ [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsJumpRise, 0] ],
+			  [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsJumpRise, 1] ], ],
+			[ [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsJumpFall, 0] ],
+			  [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsJumpFall, 1] ], ],
 	]
 	
 	//perhaps create set of x/y for just the 4 body parts to set to that they can be lerped or accelerated towards goals (and away from forces like attacks) but eh
