@@ -1,1 +1,0 @@
-//draw_rectangle(0, 0, room_width * 2, room_height * 2, true);

@@ -28,7 +28,7 @@ hitEnemy = function(hitId) {
 }
 
 hit = function() {
-	audio_play_sound(snd_acidSplash, 0, 0);
+	audio_play_sound(snd_ring, 0, 0);
 	
 	script_AOEDamageHit(,,, 250, damage, knockback,, knockbackHeight, stun,,, elementFunc);
 	part_type_speed(global.partStar, 2, 5, -.125, 0);
@@ -41,6 +41,6 @@ hit = function() {
 
 elementFunc = function(damageAOEDropOff, targetId) {
 	if(random(1) < damageAOEDropOff) {
-		targetId.acidic = max(targetId.acidic, 240 + 240 * damageAOEDropOff);
+		//targetId.acidic = max(targetId.acidic, 240 + 240 * damageAOEDropOff);
 	}
 }

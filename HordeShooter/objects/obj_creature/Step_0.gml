@@ -12,7 +12,7 @@ hitFlash--;
 
 if(burning > 0 || alwaysBurning) {
 	if(irandom(5) == 0) {
-		OWP_createPart(global.partFlamePuffs, x + irandom_range(-sprite_width * .4, sprite_width * .4), y - height - sprite_height * .6 + irandom_range(-sprite_height * .4, sprite_height * .4), 1, c_orange, -y - 30);
+		OWP_createPart(global.partFlamePuffs, x + irandom_range(-sprite_width * .32, sprite_width * .32), y - height - sprite_height * .42 + irandom_range(-sprite_height * .32, sprite_height * .32), 1, c_orange, -y - 30);
 		
 		if(!alwaysBurning && irandom(4) == 0) {
 			takeDamage(1, 0, 0, 0, 0,, false);
@@ -23,7 +23,7 @@ if(burning > 0 || alwaysBurning) {
 }
 
 if(acidic > 0) {
-	OWP_createPart(global.partThickTrail, x + irandom_range(-sprite_width * .4, sprite_width * .4), y - height - sprite_height * .4 + irandom_range(-sprite_height * .4, sprite_height * .4), 1, c_green, -y - 30);
+	OWP_createPart(global.partThickTrail, x + irandom_range(-sprite_width * .32, sprite_width * .32), y - height - sprite_height * .42 + irandom_range(-sprite_height * .32, sprite_height * .32), 1, c_green, -y - 30);
 	
 	if(irandom(20) == 0) {
 		takeDamage(1, 0, 0, 0, 0,, false);

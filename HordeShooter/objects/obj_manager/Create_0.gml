@@ -122,40 +122,69 @@ for(var _sameToSameI = 0; _sameToSameI < allegianceCount; _sameToSameI++) {
 #region gmRoomLoader stuff
 
 #macro roomSize 1800
+#macro biomeGridSize 3600
 #macro roomCreateBuffer 50
 #macro roomDestroyBuffer 80
+
+#macro worldSize 50
+
+enum E_biome {
+	grass = 0,
+	village = 1,
+	lava = 2,
+	ice = 3,
+	city = 4,
+	swamp = 5,
+	desert = 6,
+	forest = 7,
+	rockFlats = 8,
+	biomeCount = 9
+}
 
 RoomLoader.DataInit(rm_mapPlaza);
 RoomLoader.DataInit(rm_mapField);
 RoomLoader.DataInit(rm_mapForest);
 
-roomGrid = array_create(50);
-for(var _i = 0; _i < 50; _i++) {
-	roomGrid[_i] = array_create(50, 0);
+mapSeed = irandom(100000000);
+
+worldDataGrid = array_create(worldSize);
+for(var _mapX = 0; _mapX < worldSize; _mapX++) {
+	worldDataGrid[_mapX] = array_create(worldSize, 0);
+	for(var _mapY = 0; _mapY < worldSize; _mapY++) {
+		var _biome = round(clamp(script_perlin((_mapX - worldSize * .5) * biomeGridSize, (_mapY - worldSize * .5) * biomeGridSize, E_biome.biomeCount - 1), 0, E_biome.biomeCount - 1));
+		var _room = script_getBiomeRooms(_biome, true);
+		worldDataGrid[_mapX][_mapY] = [_biome, _room, irandom(biomeGridSize - roomSize), irandom(biomeGridSize - roomSize)];
+	}
+}
+
+roomGrid = array_create(worldSize);
+for(var _i = 0; _i < worldSize; _i++) {
+	roomGrid[_i] = array_create(worldSize, 0);
 }
 
 function updateRooms() {
 	var _cam = view_camera[0];
-	var _camX = camera_get_view_x(_cam) + roomSize * 1000;
-	var _camY = camera_get_view_y(_cam) + roomSize * 1000;
+	var _camX = camera_get_view_x(_cam) + biomeGridSize * 1000;
+	var _camY = camera_get_view_y(_cam) + biomeGridSize * 1000;
 	var _camW = camera_get_view_width(_cam);
 	var _camH = camera_get_view_height(_cam);
 	var _camRight = _camX + _camW;
 	var _camBottom = _camY + _camH;
 	
 	//if(roomGrid[_roomX][_roomY] == 0) { // in theory the center room should never loaded (except when tp'ing maybe?)
-		//roomGrid[_roomX][_roomY] = RoomLoader.Load(rm_mapField, (_roomX - 25) * roomSize, (_roomY - 25) * roomSize);
+		//roomGrid[_roomX][_roomY] = RoomLoader.Load(rm_mapField, (_roomX - 25) * biomeGridSize, (_roomY - 25) * biomeGridSize);
 	//}
 	
 	var _roomX, _roomY, _roomPrevX, _roomPrevY, _hold;
 	
-	_roomX = 25 + (_camX - roomCreateBuffer) div roomSize - 1000; // top left
-	_roomY = 25 + (_camY - roomCreateBuffer) div roomSize - 1000;
+	_roomX = 25 + (_camX - roomCreateBuffer) div biomeGridSize - 1000; // top left
+	_roomY = 25 + (_camY - roomCreateBuffer) div biomeGridSize - 1000;
 	if(roomGrid[_roomX][_roomY] == 0) {
-		roomGrid[_roomX][_roomY] = RoomLoader.Load(choose(rm_mapField, rm_mapForest, rm_mapPlaza), (_roomX - 25) * roomSize, (_roomY - 25) * roomSize);
+		var _roomData = worldDataGrid[_roomX][_roomY];
+		roomGrid[_roomX][_roomY] = RoomLoader.Load(_roomData[1], (_roomX - 25) * biomeGridSize + _roomData[2], (_roomY - 25) * biomeGridSize + _roomData[3]);
 	}
-	_roomPrevX = 25 + (_camX - roomDestroyBuffer) div roomSize - 1000;
-	_roomPrevY = 25 + (_camY - roomDestroyBuffer) div roomSize - 1000;
+	_roomPrevX = 25 + (_camX - roomDestroyBuffer) div biomeGridSize - 1000;
+	_roomPrevY = 25 + (_camY - roomDestroyBuffer) div biomeGridSize - 1000;
 	if(_roomPrevX != _roomX || _roomPrevY != _roomY) { // targeting "lone" tile without creation insentive, aka not in range of creator but in range of destroyer, destroyer will always be opposed by the presence of creator here, the tiles are too big to overlap in any other way. Poetic.
 		if(roomGrid[_roomPrevX][_roomPrevY] != 0) {
 			roomGrid[_roomPrevX][_roomPrevY].Cleanup();
@@ -164,13 +193,14 @@ function updateRooms() {
 	}
 	
 	
-	_roomX = 25 + (_camX + _camW + roomCreateBuffer) div roomSize - 1000; // top right
-	_roomY = 25 + (_camY - roomCreateBuffer) div roomSize - 1000;
+	_roomX = 25 + (_camX + _camW + roomCreateBuffer) div biomeGridSize - 1000; // top right
+	_roomY = 25 + (_camY - roomCreateBuffer) div biomeGridSize - 1000;
 	if(roomGrid[_roomX][_roomY] == 0) {
-		roomGrid[_roomX][_roomY] = RoomLoader.Load(rm_mapField, (_roomX - 25) * roomSize, (_roomY - 25) * roomSize);
+		var _roomData = worldDataGrid[_roomX][_roomY];
+		roomGrid[_roomX][_roomY] = RoomLoader.Load(_roomData[1], (_roomX - 25) * biomeGridSize + _roomData[2], (_roomY - 25) * biomeGridSize + _roomData[3]);
 	}
-	_roomPrevX = 25 + (_camX + _camW + roomDestroyBuffer) div roomSize - 1000;
-	_roomPrevY = 25 + (_camY - roomDestroyBuffer) div roomSize - 1000;
+	_roomPrevX = 25 + (_camX + _camW + roomDestroyBuffer) div biomeGridSize - 1000;
+	_roomPrevY = 25 + (_camY - roomDestroyBuffer) div biomeGridSize - 1000;
 	if(_roomPrevX != _roomX || _roomPrevY != _roomY) {
 		if(roomGrid[_roomPrevX][_roomPrevY] != 0) {
 			roomGrid[_roomPrevX][_roomPrevY].Cleanup();
@@ -178,13 +208,14 @@ function updateRooms() {
 		}
 	}
 	
-	_roomX = 25 + (_camX + _camW + roomCreateBuffer) div roomSize - 1000; // bottom right
-	_roomY = 25 + (_camY + _camH + roomCreateBuffer) div roomSize - 1000;
+	_roomX = 25 + (_camX + _camW + roomCreateBuffer) div biomeGridSize - 1000; // bottom right
+	_roomY = 25 + (_camY + _camH + roomCreateBuffer) div biomeGridSize - 1000;
 	if(roomGrid[_roomX][_roomY] == 0) {
-		roomGrid[_roomX][_roomY] = RoomLoader.Load(rm_mapField, (_roomX - 25) * roomSize, (_roomY - 25) * roomSize);
+		var _roomData = worldDataGrid[_roomX][_roomY];
+		roomGrid[_roomX][_roomY] = RoomLoader.Load(_roomData[1], (_roomX - 25) * biomeGridSize + _roomData[2], (_roomY - 25) * biomeGridSize + _roomData[3]);
 	}
-	_roomPrevX = 25 + (_camX + _camW + roomDestroyBuffer) div roomSize - 1000;
-	_roomPrevY = 25 + (_camY + _camH + roomDestroyBuffer) div roomSize - 1000;
+	_roomPrevX = 25 + (_camX + _camW + roomDestroyBuffer) div biomeGridSize - 1000;
+	_roomPrevY = 25 + (_camY + _camH + roomDestroyBuffer) div biomeGridSize - 1000;
 	if(_roomPrevX != _roomX || _roomPrevY != _roomY) {
 		if(roomGrid[_roomPrevX][_roomPrevY] != 0) {
 			roomGrid[_roomPrevX][_roomPrevY].Cleanup();
@@ -192,17 +223,29 @@ function updateRooms() {
 		}
 	}
 	
-	_roomX = 25 + (_camX - roomCreateBuffer) div roomSize - 1000; // bottom left
-	_roomY = 25 + (_camY + _camH + roomCreateBuffer) div roomSize - 1000;
+	_roomX = 25 + (_camX - roomCreateBuffer) div biomeGridSize - 1000; // bottom left
+	_roomY = 25 + (_camY + _camH + roomCreateBuffer) div biomeGridSize - 1000;
 	if(roomGrid[_roomX][_roomY] == 0) {
-		roomGrid[_roomX][_roomY] = RoomLoader.Load(rm_mapField, (_roomX - 25) * roomSize, (_roomY - 25) * roomSize);
+		var _roomData = worldDataGrid[_roomX][_roomY];
+		roomGrid[_roomX][_roomY] = RoomLoader.Load(_roomData[1], (_roomX - 25) * biomeGridSize + _roomData[2], (_roomY - 25) * biomeGridSize + _roomData[3]);
 	}
-	_roomPrevX = 25 + (_camX - roomDestroyBuffer) div roomSize - 1000;
-	_roomPrevY = 25 + (_camY + _camH + roomDestroyBuffer) div roomSize - 1000;
+	_roomPrevX = 25 + (_camX - roomDestroyBuffer) div biomeGridSize - 1000;
+	_roomPrevY = 25 + (_camY + _camH + roomDestroyBuffer) div biomeGridSize - 1000;
 	if(_roomPrevX != _roomX || _roomPrevY != _roomY) {
 		if(roomGrid[_roomPrevX][_roomPrevY] != 0) {
 			roomGrid[_roomPrevX][_roomPrevY].Cleanup();
 			roomGrid[_roomPrevX][_roomPrevY] = 0;
+		}
+	}
+}
+
+clearAllRooms = function() {
+	for(var _x = 0; _x < worldSize; _x++) {
+		for(var _y = 0; _y < worldSize; _y++) {
+			if(roomGrid[_x][_y] != 0) {
+				roomGrid[_roomPrevX][_roomPrevY].Cleanup();
+				roomGrid[_roomPrevX][_roomPrevY] = 0;
+			}
 		}
 	}
 }
@@ -356,7 +399,7 @@ global.partFlamePuffs = part_type_create();
 var _firePuff = global.partFlamePuffs;
 part_type_life(_firePuff, 40, 40);
 part_type_sprite(_firePuff, spr_flamePuff, 1, 1, 0);
-part_type_size(_firePuff, 3, 4, -.1, 0);
+part_type_size(_firePuff, 2, 2.6, -.08, 0);
 part_type_speed(_firePuff, 0, .3, -.05, 0);
 part_type_direction(_firePuff, 0, 180, 0, 0);
 part_type_gravity(_firePuff, .14, 90);
