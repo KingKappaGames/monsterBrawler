@@ -1,0 +1,1 @@
+(useSkeletonAnimations ? script_setSkeletonAnimation : script_setAnimation)(animIdle, 0, 2.5);

@@ -20,7 +20,7 @@
   "height":80,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"2ecf2f8c-6776-4de1-b0e0-a77890533c12","blendMode":0,"displayName":"Head","isLocked":false,"name":"2ecf2f8c-6776-4de1-b0e0-a77890533c12","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"d11502bf-ba2d-444c-bad4-ce1e1008b9ea","blendMode":0,"displayName":"Head","isLocked":false,"name":"d11502bf-ba2d-444c-bad4-ce1e1008b9ea","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_flameMonsterHead",
   "nineSlice":null,

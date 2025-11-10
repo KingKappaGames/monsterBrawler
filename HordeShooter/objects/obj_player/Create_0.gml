@@ -13,7 +13,7 @@ height = 0;
 bounceHorizontalSpeedtMult = .8;
 bounceHeightMult = -.4;
 
-moveSpeed = 1.55;
+moveSpeed = 1.6;
 moveSpeedAir = .6;
 
 jumpSpeed = 4.2;
