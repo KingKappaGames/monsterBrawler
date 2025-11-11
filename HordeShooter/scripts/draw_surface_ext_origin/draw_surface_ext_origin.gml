@@ -7,4 +7,6 @@ function draw_surface_ext_origin(_surf, _x, _y, _xscale, _yscale, _rot, _col, _a
 					 
 	draw_surface_ext(_surf,-_originX,-_originY,_xscale,_yscale,0,_col,_alpha);
 	matrix_set(matrix_world,matrix_build_identity());
+	
+	// cool but horribly slow ^^^
 }

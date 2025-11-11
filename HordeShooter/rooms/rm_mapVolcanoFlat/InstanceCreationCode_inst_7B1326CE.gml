@@ -1,0 +1,1 @@
+allegiance = E_allegiance.demon;

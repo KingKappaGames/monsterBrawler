@@ -10,7 +10,7 @@ alwaysBurning = false;
 #region animations
 useSkeletonAnimations = true;
 
-	skeletonBasicItem = choose(spr_swordBranch, spr_swordHammer, spr_swordFantasy);//choose(spr_swordFantasy, spr_swordBranch, spr_swordBlackPoker, spr_swordIce);
+	skeletonBasicItem = choose(spr_swordBranch, spr_swordHammer, spr_swordFantasy, spr_swordBaton, spr_swordClub);//choose(spr_swordFantasy, spr_swordBranch, spr_swordBlackPoker, spr_swordIce);
 	skeletonBasicHandRightSprite = spr_flameMonsterHandRight;
 	skeletonBasicHandLeftSprite = spr_flameMonsterHandRight;
 	skeletonBasicHeadSprite = spr_barbarianHead;

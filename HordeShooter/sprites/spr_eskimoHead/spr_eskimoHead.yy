@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":4,
   "parent":{
-    "name":"bodyPieces",
-    "path":"folders/Sprites/humanSpriteSets/bodyPieces.yy",
+    "name":"eskimo",
+    "path":"folders/Sprites/humanSpriteSets/bodyPieces/eskimo.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

@@ -24,13 +24,13 @@ if(_camScaleChange != 0) {
 }
 
 if(autoSpawn) {
-	if(irandom(20) == 0) {
+	if(irandom(8) == 0) {
 		if(irandom(40) == 0 && instance_number(obj_knight) > 10) {
 			script_spawnCreature(obj_darkPriest, irandom_range(1, 5),,, true); // spawn powerful unit to offset battle
 		} else if(irandom(26) == 0 && instance_number(obj_barbarian) > 10) {
 			script_spawnCreature(obj_priest, irandom_range(1, 5),,, true); // spawn powerful unit to offset battle
 		} else {
-			script_spawnCreature(choose(obj_barbarian, obj_knight, obj_eskimo, obj_demon), irandom_range(1, 5),,, true);
+			script_spawnCreature(choose(obj_barbarian, obj_knight, obj_eskimo, obj_demon, obj_jungleWarrior, obj_desertWarrior, obj_desertShamans), irandom_range(1, 5),,, true);
 		}
 	}
 }

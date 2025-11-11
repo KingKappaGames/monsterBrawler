@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":9,
   "parent":{
-    "name":"bodyPieces",
-    "path":"folders/Sprites/humanSpriteSets/bodyPieces.yy",
+    "name":"items",
+    "path":"folders/Sprites/humanSpriteSets/bodyPieces/items.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

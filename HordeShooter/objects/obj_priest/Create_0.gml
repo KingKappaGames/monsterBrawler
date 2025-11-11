@@ -18,7 +18,7 @@ attackRangeRangedMin = 110;
 #region animation
 useSkeletonAnimations = true;
 
-	skeletonBasicItem = choose(spr_swordBlackPoker, spr_swordFantasy);//choose(spr_swordFantasy, spr_swordBranch, spr_swordBlackPoker, spr_swordIce);
+	skeletonBasicItem = choose(spr_swordBlackPoker, spr_swordFantasy, spr_swordSpear);//choose(spr_swordFantasy, spr_swordBranch, spr_swordBlackPoker, spr_swordIce);
 	skeletonBasicHandRightSprite = spr_flameMonsterHandRight;
 	skeletonBasicHandLeftSprite = spr_flameMonsterHandRight;
 	skeletonBasicHeadSprite = spr_monkHead;

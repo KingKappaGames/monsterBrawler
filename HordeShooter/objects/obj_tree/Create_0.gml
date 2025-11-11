@@ -1,3 +1,3 @@
 event_inherited();
 
-sprite_index = spr_pineTree;
+//sprite_index = spr_pineTree;

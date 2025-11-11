@@ -7,6 +7,7 @@ global.manager = id;
 global.timer = 0;
 
 #macro grav .18
+#macro squareDist .707107
 
 autoSpawn = false;
 
@@ -74,12 +75,16 @@ global.skeletonRigData = [
 
 #region allegiances
 
-#macro allegianceCount 3
+#macro allegianceCount 7
 
 enum E_allegiance {
 	player = 0, 
 	barbarian = 1,
 	knight = 2, 
+	eskimo = 3,
+	demon = 4,
+	swamp = 5,
+	desert = 6,
 }
 
 global.allegianceGrid = ds_grid_create(allegianceCount, allegianceCount); // each faction x each faction, gives the result of each combination
@@ -91,9 +96,32 @@ for(var _x = 0; _x < allegianceCount; _x++) {
 	}
 }
 
-ds_grid_set(_grid, E_allegiance.player, E_allegiance.barbarian, 0);
+ds_grid_set(_grid, E_allegiance.player, E_allegiance.barbarian, .2); // cascade the relations down the allegiance index
 ds_grid_set(_grid, E_allegiance.player, E_allegiance.knight, 1);
+ds_grid_set(_grid, E_allegiance.player, E_allegiance.eskimo, .6);
+ds_grid_set(_grid, E_allegiance.player, E_allegiance.demon, 0);
+ds_grid_set(_grid, E_allegiance.player, E_allegiance.swamp, .35);
+ds_grid_set(_grid, E_allegiance.player, E_allegiance.desert, .4);
+
 ds_grid_set(_grid, E_allegiance.barbarian, E_allegiance.knight, 0);
+ds_grid_set(_grid, E_allegiance.barbarian, E_allegiance.eskimo, .35);
+ds_grid_set(_grid, E_allegiance.barbarian, E_allegiance.demon, .4);
+ds_grid_set(_grid, E_allegiance.barbarian, E_allegiance.swamp, .4);
+ds_grid_set(_grid, E_allegiance.barbarian, E_allegiance.desert, .2);
+
+ds_grid_set(_grid, E_allegiance.knight, E_allegiance.eskimo, .7);
+ds_grid_set(_grid, E_allegiance.knight, E_allegiance.demon, 0);
+ds_grid_set(_grid, E_allegiance.knight, E_allegiance.swamp, .35);
+ds_grid_set(_grid, E_allegiance.knight, E_allegiance.desert, .4);
+
+ds_grid_set(_grid, E_allegiance.eskimo, E_allegiance.demon, 0);
+ds_grid_set(_grid, E_allegiance.eskimo, E_allegiance.swamp, .45);
+ds_grid_set(_grid, E_allegiance.eskimo, E_allegiance.desert, .7);
+
+ds_grid_set(_grid, E_allegiance.demon, E_allegiance.swamp, .1);
+ds_grid_set(_grid, E_allegiance.demon, E_allegiance.desert, 0);
+
+ds_grid_set(_grid, E_allegiance.swamp, E_allegiance.desert, .3);
 
 var _filledPositions = [];
 var _filledCount = 0;
@@ -111,7 +139,7 @@ for(var _x = 0; _x < allegianceCount; _x++) {
 var _fillData;
 for(var _mirrorI = 0; _mirrorI < _filledCount; _mirrorI++) {
 	_fillData = _filledPositions[_mirrorI];
-	_grid[# allegianceCount - 1 - _fillData[0], allegianceCount - 1 - _fillData[1]] = _fillData[2]; // flip filled values to mirror (eg barbarians hate knight SO knights hate barbarians, 1,3 = 3,1)
+	_grid[# _fillData[1], _fillData[0]] = _fillData[2]; // flip filled values to mirror (eg barbarians hate knight SO knights hate barbarians, 1,3 = 3,1)
 }
 
 for(var _sameToSameI = 0; _sameToSameI < allegianceCount; _sameToSameI++) {
@@ -151,7 +179,8 @@ worldDataGrid = array_create(worldSize);
 for(var _mapX = 0; _mapX < worldSize; _mapX++) {
 	worldDataGrid[_mapX] = array_create(worldSize, 0);
 	for(var _mapY = 0; _mapY < worldSize; _mapY++) {
-		var _biome = round(clamp(script_perlin((_mapX - worldSize * .5) * biomeGridSize, (_mapY - worldSize * .5) * biomeGridSize, E_biome.biomeCount - 1), 0, E_biome.biomeCount - 1));
+		var _biomeScale = .01;
+		var _biome = round(clamp(-4 + script_perlin((_mapX - worldSize * .5) * biomeGridSize * _biomeScale + 1_000_000, (_mapY - worldSize * .5) * biomeGridSize * _biomeScale + 1_000_000, E_biome.biomeCount - 1) * 1.1, 0, E_biome.biomeCount - 1)); // -1 + *1.2 is just to widen the range... Need to make some better method sampling which biomes are near and common
 		var _room = script_getBiomeRooms(_biome, true);
 		worldDataGrid[_mapX][_mapY] = [_biome, _room, irandom(biomeGridSize - roomSize), irandom(biomeGridSize - roomSize)];
 	}

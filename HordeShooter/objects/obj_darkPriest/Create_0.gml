@@ -18,9 +18,9 @@ knockbackHeight = 1.5;
 useSkeletonAnimations = true;
 
 	skeletonBasicItem = choose(spr_swordBlackPoker, spr_swordBranch, spr_swordFantasy);//choose(spr_swordFantasy, spr_swordBranch, spr_swordBlackPoker, spr_swordIce);
-	skeletonBasicHandRightSprite = spr_monkHead;
+	skeletonBasicHandRightSprite = spr_flameMonsterHandRight;
 	skeletonBasicHandLeftSprite = spr_flameMonsterHandRight;
-	skeletonBasicHeadSprite = spr_barbarianHead;
+	skeletonBasicHeadSprite = spr_flameMonsterHead;
 	skeletonBasicBodySprite = spr_monkBodyIdle;
 
 	skeletonData = [

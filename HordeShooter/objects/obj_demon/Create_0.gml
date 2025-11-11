@@ -1,6 +1,6 @@
 event_inherited();
 
-allegiance = E_allegiance.barbarian;
+allegiance = E_allegiance.demon;
 
 HealthMax = 45;
 meleeDamage = 6;
@@ -11,8 +11,8 @@ alwaysBurning = true;
 useSkeletonAnimations = true;
 
 	skeletonBasicItem = choose(spr_swordBranch, spr_swordHammer, spr_swordFantasy, spr_swordBlackPoker);//choose(spr_swordFantasy, spr_swordBranch, spr_swordBlackPoker, spr_swordIce);
-	skeletonBasicHandRightSprite = spr_flameMonsterHandRight;
-	skeletonBasicHandLeftSprite = spr_flameMonsterHandRight;
+	skeletonBasicHandRightSprite = spr_handDemon;
+	skeletonBasicHandLeftSprite = spr_handDemon;
 	skeletonBasicHeadSprite = spr_flameMonsterHead;
 	skeletonBasicBodySprite = spr_flameMonsterBody;
 
@@ -42,3 +42,25 @@ useSkeletonAnimations = true;
 image_blend = #ffff99;
 
 #endregion
+
+SM.add("attackRanged", {
+    enter: function(duration = 40) {
+		//die animation
+		script_setEventTimer(duration);
+		image_angle = 10;
+    },
+    step: function() {
+		stateTimer--;
+		if(stateTimer <= 0) {
+			SM.change("chase");
+		} else if(stateTimer == round(stateTimerMax * .5)) {
+			if(instance_exists(agroId)) {
+				var _attackDir = directionTo(agroId);
+				script_createAttack(obj_fireBolt, x + lengthdir_x(attackCreateDist, _attackDir), y + lengthdir_y(attackCreateDist, _attackDir), _attackDir, height);
+			}
+		}
+    },
+	leave: function() {
+		image_angle = 0;
+	}
+});

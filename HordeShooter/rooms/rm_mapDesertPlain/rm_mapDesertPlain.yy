@@ -6,9 +6,9 @@
   "inheritCreationOrder":false,
   "inheritLayers":false,
   "instanceCreationOrder":[
-    {"name":"inst_79373E81_1","path":"rooms/rm_mapDesertPlain/rm_mapDesertPlain.yy",},
     {"name":"inst_3D39B174_1","path":"rooms/rm_mapDesertPlain/rm_mapDesertPlain.yy",},
     {"name":"inst_128A835D2_1","path":"rooms/rm_mapDesertPlain/rm_mapDesertPlain.yy",},
+    {"name":"inst_295B0AC0","path":"rooms/rm_mapDesertPlain/rm_mapDesertPlain.yy",},
   ],
   "isDnd":false,
   "layers":[
@@ -16,8 +16,8 @@
         {"$GMRInstance":"v4","%Name":"inst_128A835D2_1","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_128A835D2_1","objectId":{"name":"obj_structure","path":"objects/obj_structure/obj_structure.yy",},"previewSprite":{"name":"spr_structureDesertRoundHouse","path":"sprites/spr_structureDesertRoundHouse/spr_structureDesertRoundHouse.yy",},"properties":[
             {"$GMOverriddenProperty":"v1","%Name":"","name":"","objectId":{"name":"obj_structure","path":"objects/obj_structure/obj_structure.yy",},"propertyId":{"name":"sprite_index","path":"objects/obj_structure/obj_structure.yy",},"resourceType":"GMOverriddenProperty","resourceVersion":"2.0","value":"spr_structureDesertRoundHouse",},
           ],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":1184.0,"y":736.0,},
-        {"$GMRInstance":"v4","%Name":"inst_79373E81_1","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_79373E81_1","objectId":{"name":"obj_barbarian","path":"objects/obj_barbarian/obj_barbarian.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":1248.0,"y":864.0,},
-        {"$GMRInstance":"v4","%Name":"inst_3D39B174_1","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_3D39B174_1","objectId":{"name":"obj_barbarian","path":"objects/obj_barbarian/obj_barbarian.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":800.0,"y":736.0,},
+        {"$GMRInstance":"v4","%Name":"inst_3D39B174_1","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_3D39B174_1","objectId":{"name":"obj_desertWarrior","path":"objects/obj_desertWarrior/obj_desertWarrior.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":800.0,"y":736.0,},
+        {"$GMRInstance":"v4","%Name":"inst_295B0AC0","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_295B0AC0","objectId":{"name":"obj_desertShamans","path":"objects/obj_desertShamans/obj_desertShamans.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":1152.0,"y":832.0,},
       ],"layers":[],"name":"Instances","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
     {"$GMRBackgroundLayer":"","%Name":"Background","animationFPS":0.0,"animationSpeedType":0,"colour":4294967295,"depth":25000,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"hspeed":0.0,"htiled":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[],"name":"Background","properties":[],"resourceType":"GMRBackgroundLayer","resourceVersion":"2.0","spriteId":{"name":"spr_desertBackgroundAlt","path":"sprites/spr_desertBackgroundAlt/spr_desertBackgroundAlt.yy",},"stretch":false,"userdefinedAnimFPS":false,"userdefinedDepth":true,"visible":true,"vspeed":0.0,"vtiled":false,"x":0,"y":0,},
   ],

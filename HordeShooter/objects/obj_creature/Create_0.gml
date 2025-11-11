@@ -63,6 +63,8 @@ trailPartColor = c_white;
 #region animations
 	useSkeletonAnimations = false;
 	
+	skeletonRigData = global.skeletonRigData;
+
 	skeletonAnimation = E_animation.idle;
 	
 	animIdle = E_animation.idle;
@@ -73,10 +75,11 @@ trailPartColor = c_white;
 	animFall = E_animation.fall;
 	
 	bodySurf = -1;
+	bodySurfSize = 128;
 	
 	getBodySurf = function() {
 		if(!surface_exists(bodySurf)) {
-			bodySurf = surface_create(128, 128); // is 128 always the size?
+			bodySurf = surface_create(bodySurfSize, bodySurfSize); // is 128 always the size? (no because I want the scaling of sprites to be non-pixel perfect now, and so I need the surfaces to take the sprites as like, scaled up versions)
 		}
 		
 		return bodySurf;
@@ -399,7 +402,9 @@ SM.add("knockdown", {
 				vspeed *= bounceHorizontalSpeedtMult;
 				heightChange = min(12, heightChange * bounceHeightMult);
 				OWP_createPartExtColor(global.partDust, x, y, 10, #af8a61,, sprite_width * .3, 4);
-				audio_play_sound(snd_fallBonk, 0, 0, 1 + sqrt(abs(heightChange)) * .5);
+				if(heightChange < -1) {
+					audio_play_sound(snd_fallBonk, 0, 0, 1 + sqrt(abs(heightChange)) * .5);
+				}
 				height = 0;
 			} else {
 				hspeed *= bounceHorizontalSpeedtMult;

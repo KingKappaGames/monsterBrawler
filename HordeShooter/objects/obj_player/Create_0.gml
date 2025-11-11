@@ -63,11 +63,11 @@ view_set_camera(0, cameraOne); //view_camera[0] or [1] worked
 view_enabled = true;
 view_visible[0] = true;
 
-view_wport[0] = 1920;
-view_hport[0] = 1080;
-
 surface_resize(application_surface, 1920, 1080);
 window_set_size(1920, 1080);
+
+view_wport[0] = 1920;
+view_hport[0] = 1080;
 
 global.cam = view_camera[0];
 
@@ -253,6 +253,9 @@ movementControls = function() {
 	directionAiming = point_direction(x, y, mouse_x, mouse_y);
 	
 	var _speed = height > 0 ? moveSpeedAir : moveSpeed;
+	if(keyboard_check(vk_shift)) {
+		_speed *= 9;
+	}
 	
 	if(InputCheck(INPUT_VERB.RIGHT)) {
 		hspeed += _speed;

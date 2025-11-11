@@ -1,3 +1,4 @@
+//if (live_call()) return live_result;
 
 draw_ellipse_color(x - sprite_width * .3, y + 15, x + sprite_width * .3, y + 25, #111111, #111111, false); // shadow
 
@@ -14,9 +15,6 @@ if(hitFlash > 0) {
 
 if(useSkeletonAnimations) {
 	bodySurf = getBodySurf();
-
-	var _surfHalfW = surface_get_width(bodySurf) * .5;
-	var _surfHalfH = surface_get_height(bodySurf) * .5;
 	
 	surface_set_target(bodySurf);
 	
@@ -25,25 +23,30 @@ if(useSkeletonAnimations) {
 	var _animation = skeletonData[skeletonAnimation];
 	var _frame = _animation[image_index];
 	
-	var _rigAnimation = global.skeletonRigData[skeletonAnimation];
+	var _rigAnimation = skeletonRigData[skeletonAnimation];
 	var _rigFrame = _rigAnimation[image_index];
-	
-	if(_animation == E_animation.rise) {
-		var _gunk = false;
-	}
 	
 	var _bodyPart, _rigBodyPart;
 	for(var _i = bodyPartCount - 1; _i >= 0; _i--) {
 		_bodyPart = _frame[_i];
 		if(_bodyPart[0] != -1) { // don't draw part frames marked as blank (-1)
 			_rigBodyPart = _rigFrame[_i];
-			draw_sprite_ext(_bodyPart[0], _bodyPart[1], _surfHalfW + _rigBodyPart[0], _surfHalfH + _rigBodyPart[1], 1, 1, _rigBodyPart[2], c_white, 1);
+			draw_sprite_ext(_bodyPart[0], _bodyPart[1], bodySurfSize * .5 + _rigBodyPart[0], bodySurfSize * .5 + _rigBodyPart[1], 1, 1, _rigBodyPart[2], c_white, 1);
 		}
 	}
 	
 	surface_reset_target();
-					
-	draw_surface_ext_origin(bodySurf, x, y - height, directionFacing * image_xscale, image_yscale, image_angle, image_blend, image_alpha, _surfHalfW, _surfHalfH);
+		
+	var _surfCornerDist = bodySurfSize * squareDist;
+	var _surfX, _surfY;
+	if(directionFacing == 1) {
+		_surfX = x + (lengthdir_x(_surfCornerDist, 135 + image_angle)) * image_xscale;
+		_surfY = y + (lengthdir_y(_surfCornerDist, 135 + image_angle)) * image_yscale; 
+	} else {
+		_surfX = x + (lengthdir_x(_surfCornerDist, 45 + image_angle)) * image_xscale;
+		_surfY = y + (lengthdir_y(_surfCornerDist, 45 + image_angle)) * image_yscale; 
+	}
+	draw_surface_ext(bodySurf, _surfX, _surfY - height, directionFacing * image_xscale, image_yscale, image_angle, image_blend, image_alpha);
 } else {
 	draw_sprite_ext(sprite_index, image_index, x, y - height, directionFacing * image_xscale, image_yscale, image_angle, image_blend, image_alpha);
 }

@@ -4,19 +4,19 @@ function script_getBiomeRooms(biome, returnRandom = false) {
 	//[rm_mapDesertOpen, rm_mapField, rm_mapFieldOpen, rm_mapForest, rm_mapIceOpen, rm_mapPlaza, rm_mapVillage, rm_mapVolcanoFlat];
 	
 	if(biome == E_biome.grass) {
-		_roomSet = [rm_mapField, rm_mapFieldOpen, rm_mapForest, rm_mapVillage];
+		_roomSet = [rm_mapField, rm_mapFieldOpen, rm_mapForest, rm_mapFieldOpen, rm_mapFieldOpen, rm_mapFieldOpen, rm_mapFieldOpen];
 	} else if(biome == E_biome.village) {
 		_roomSet = [rm_mapVillage];
 	} else if(biome == E_biome.lava) {
 		_roomSet = [rm_mapPlaza, rm_mapVolcanoFlat];
 	} else if(biome == E_biome.ice) {
-		_roomSet = [rm_mapIceOpen];
+		_roomSet = [rm_mapIceOpen, rm_mapIcePit];
 	} else if(biome == E_biome.city) {
 		_roomSet = [rm_mapVillage];
 	} else if(biome == E_biome.swamp) {
 		_roomSet = [rm_mapField];
 	} else if(biome == E_biome.desert) {
-		_roomSet = [rm_mapDesertOpen];
+		_roomSet = [rm_mapDesertOpen, rm_mapDesertPits, rm_mapDesertPlain];
 	} else if(biome == E_biome.forest) {
 		_roomSet = [rm_mapForest, rm_mapField];
 	} else if(biome == E_biome.rockFlats) {
