@@ -13,10 +13,10 @@ attackRangeRangedMin = 250;
 #region animations
 useSkeletonAnimations = true;
 
-	skeletonBasicItem = choose(spr_swordBranch, spr_swordFantasy);//choose(spr_swordFantasy, spr_swordBranch, spr_swordBlackPoker, spr_swordIce);
+	skeletonBasicItem = choose(spr_swordDesertStaff, spr_swordDesertStaff);//choose(spr_swordFantasy, spr_swordBranch, spr_swordBlackPoker, spr_swordIce);
 	skeletonBasicHandRightSprite = spr_flameMonsterHandLeft;
 	skeletonBasicHandLeftSprite = spr_flameMonsterHandRight;
-	skeletonBasicHeadSprite = spr_eskimoHead;
+	skeletonBasicHeadSprite = spr_desertShamanHead;
 	skeletonBasicBodySprite = spr_monkBodyHit; // not used
 
 	skeletonData = [
@@ -65,3 +65,5 @@ SM.add("attackRanged", {
 		image_angle = 0;
 	}
 });
+
+postCreate();

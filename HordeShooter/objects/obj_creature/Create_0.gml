@@ -7,12 +7,36 @@ knockback = 1;
 knockbackHeight = 1;
 stun = 10;
 
+meleeDamageBase = 5;
+damageBase = 1;
+knockbackBase = 1;
+knockbackHeightBase = 1;
+stunBase = 10;
+
+itemMeleeDamage = 1;
+itemDamage = 1;
+itemKnockback = 1;
+itemKnockbackHeight = 1;
+itemStun = 1;
+
 attackRange = 50;
 attackRangeRangedMax = 450;
 attackRangeRangedMin = 240;
 attackCreateDist = 15; // this is the distance from the origin that spells and attacks are placed, aka the maw, aka the reach, aka the start distance of a spell from it's castor
 
+calculateStats = function() { // WIP TODO
+	meleeDamage = meleeDamageBase * itemMeleeDamage;
+	damage = damageBase * itemDamage;
+	knockback = knockbackBase * itemKnockback;
+	knockbackHeight = knockbackHeightBase * itemKnockbackHeight;
+	stun = stunBase * itemStun;
+}
+
 meleeAttackType = obj_attackMeleeSwing;
+
+meleeHitFunc = function(target, self) {
+	
+}
 
 hspeed = 0;
 vspeed = 0;
@@ -43,7 +67,7 @@ directionFacing = choose(-1, 1);
 poiseMax = 80;
 poise = poiseMax;
 
-allegiance = choose(E_allegiance.barbarian, E_allegiance.knight);
+allegiance = E_allegiance.knight;
 
 agroId = noone;
 agroRange = 900;
@@ -112,9 +136,14 @@ trailPartColor = c_white;
 			[ [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [spr_monkBodyJumpFall, 0], [spr_flameMonsterLegsJumpFall, 0] ],
 			  [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [spr_monkBodyJumpFall, 1], [spr_flameMonsterLegsJumpFall, 1] ], ],
 	]
+
+
+	
 	
 	//perhaps create set of x/y for just the 4 body parts to set to that they can be lerped or accelerated towards goals (and away from forces like attacks) but eh
 #endregion
+
+
 
 #region STATE MACHINE SET UP
 
@@ -289,7 +318,7 @@ SM.add("melee", {
 		} else if(stateTimer == round(stateTimerMax * .5)) {
 			if(instance_exists(agroId)) {
 				var _attackDir = point_direction(x, y, agroId.x, agroId.y);
-				script_createMeleeAttack(meleeAttackType, x + lengthdir_x(20, _attackDir), y + lengthdir_y(20, _attackDir), _attackDir, height,,,, irandom_range(meleeDamage * .8, meleeDamage * 1.2));
+				script_createMeleeAttack(meleeAttackType, x + lengthdir_x(20, _attackDir), y + lengthdir_y(20, _attackDir), _attackDir, height,,,, irandom_range(meleeDamage * .8, meleeDamage * 1.2),,,, meleeHitFunc);
 			} else {
 				SM.change("idle");
 			}
@@ -495,6 +524,12 @@ refreshCondition = function() {
 
 spawn = function() {
 	//stuff to do on creation (after create event and all, last step)
+	(useSkeletonAnimations ? script_setSkeletonAnimation : script_setAnimation)(animIdle, 0, 2.5);
+}
+
+/// @desc Function Called at the end of the child instances create event, so it's pre script ending but post all create code, if you want post scripts then use the spawn() function
+postCreate = function() {
+	(useSkeletonAnimations ? script_setSkeletonAnimation : script_setAnimation)(animIdle, 0, 2.5);
 }
 
 /// @desc RETURNS LETHALITY

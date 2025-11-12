@@ -41,7 +41,7 @@ if(spread < spreadMinimum) {
 }
 
 if(keyboard_check_released(ord("H"))) {
-	script_createAttackRadiant(obj_radiantAttack, x, y, 0,, 10, 32, 110, .66, c_blue);
+	script_createAttack(obj_thunderCloud, x + irandom_range(-200, 200), y + irandom_range(-200, 200), 0);
 }
 
 if(keyboard_check_released(vk_f1)) {

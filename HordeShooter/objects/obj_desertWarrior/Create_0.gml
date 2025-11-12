@@ -63,3 +63,5 @@ SM.add("attackRanged", {
 		image_angle = 0;
 	}
 });
+
+postCreate();

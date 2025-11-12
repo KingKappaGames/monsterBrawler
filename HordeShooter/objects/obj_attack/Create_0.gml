@@ -16,6 +16,8 @@ hitIds = []; // not used in most cases (IS used by melee and other overlapping a
 
 hitFunc = undefined; // passed to hit scripts for extra info
 
+target = noone;
+
 spawn = function() {
 	
 }

@@ -7,6 +7,9 @@ meleeDamage = 5;
 
 alwaysBurning = false;
 
+attackRangeRangedMax = 500;
+attackRangeRangedMin = 250;
+
 #region animations
 useSkeletonAnimations = true;
 
@@ -39,6 +42,28 @@ useSkeletonAnimations = true;
 	]
 
 //image_blend = #ff1a1a;
-image_blend = #ffff99;
 
 #endregion
+
+SM.add("attackRanged", {
+    enter: function(duration = 120) {
+		//die animation
+		script_setEventTimer(duration);
+		image_angle = 20;
+    },
+    step: function() {
+		stateTimer--;
+		if(stateTimer <= 0) {
+			SM.change("chase");
+		} else if(stateTimer == round(stateTimerMax * .3)) {
+			if(instance_exists(agroId)) {
+				script_createAttack(obj_thunderCloud, agroId.x + irandom_range(-200, 200), agroId.y + irandom_range(-200, 200), 0, 0);
+			}
+		}
+    },
+	leave: function() {
+		image_angle = 0;
+	}
+});
+
+postCreate();

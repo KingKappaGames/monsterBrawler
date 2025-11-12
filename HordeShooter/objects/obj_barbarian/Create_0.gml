@@ -39,6 +39,8 @@ useSkeletonAnimations = true;
 	]
 
 //image_blend = #ff1a1a;
-image_blend = #ffff99;
+//image_blend = #ffff99;
 
 #endregion
+
+postCreate();

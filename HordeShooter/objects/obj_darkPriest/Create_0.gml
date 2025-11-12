@@ -113,3 +113,5 @@ determineAttack = function() {
 	
 	return _state; // state names randomly chosen, in theory they could probably just call the SM.change themselves but idk man
 }
+
+postCreate();

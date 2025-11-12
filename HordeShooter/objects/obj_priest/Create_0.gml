@@ -47,7 +47,7 @@ useSkeletonAnimations = true;
 	]
 
 //image_blend = #ff1a1a;
-image_blend = #ffffff;
+//image_blend = #ffffff;
 
 #endregion
 
@@ -106,3 +106,5 @@ determineAttack = function() {
 		//}
 	//}
 //});
+
+postCreate();

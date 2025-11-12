@@ -17,6 +17,8 @@ radius = 140;
 
 sprite_index = spr_dustTornado;
 
+image_alpha = .75;
+
 swirlList = ds_list_create();
 
 spawn = function() {

@@ -152,7 +152,7 @@ for(var _sameToSameI = 0; _sameToSameI < allegianceCount; _sameToSameI++) {
 #macro roomSize 1800
 #macro biomeGridSize 3600
 #macro roomCreateBuffer 50
-#macro roomDestroyBuffer 80
+#macro roomDestroyBuffer 100
 
 #macro worldSize 50
 
@@ -180,7 +180,7 @@ for(var _mapX = 0; _mapX < worldSize; _mapX++) {
 	worldDataGrid[_mapX] = array_create(worldSize, 0);
 	for(var _mapY = 0; _mapY < worldSize; _mapY++) {
 		var _biomeScale = .01;
-		var _biome = round(clamp(-4 + script_perlin((_mapX - worldSize * .5) * biomeGridSize * _biomeScale + 1_000_000, (_mapY - worldSize * .5) * biomeGridSize * _biomeScale + 1_000_000, E_biome.biomeCount - 1) * 1.1, 0, E_biome.biomeCount - 1)); // -1 + *1.2 is just to widen the range... Need to make some better method sampling which biomes are near and common
+		var _biome = round(clamp(-2 + script_perlin((_mapX - worldSize * .5) * biomeGridSize * _biomeScale + 1_000_000, (_mapY - worldSize * .5) * biomeGridSize * _biomeScale + 1_000_000, E_biome.biomeCount - 1) * 1.05, 0, E_biome.biomeCount - 1)); // -1 + *1.2 is just to widen the range... Need to make some better method sampling which biomes are near and common
 		var _room = script_getBiomeRooms(_biome, true);
 		worldDataGrid[_mapX][_mapY] = [_biome, _room, irandom(biomeGridSize - roomSize), irandom(biomeGridSize - roomSize)];
 	}
