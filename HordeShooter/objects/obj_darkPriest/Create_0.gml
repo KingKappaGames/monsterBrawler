@@ -5,19 +5,23 @@ allegiance = E_allegiance.barbarian;
 HealthMax = 40;
 poiseMax = 500;
 
+meleeDamage = 5;
+magicDamage = 2;
+knockback = 1.5;
+knockbackHeight = 1;
+stun = 1.5;
+
 attackRange = 120;
 attackRangeRangedMin = 150;
 attackRangeRangedMax = 240;
 
-meleeDamage = 5;
-damage = 2;
-knockback = 1.5;
-knockbackHeight = 1.5;
 
 #region animation
 useSkeletonAnimations = true;
 
-	skeletonBasicItem = choose(spr_swordBlackPoker, spr_swordBranch, spr_swordFantasy);//choose(spr_swordFantasy, spr_swordBranch, spr_swordBlackPoker, spr_swordIce);
+	//skeletonBasicItem = choose(spr_swordBlackPoker, spr_swordBranch, spr_swordFantasy);//choose(spr_swordFantasy, spr_swordBranch, spr_swordBlackPoker, spr_swordIce);
+	item = script_getItemInfo(choose(E_item.branch, E_item.hammer, E_item.broadSword, E_item.baton, E_item.woodenClub));
+	skeletonBasicItem = item.sprite;
 	skeletonBasicHandRightSprite = spr_flameMonsterHandRight;
 	skeletonBasicHandLeftSprite = spr_flameMonsterHandRight;
 	skeletonBasicHeadSprite = spr_flameMonsterHead;
@@ -63,7 +67,7 @@ SM.add("attack", {
 		} else if(abs(stateTimer - round(stateTimerMax * .5)) == 0) {
 			if(instance_exists(agroId)) {
 				var _aimDir = point_direction(x, y, agroId.x, agroId.y);
-				script_createAttack(obj_grenade, agroId.x, agroId.y, 0, height, 0, 2,,, damage, knockback, knockbackHeight, 5);
+				script_createAttack(obj_grenade, agroId.x, agroId.y, 0, height, 0, 2,,, magicDamage, knockback, knockbackHeight, 5);
 			}
 		}
     },
@@ -85,7 +89,7 @@ SM.add("attackRanged", {
 		} else if(abs(stateTimer - round(stateTimerMax * .5)) == 0) {
 			if(instance_exists(agroId)) {
 				var _aimDir = point_direction(x, y, agroId.x, agroId.y);
-				script_createAttack(obj_fireJet, x + lengthdir_x(attackCreateDist, _aimDir), y + lengthdir_y(attackCreateDist, _aimDir), _aimDir, height, 1.3, .8,,, damage, knockback, knockbackHeight, 5);
+				script_createAttack(obj_fireJet, x + lengthdir_x(attackCreateDist, _aimDir), y + lengthdir_y(attackCreateDist, _aimDir), _aimDir, height, 1.3, .8,,, magicDamage, knockback, knockbackHeight, 5);
 			}
 		}
     },

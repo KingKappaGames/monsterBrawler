@@ -34,7 +34,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_throwingKnife",
+    "path":"sprites/spr_throwingKnife/spr_throwingKnife.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

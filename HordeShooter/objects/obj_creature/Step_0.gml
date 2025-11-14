@@ -41,7 +41,7 @@ if(poise < poiseMax) {
 heightChange = min(10, heightChange); // keep it from doing absurd things..
 height = min(500, height);
 
-depth = -(y + 24) - height;
+depth = -(y + 24);
 
 //
 //dashCooldown--;

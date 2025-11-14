@@ -32,6 +32,6 @@ hit = function() {
 
 elementFunc = function(damageAOEDropOff, targetId) {
 	if(random(1) < damageAOEDropOff) {
-		targetId.acidic = max(targetId.acidic, 240 + 240 * damageAOEDropOff);
+		targetId.applyAcidic(240 + 240 * damageAOEDropOff);
 	}
 }

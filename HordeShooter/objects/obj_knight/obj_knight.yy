@@ -34,7 +34,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_knightIdle",
+    "path":"sprites/spr_knightIdle/spr_knightIdle.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

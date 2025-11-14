@@ -34,7 +34,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_barbarianHead",
+    "path":"sprites/spr_barbarianHead/spr_barbarianHead.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

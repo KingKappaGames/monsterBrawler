@@ -34,7 +34,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_flameMonsterJumpStart",
+    "path":"sprites/spr_flameMonsterJumpStart/spr_flameMonsterJumpStart.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

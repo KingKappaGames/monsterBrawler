@@ -8,12 +8,12 @@ stun = 1000;
 knockback = 0;
 knockbackHeight = 0;
 
-height = 190;
+height = 170;
 heightHitRange = 9999;
 
 hitDurationMin = 0;
 
-radius = 230;
+radius = 190;
 
 sprite_index = spr_thunderCloud;
 

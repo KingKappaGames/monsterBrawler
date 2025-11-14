@@ -21,27 +21,25 @@ function script_AOEDamageHit(allegianceSet = allegiance, xx = x, yy = y, radius 
 			if(!intangible) { 
 				if(!array_contains(exclusions, id)) { // if this target is not in the exclusions passed in (don't hit white listed things, basically)
 					if(object_is_ancestor(object_index, obj_creature)) {
-						if(script_judgeAllegiance(allegianceSet, allegiance) > .5) {
-							continue; // if is NOT friendly (and only creatures can be friendly) then skip this creature
+						if(script_judgeAllegiance(allegianceSet, allegiance) < .5) {
+							var _aoeDropOff = clamp(1 - (point_distance(xx, yy, x, y) / radius), .1, 1); // this is what would determine the damage at a given distance, could be switched to an equation or some other sort of adjustment
+					
+							var _knockbackDone = knockbackStrength * _aoeDropOff;
+							
+							if(is_undefined(stun)) {
+								stun = power(_knockbackDone, 1.5);
+							} else {
+								stun *= _aoeDropOff;
+							}
+							if(!is_undefined(func)) {
+								func(_aoeDropOff, id);
+							}
+							
+							takeDamage(ceil(damage * _aoeDropOff), is_undefined(knockbackDirection) ? point_direction(xx, yy, x, y) : knockbackDirection, _knockbackDone, knockbackHeight * _aoeDropOff, stun);
+							_hits[_hitNum] = id; // add to the hit registry
+							_hitNum++;
 						}
 					}
-					
-					var _aoeDropOff = clamp(1 - (point_distance(xx, yy, x, y) / radius), .1, 1); // this is what would determine the damage at a given distance, could be switched to an equation or some other sort of adjustment
-			
-					var _knockbackDone = knockbackStrength * _aoeDropOff;
-					
-					if(is_undefined(stun)) {
-						stun = power(_knockbackDone, 1.5);
-					} else {
-						stun *= _aoeDropOff;
-					}
-					if(!is_undefined(func)) {
-						func(_aoeDropOff, id);
-					}
-					
-					takeDamage(ceil(damage * _aoeDropOff), is_undefined(knockbackDirection) ? point_direction(xx, yy, x, y) : knockbackDirection, _knockbackDone, knockbackHeight * _aoeDropOff, stun);
-					_hits[_hitNum] = id; // add to the hit registry
-					_hitNum++;
 				}
 			}
 		}

@@ -30,6 +30,6 @@ hit = function() {
 
 elementFunc = function(damageAOEDropOff, targetId) {
 	if(random(1) < damageAOEDropOff) {
-		targetId.burning = max(targetId.burning, 200 + 200 * damageAOEDropOff);
+		targetId.applyBurning(200 + 200 * damageAOEDropOff);
 	}
 }

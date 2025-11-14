@@ -13,7 +13,9 @@ attackRangeRangedMin = 250;
 #region animations
 useSkeletonAnimations = true;
 
-	skeletonBasicItem = choose(spr_swordBranch, spr_swordHammer, spr_swordFantasy, spr_swordSpear, spr_swordBaton);//choose(spr_swordFantasy, spr_swordBranch, spr_swordBlackPoker, spr_swordIce);
+	//skeletonBasicItem = choose(spr_swordBranch, spr_swordHammer, spr_swordFantasy, spr_swordSpear, spr_swordBaton);//choose(spr_swordFantasy, spr_swordBranch, spr_swordBlackPoker, spr_swordIce);
+	item = script_getItemInfo(choose(E_item.branch, E_item.hammer, E_item.broadSword, E_item.baton, E_item.woodenClub));
+	skeletonBasicItem = item.sprite;
 	skeletonBasicHandRightSprite = spr_flameMonsterHandRight;
 	skeletonBasicHandLeftSprite = spr_flameMonsterHandRight;
 	skeletonBasicHeadSprite = spr_jungleHead;

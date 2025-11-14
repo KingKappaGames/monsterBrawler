@@ -3,14 +3,20 @@ event_inherited();
 allegiance = E_allegiance.demon;
 
 HealthMax = 45;
+
 meleeDamage = 6;
+magicDamage = 1;
+knockback = 1;
+knockbackHeight = 1;
+stun = 1;
 
 alwaysBurning = true;
 
 #region animations
 useSkeletonAnimations = true;
 
-	skeletonBasicItem = choose(spr_swordBranch, spr_swordHammer, spr_swordFantasy, spr_swordBlackPoker);//choose(spr_swordFantasy, spr_swordBranch, spr_swordBlackPoker, spr_swordIce);
+	item = script_getItemInfo(choose(E_item.branch, E_item.hammer, E_item.broadSword, E_item.blackPoker));
+	skeletonBasicItem = item.sprite;
 	skeletonBasicHandRightSprite = spr_handDemon;
 	skeletonBasicHandLeftSprite = spr_handDemon;
 	skeletonBasicHeadSprite = spr_flameMonsterHead;

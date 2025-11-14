@@ -10,7 +10,9 @@ alwaysBurning = false;
 #region animations
 useSkeletonAnimations = true;
 
-	skeletonBasicItem = choose(spr_swordBranch, spr_swordHammer, spr_swordIce, spr_swordSpear);
+	//skeletonBasicItem = choose(spr_swordBranch, spr_swordHammer, spr_swordIce, spr_swordSpear);
+	item = script_getItemInfo(choose(E_item.branch, E_item.hammer, E_item.broadSword, E_item.baton, E_item.woodenClub, E_item.woodCutterAxe));
+	skeletonBasicItem = item.sprite;
 	skeletonBasicHandRightSprite = spr_headGlove;
 	skeletonBasicHandLeftSprite = spr_headGlove;
 	skeletonBasicHeadSprite = spr_eskimoHead;

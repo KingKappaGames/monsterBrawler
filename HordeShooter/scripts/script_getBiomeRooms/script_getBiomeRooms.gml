@@ -10,7 +10,7 @@ function script_getBiomeRooms(biome, returnRandom = false) {
 	} else if(biome == E_biome.lava) {
 		_roomSet = [rm_mapPlaza, rm_mapVolcanoFlat];
 	} else if(biome == E_biome.ice) {
-		_roomSet = [rm_mapIceOpen, rm_mapIcePit];
+		_roomSet = [rm_mapIceOpen, rm_mapIcePit, rm_mapIceFlats];
 	} else if(biome == E_biome.city) {
 		_roomSet = [rm_mapVillage];
 	} else if(biome == E_biome.swamp) {

@@ -5,11 +5,11 @@ allegiance = E_allegiance.knight;
 HealthMax = 65;
 poiseMax = 500;
 
-attackRange = 150;
-
-damage = 5;
 meleeDamage = 10;
-knockback = 4;
+magicDamage = 1;
+knockback = 1;
+knockbackHeight = 1;
+stun = 1;
 
 attackRange = 50;
 attackRangeRangedMax = 180;
@@ -18,7 +18,9 @@ attackRangeRangedMin = 110;
 #region animation
 useSkeletonAnimations = true;
 
-	skeletonBasicItem = choose(spr_swordBlackPoker, spr_swordFantasy, spr_swordSpear);//choose(spr_swordFantasy, spr_swordBranch, spr_swordBlackPoker, spr_swordIce);
+	//skeletonBasicItem = choose(spr_swordBlackPoker, spr_swordFantasy, spr_swordSpear);//choose(spr_swordFantasy, spr_swordBranch, spr_swordBlackPoker, spr_swordIce);
+	item = script_getItemInfo(choose(E_item.branch, E_item.hammer, E_item.broadSword, E_item.baton, E_item.woodenClub));
+	skeletonBasicItem = item.sprite;
 	skeletonBasicHandRightSprite = spr_flameMonsterHandRight;
 	skeletonBasicHandLeftSprite = spr_flameMonsterHandRight;
 	skeletonBasicHeadSprite = spr_monkHead;

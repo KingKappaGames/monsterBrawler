@@ -3,14 +3,20 @@ event_inherited();
 allegiance = E_allegiance.barbarian;
 
 HealthMax = 35;
+
 meleeDamage = 6;
+magicDamage = 1;
+knockback = 1;
+knockbackHeight = 1;
+stun = 1;
 
 alwaysBurning = false;
 
 #region animations
 useSkeletonAnimations = true;
 
-	skeletonBasicItem = choose(spr_swordBranch, spr_swordHammer, spr_swordFantasy, spr_swordBaton, spr_swordClub);//choose(spr_swordFantasy, spr_swordBranch, spr_swordBlackPoker, spr_swordIce);
+	item = script_getItemInfo(choose(E_item.branch, E_item.hammer, E_item.broadSword, E_item.baton, E_item.woodenClub));
+	skeletonBasicItem = item.sprite;
 	skeletonBasicHandRightSprite = spr_flameMonsterHandRight;
 	skeletonBasicHandLeftSprite = spr_flameMonsterHandRight;
 	skeletonBasicHeadSprite = spr_barbarianHead;

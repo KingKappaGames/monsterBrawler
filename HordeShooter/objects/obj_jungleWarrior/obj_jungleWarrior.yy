@@ -34,7 +34,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_jungleHead",
+    "path":"sprites/spr_jungleHead/spr_jungleHead.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

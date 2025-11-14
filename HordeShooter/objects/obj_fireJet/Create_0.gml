@@ -19,7 +19,7 @@ hitSingle = false;
 hitStopOn = false;
 
 hitEnemy = function(hitId) {
-	hitId.burning = max(480, hitId.burning);
+	hitId.applyBurning(480);
 	hitId.takeDamage(damage, direction, knockback, knockbackHeight, stun);
 }
 

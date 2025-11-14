@@ -34,7 +34,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_monkJumpRise",
+    "path":"sprites/spr_monkJumpRise/spr_monkJumpRise.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

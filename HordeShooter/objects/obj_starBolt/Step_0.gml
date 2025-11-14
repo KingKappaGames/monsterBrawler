@@ -2,9 +2,9 @@ event_inherited();
 
 image_angle += spinSpeed;
 
-part_type_orientation(global.basicSmoothTrail, direction, direction, 0, 0, 0);
+part_type_orientation(global.partSmoothTrail, direction, direction, 0, 0, 0);
 
-OWP_createPart(global.basicSmoothTrail, x - hspeed, y - vspeed, 1, #ffff99);
+OWP_createPart(global.partSmoothTrail, x - hspeed, y - vspeed, 1, #ffff99);
 
 part_type_speed(global.partStarMini, 0, 1.8, -.125, 0);
 

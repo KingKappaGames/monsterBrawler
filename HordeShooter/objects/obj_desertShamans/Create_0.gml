@@ -3,7 +3,12 @@ event_inherited();
 allegiance = E_allegiance.desert;
 
 HealthMax = 24;
+
 meleeDamage = 11;
+magicDamage = 1;
+knockback = 1;
+knockbackHeight = 1;
+stun = 1;
 
 alwaysBurning = false;
 
@@ -13,7 +18,9 @@ attackRangeRangedMin = 250;
 #region animations
 useSkeletonAnimations = true;
 
-	skeletonBasicItem = choose(spr_swordDesertStaff, spr_swordDesertStaff);//choose(spr_swordFantasy, spr_swordBranch, spr_swordBlackPoker, spr_swordIce);
+	//skeletonBasicItem = choose(spr_swordDesertStaff, spr_swordDesertStaff);//choose(spr_swordFantasy, spr_swordBranch, spr_swordBlackPoker, spr_swordIce);
+	item = script_getItemInfo(choose(E_item.branch, E_item.hammer, E_item.broadSword, E_item.baton, E_item.woodenClub));
+	skeletonBasicItem = item.sprite;
 	skeletonBasicHandRightSprite = spr_flameMonsterHandLeft;
 	skeletonBasicHandLeftSprite = spr_flameMonsterHandRight;
 	skeletonBasicHeadSprite = spr_desertShamanHead;

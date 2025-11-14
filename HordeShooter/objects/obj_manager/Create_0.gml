@@ -21,6 +21,16 @@ global.cameraScale = .5;
 
 global.animations = [spr_refIdle, spr_refRun, spr_refHit, spr_refJumpStart, spr_refJumpRise, spr_refJumpFall];
 
+//item, hand right, hand left, head, body, legs
+enum E_bodyPart {
+	item = 0,
+	rightHand = 1,
+	leftHand = 2,
+	head = 3,
+	body = 4,
+	legs = 5
+}
+
 #macro bodyPartCount 6
 
 enum E_animation {
@@ -31,6 +41,8 @@ enum E_animation {
 	rise = 4, 
 	fall = 5,
 }
+
+//off hand magic cast animation todo
 
 global.skeletonRigData = [
 	[ // frames
@@ -182,7 +194,7 @@ for(var _mapX = 0; _mapX < worldSize; _mapX++) {
 		var _biomeScale = .01;
 		var _biome = round(clamp(-2 + script_perlin((_mapX - worldSize * .5) * biomeGridSize * _biomeScale + 1_000_000, (_mapY - worldSize * .5) * biomeGridSize * _biomeScale + 1_000_000, E_biome.biomeCount - 1) * 1.05, 0, E_biome.biomeCount - 1)); // -1 + *1.2 is just to widen the range... Need to make some better method sampling which biomes are near and common
 		var _room = script_getBiomeRooms(_biome, true);
-		worldDataGrid[_mapX][_mapY] = [_biome, _room, irandom(biomeGridSize - roomSize), irandom(biomeGridSize - roomSize)];
+		worldDataGrid[_mapX][_mapY] = [_biome, _room, irandom_range(200, biomeGridSize - roomSize - 200), irandom_range(200, biomeGridSize - roomSize - 200)];
 	}
 }
 
@@ -487,18 +499,25 @@ part_type_speed(_itemGlimmer, 0.2, .4, -.001, 0);
 part_type_direction(_itemGlimmer, 0, 360, 0, 0);
 part_type_gravity(_itemGlimmer, -.003, 270);
 
-global.basicSmoothTrail = part_type_create(); // basic white, size and alpha fade trail
-var _smoothTrail = global.basicSmoothTrail;
+global.partSmoothTrail = part_type_create(); // basic white, size and alpha fade trail
+var _smoothTrail = global.partSmoothTrail;
 part_type_life(_smoothTrail, 28, 28);
 part_type_shape(_smoothTrail, pt_shape_disk);
 part_type_size_x(_smoothTrail, .3, .3, 0, 0);
 part_type_size_y(_smoothTrail, .2, .2, -.01, 0);
-part_type_gravity(_smoothTrail, .0, 90);
 part_type_speed(_smoothTrail, 0, 0, 0, 0);
-part_type_direction(_smoothTrail, 0, 360, 0, 0);
-part_type_orientation(_smoothTrail, 0, 360, 0, 0, 0);
 part_type_color1(_smoothTrail, #ffffff);
 part_type_alpha3(_smoothTrail, 1, 1, 0);
+
+global.partSmoothTrailTiny = part_type_create(); // basic white, size and alpha fade trail
+var _smoothTrailMini = global.partSmoothTrailTiny;
+part_type_life(_smoothTrailMini, 28, 28);
+part_type_shape(_smoothTrailMini, pt_shape_disk);
+part_type_size_x(_smoothTrailMini, .3, .3, 0, 0);
+part_type_size_y(_smoothTrailMini, .1, .1, -.004, 0);
+part_type_speed(_smoothTrailMini, 0, 0, 0, 0);
+part_type_color1(_smoothTrailMini, #ffffff);
+part_type_alpha3(_smoothTrailMini, 1, 1, 0);
 
 #endregion
 

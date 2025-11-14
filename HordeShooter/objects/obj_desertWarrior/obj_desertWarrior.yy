@@ -34,7 +34,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_swordDesertStaff",
+    "path":"sprites/spr_swordDesertStaff/spr_swordDesertStaff.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

@@ -2,19 +2,20 @@ HealthMax = 25;
 Health = HealthMax;
 
 meleeDamage = 5;
-damage = 1;
+magicDamage = 1;
+
 knockback = 1;
 knockbackHeight = 1;
 stun = 10;
 
 meleeDamageBase = 5;
-damageBase = 1;
+magicDamageBase = 1;
 knockbackBase = 1;
 knockbackHeightBase = 1;
 stunBase = 10;
 
-itemMeleeDamage = 1;
-itemDamage = 1;
+itemMeleDamage = 1;
+itemMagicDamage = 1;
 itemKnockback = 1;
 itemKnockbackHeight = 1;
 itemStun = 1;
@@ -24,15 +25,17 @@ attackRangeRangedMax = 450;
 attackRangeRangedMin = 240;
 attackCreateDist = 15; // this is the distance from the origin that spells and attacks are placed, aka the maw, aka the reach, aka the start distance of a spell from it's castor
 
-calculateStats = function() { // WIP TODO
-	meleeDamage = meleeDamageBase * itemMeleeDamage;
-	damage = damageBase * itemDamage;
-	knockback = knockbackBase * itemKnockback;
-	knockbackHeight = knockbackHeightBase * itemKnockbackHeight;
-	stun = stunBase * itemStun;
-}
+item = -1;
 
-meleeAttackType = obj_attackMeleeSwing;
+meleeAttackType = obj_attackMeleeSwing; // there needs to be a library of which attacks / objects relate to which states and so when you navigate the attack states you can send the creature to the correct state of attacking and the state will just grab the attack there, or even store it in that code since attacks don't really change
+
+magicBasic = obj_fireJet;
+magicShot = obj_fireBolt;
+magicBurst = obj_bullet;
+magicRadial = obj_radiantAttack;
+magicJump = obj_radiantAttack;
+magicCall = obj_thunderCloud;
+magicSummon = obj_priest; // huh? How did i get here - the priest
 
 meleeHitFunc = function(target, self) {
 	
@@ -392,6 +395,8 @@ SM.add("die", {
 			script_disintegrateObject(,, sprite_width / 4, sprite_height / 4);
 			if(irandom(10) == 0) {
 				script_createPickup(x, y + 5, obj_pickup);
+			} else if(irandom(10) == 0) {
+				script_createItemPickup(x, y + 5, item.index);
 			}
 			instance_destroy();
 		}
@@ -530,6 +535,8 @@ spawn = function() {
 /// @desc Function Called at the end of the child instances create event, so it's pre script ending but post all create code, if you want post scripts then use the spawn() function
 postCreate = function() {
 	(useSkeletonAnimations ? script_setSkeletonAnimation : script_setAnimation)(animIdle, 0, 2.5);
+	
+	calculateStats();
 }
 
 /// @desc RETURNS LETHALITY
@@ -539,6 +546,7 @@ postCreate = function() {
 /// @param {real} heightForce 
 /// @returns {bool} LETHAL
 takeDamage = function(damage, direction, force, heightForce, stun = undefined, makeHitNumber = true, doEffects = true) {
+	damage = ceil(damage);
 	Health = min(HealthMax, Health - damage);
 	
 	script_createHitNum(damage);
@@ -572,8 +580,32 @@ takeDamage = function(damage, direction, force, heightForce, stun = undefined, m
 	}
 }
 
+calculateStats = function() {
+	meleeHitFunc = item.hitFunc;
+	
+	meleeDamage = meleeDamageBase * itemMeleDamage;
+	magicDamage = magicDamageBase * itemMagicDamage;
+	knockback = knockbackBase * itemKnockback;
+	knockbackHeight = knockbackHeightBase * itemKnockbackHeight;
+	stun = stunBase * itemStun;
+}
+
 die = function() {
 	SM.change("die");
+}
+
+applyBurning = function(durationPower) {
+	burning = max(burning, durationPower);
+}
+
+applyFreezing = function(durationPower) {
+	if(SM.get_current_state() != "frozen") {
+		SM.change("frozen",,, durationPower);
+	}
+}
+
+applyAcidic = function(durationPower) {
+	acidic = max(acidic, durationPower);
 }
 
 #region magic functions

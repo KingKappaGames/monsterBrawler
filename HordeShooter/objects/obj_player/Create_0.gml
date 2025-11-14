@@ -33,18 +33,41 @@ allegiance = E_allegiance.player;
 
 #region animations
 useSkeletonAnimations = true;
+
+//skeletonBasicItem = choose(spr_swordBranch, spr_swordHammer, spr_swordIce, spr_swordSpear);
+	item = script_getItemInfo(E_item.branch);
+	skeletonBasicItem = item.sprite;
+	skeletonBasicHandRightSprite = spr_headGlove;
+	skeletonBasicHandLeftSprite = spr_headGlove;
+	skeletonBasicHeadSprite = spr_eskimoHead;
+	skeletonBasicBodySprite = spr_eskimoBody;
+
+	skeletonData = [
+			[ [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsIdle, 0] ],
+			  [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsIdle, 1] ], ],
+			[ [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsRun, 0] ],
+			  [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsRun, 1] ],
+			  [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsRun, 2] ],
+			  [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsRun, 3] ], ],
+			[ [ [-1, 0], [-1, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsHit, 0] ],
+			  [ [-1, 0], [-1, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsHit, 1] ],
+			  [ [-1, 0], [-1, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsHit, 2] ],
+			  [ [-1, 0], [-1, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsHit, 3] ],
+			  [ [-1, 0], [-1, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsHit, 4] ], ],
+			[ [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsJumpStart, 0] ],
+			  [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsJumpStart, 1] ],
+			  [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsJumpStart, 2] ],
+			  [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsJumpStart, 3] ], ],
+			[ [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsJumpRise, 0] ],
+			  [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsJumpRise, 1] ], ],
+			[ [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsJumpFall, 0] ],
+			  [ [skeletonBasicItem, 0], [skeletonBasicHandRightSprite, 0], [skeletonBasicHandLeftSprite, 0], [skeletonBasicHeadSprite, 0], [skeletonBasicBodySprite, 0], [spr_flameMonsterLegsJumpFall, 1] ], ],
+	]
 #endregion
 
 deathSound = snd_crunch;
 
 var sec = game_get_speed(gamespeed_fps)
-
-weaponType = 1; //1 machine gun, 2 rockets, 3 ???
-
-fireRate = 20;
-shotDelay = 0;
-damage = 1;
-shotSpeed = 1;
 
 spreadMinimum = 0;
 spread = 3;
@@ -97,10 +120,14 @@ SM.add("idle", {
 			}
 			
 			if(InputCheck(INPUT_VERB.JUMP)) {
-				SM.change("jump");
+				if(InputCheck(INPUT_VERB.MAGIC)) {
+					SM.change("jumpMagic");
+				} else {
+					SM.change("jump");
+				}
+			} else {
+				weaponControls();
 			}
-			
-			weaponControls();
 		}
     },
 	leave: function() {
@@ -141,15 +168,43 @@ SM.add("jump", {
 		if(stateTimer > 0) {
 			stateTimer--;
 			if(stateTimer <= 0) {
-				if(keyboard_check(vk_shift)) {
-					heightChange = jumpSpeed * 1.5;
-					poise *= .4;
+				heightChange = jumpSpeed;
+				poise *= .4;
+				SM.change("float");
+			}
+		}
+    },
+	leave: function() {
+		
+	},
+});
+
+SM.add("jumpMagic", {
+    enter: function() {
+		(useSkeletonAnimations ? script_setSkeletonAnimation : script_setAnimation)(animJumpStart, 0, 1, 5, true);
+		script_setEventTimer(10);
+    },
+    step: function() {
+		if(stateTimer > 0) {
+			stateTimer--;
+			if(stateTimer <= 0) {
+				heightChange = jumpSpeed * 1.5;
+				poise *= .4;
 					
-					doJumpMagic();
-				} else {
-					heightChange = jumpSpeed;
-					poise *= .4;
-				}
+				trailPart = global.partTrailChunk;
+				trailDuration = 55;
+				trailPartColor = #cfdfff;
+				
+				audio_play_sound(snd_iceSpellImpact, 0, 0);
+				script_AOEDamageHit(,,, 200, 10, 5,, 5, 200,,, jumpMagicHitFunc);
+				OWP_createPartExtColor(global.partThickHaze, x, y, 5, #bbffff,, 70, 0, 1);
+				part_type_speed(global.partStar, 2, 5, -.125, 0);
+				OWP_createPartExtColor(global.partStar, x, y, 20, #ccffff,, 20, 20, 5);
+				part_type_speed(global.partOverwrittenTrailer, 3, 5, 0, 0);
+				OWP_createPartExt(global.partOverwrittenTrailer, x, y, 12,, 0, 10, 1);
+				
+				//create magicJump
+				
 				SM.change("float");
 			}
 		}
@@ -185,17 +240,25 @@ SM.add("float", {
 });
 
 SM.add("melee", {
-	enter: function(duration = undefined, type = obj_attackMeleeSwing) {
-		meleeAttackType = type;
-		if(type == obj_attackMeleeSwing) {
+	enter: function(duration = undefined, type = "basic") {
+		var _anim = animHit;
+		if(type == "basic") {
 			duration = 14;
-		} else {
+			meleeAttackType = obj_attackMeleeSwing;
+			//_anim = basic;
+		} else if(type == "magic") {
 			duration = 14;
+			meleeAttackType = obj_attackMeleeSwing;
+			//_anim = magicMelee; ?
+		} else if(type == "burst") {
+			duration = 14;
+			meleeAttackType = obj_attackMeleeSwing;
+			//_anim = magicMelee; ?
 		}
 		
 		script_setEventTimer(duration);
 		
-		(useSkeletonAnimations ? script_setSkeletonAnimation : script_setAnimation)(animHit, 0, 1, 14, true);
+		(useSkeletonAnimations ? script_setSkeletonAnimation : script_setAnimation)(_anim, 0, 1, duration, true);
 		
 		directionFacing = x > mouse_x ? -1 : 1;
     },
@@ -217,6 +280,175 @@ SM.add("melee", {
 	}
 });
 
+SM.add("magicBasic", {
+	enter: function(durationMult = 1) {
+		var _duration = 14 * durationMult;
+		
+		script_setEventTimer(_duration);
+		
+		(useSkeletonAnimations ? script_setSkeletonAnimation : script_setAnimation)(animHit, 0, 1, _duration, true);
+		
+		directionFacing = x > mouse_x ? -1 : 1;
+    },
+    step: function() {
+		stateTimer--;
+		if(stateTimer <= 0) {
+			if(height > 0) {
+				SM.change("float");
+			} else {
+				SM.change("idle");
+			}
+		} else if(stateTimer == round(stateTimerMax * .5)) {
+			var _mouseDir = point_direction(x, y, mouse_x, mouse_y);
+			script_createAttack(magicBasic, x + lengthdir_x(attackCreateDist, _mouseDir), y + lengthdir_y(attackCreateDist, _mouseDir), _mouseDir + recoil, height,,,,, irandom_range(magicDamage * .8, magicDamage * 1.2)); // recoil..?
+		}
+    },
+	leave: function() {
+		
+	}
+});
+
+SM.add("magicShot", {
+	enter: function(durationMult = 1) {
+		var _duration = 18 * durationMult;
+		
+		script_setEventTimer(_duration);
+		
+		(useSkeletonAnimations ? script_setSkeletonAnimation : script_setAnimation)(animHit, 0, 1, _duration, true);
+		
+		directionFacing = x > mouse_x ? -1 : 1;
+    },
+    step: function() {
+		stateTimer--;
+		if(stateTimer <= 0) {
+			if(height > 0) {
+				SM.change("float");
+			} else {
+				SM.change("idle");
+			}
+		} else if(stateTimer == round(stateTimerMax * .5)) {
+			var _mouseDir = point_direction(x, y, mouse_x, mouse_y);
+			script_createAttack(magicShot, x + lengthdir_x(attackCreateDist, _mouseDir), y + lengthdir_y(attackCreateDist, _mouseDir), _mouseDir + recoil, height,,,,, irandom_range(magicDamage * .8, magicDamage * 1.2)); // recoil..?
+		}
+    },
+	leave: function() {
+		
+	}
+});
+
+SM.add("magicBurst", {
+	enter: function(durationMult = 1) {
+		var _duration = 21 * durationMult;
+		
+		script_setEventTimer(_duration);
+		
+		(useSkeletonAnimations ? script_setSkeletonAnimation : script_setAnimation)(animHit, 0, 1, _duration, true);
+		
+		directionFacing = x > mouse_x ? -1 : 1;
+    },
+    step: function() {
+		stateTimer--;
+		if(stateTimer <= 0) {
+			if(height > 0) {
+				SM.change("float");
+			} else {
+				SM.change("idle");
+			}
+		} else if(stateTimer == round(stateTimerMax * .5)) {
+			var _mouseDir = point_direction(x, y, mouse_x, mouse_y);
+			repeat(irandom_range(3, 5)) {
+				script_createAttack(magicBurst, x + lengthdir_x(attackCreateDist, _mouseDir), y + lengthdir_y(attackCreateDist, _mouseDir), _mouseDir + recoil + random_range(-11, 11), height, random_range(.7, 1.1),,,, random_range(magicDamage * .8, magicDamage * 1.2)); // recoil..?
+			}
+		}
+    },
+	leave: function() {
+		
+	}
+});
+
+SM.add("magicRadial", {
+	enter: function(durationMult = 1) {
+		var _duration = 35 * durationMult;
+		
+		script_setEventTimer(_duration);
+		
+		(useSkeletonAnimations ? script_setSkeletonAnimation : script_setAnimation)(animJumpStart, 0, 1, _duration, true);
+		
+		directionFacing = x > mouse_x ? -1 : 1;
+    },
+    step: function() {
+		stateTimer--;
+		if(stateTimer <= 0) {
+			if(height > 0) {
+				SM.change("float");
+			} else {
+				SM.change("idle");
+			}
+		} else if(stateTimer == round(stateTimerMax * .5)) {
+			script_createAttackRadiant(magicRadial, x, y, 0,, 10, 32, 110, .66, c_blue,,, random_range(magicDamage * .8, magicDamage * 1.25));
+		}
+    },
+	leave: function() {
+		
+	}
+});
+
+SM.add("magicCall", {
+	enter: function(durationMult = 1) {
+		var _duration = 60 * durationMult;
+		
+		script_setEventTimer(_duration);
+		
+		(useSkeletonAnimations ? script_setSkeletonAnimation : script_setAnimation)(animHit, 0, 1, _duration, true);
+		
+		directionFacing = x > mouse_x ? -1 : 1;
+    },
+    step: function() {
+		stateTimer--;
+		if(stateTimer <= 0) {
+			if(height > 0) {
+				SM.change("float");
+			} else {
+				SM.change("idle");
+			}
+		} else if(stateTimer == round(stateTimerMax * .5)) {
+			var _mouseDir = point_direction(x, y, mouse_x, mouse_y);
+			script_createAttack(magicCall, x + lengthdir_x(attackCreateDist, _mouseDir), y + lengthdir_y(attackCreateDist, _mouseDir), _mouseDir,,,,,, irandom_range(magicDamage * .8, magicDamage * 1.2)); // recoil..?
+		}
+    },
+	leave: function() {
+		
+	}
+});
+
+SM.add("magicSummon", {
+	enter: function(durationMult = 1) {
+		var _duration = 80 * durationMult;
+		
+		script_setEventTimer(_duration);
+		
+		(useSkeletonAnimations ? script_setSkeletonAnimation : script_setAnimation)(animJumpStart, 0, 1, _duration, true);
+		
+		directionFacing = x > mouse_x ? -1 : 1;
+    },
+    step: function() {
+		stateTimer--;
+		if(stateTimer <= 0) {
+			if(height > 0) {
+				SM.change("float");
+			} else {
+				SM.change("idle");
+			}
+		} else if(stateTimer == round(stateTimerMax * .5)) {
+			var _mouseDir = point_direction(x, y, mouse_x, mouse_y);
+			script_spawnCreature(magicSummon, 1, x + lengthdir_x(attackCreateDist, _mouseDir), y + lengthdir_y(attackCreateDist, _mouseDir)); // recoil..?
+		}
+    },
+	leave: function() {
+		
+	}
+});
+
 
 
 refreshCondition = function() {
@@ -229,31 +461,11 @@ spawn = function() {
 	//stuff to do on creation (after create event and all, last step)
 }
 
-shootBullet = function() {
-	var _bulletType = obj_bullet;
-	var _spawnArea = 0;
-	if(weaponType == 2) {
-		_bulletType = obj_rocket;
-		_spawnArea = 50;
-	} else if(weaponType == 3) {
-		_bulletType = obj_fireJet;
-		_spawnArea = 0;
-	} else if(weaponType == 4) {
-		_bulletType = obj_starBolt;
-		_spawnArea = 0;
-	}
-	
-	var _shot = script_createAttack(_bulletType, x + dcos(directionAiming) * 16 + irandom_range(-_spawnArea, _spawnArea), y - dsin(directionAiming) * 16 + irandom_range(-_spawnArea, _spawnArea), directionAiming + random_range(-spread, spread), height, shotSpeed,,,, damage);
-
-	spread += 1;
-	recoil += 2;
-}
-
 movementControls = function() {
 	directionAiming = point_direction(x, y, mouse_x, mouse_y);
 	
 	var _speed = height > 0 ? moveSpeedAir : moveSpeed;
-	if(keyboard_check(vk_shift)) {
+	if(keyboard_check(vk_alt)) {
 		_speed *= 9;
 	}
 	
@@ -308,51 +520,33 @@ jumpMagicHitFunc = function(damageAOEDropOff, targetId) {
 	}
 }
 
-doJumpMagic = function() {
-	trailPart = global.partTrailChunk;
-	trailDuration = 55;
-	trailPartColor = #cfdfff;
-	
-	audio_play_sound(snd_iceSpellImpact, 0, 0);
-	script_AOEDamageHit(,,, 200, 10, 5,, 5, 200,,, jumpMagicHitFunc);
-	OWP_createPartExtColor(global.partThickHaze, x, y, 5, #bbffff,, 70, 0, 1);
-	part_type_speed(global.partStar, 2, 5, -.125, 0);
-	OWP_createPartExtColor(global.partStar, x, y, 20, #ccffff,, 20, 20, 5);
-	part_type_speed(global.partOverwrittenTrailer, 3, 5, 0, 0);
-	OWP_createPartExt(global.partOverwrittenTrailer, x, y, 12,, 0, 10, 1);
+weaponControls = function() {
+	if(InputCheck(INPUT_VERB.RIGHTCLICK)) {
+		if(InputCheck(INPUT_VERB.MAGIC)) {
+			SM.change("magicShot");
+		} else if(InputCheck(INPUT_VERB.BURST)) {
+			SM.change("melee",,, "burst");
+		} else {
+			SM.change("magicBasic");
+		}
+	} else if(InputCheck(INPUT_VERB.LEFTCLICK)) {
+		if(InputCheck(INPUT_VERB.MAGIC)) {
+			SM.change("melee",,, "magic");
+		} else if(InputCheck(INPUT_VERB.BURST)) {
+			SM.change("magicBurst");
+		} else {
+			SM.change("melee",,, "basic");
+		}
+		//instance_create_depth(mouse_x, mouse_y, depth, obj_smiteBeam);
+	} else if(InputCheck(INPUT_VERB.SPECIAL)) { // C
+		if(InputCheck(INPUT_VERB.MAGIC)) {
+			SM.change("magicCall");
+		} else if(InputCheck(INPUT_VERB.BURST)) {
+			SM.change("magicRadial"); // ??
+		} else {
+			SM.change("magicSummon");
+		}
+	}
 }
 
-weaponControls = function() {
-	if(mouse_check_button(mb_right)) {
-		shotDelay--;
-		if(shotDelay <= 0) {
-			shotDelay = 60 / fireRate;
-			shootBullet();
-		}
-	} else if(mouse_check_button_released(mb_right)) {
-		shotDelay = 60 / fireRate;
-	}
-	
-	if(mouse_check_button_released(mb_left)) {
-		SM.change("melee",,, "basic");
-		//instance_create_depth(mouse_x, mouse_y, depth, obj_smiteBeam);
-	}
-	
-	if(keyboard_check_released(ord("J"))) {
-		
-	}
-	
-	if(keyboard_check_pressed(ord("M"))) {
-		mortaring = 1;
-		mortarXstart = mouse_x;
-		mortarYstart = mouse_y;
-	} else if(keyboard_check_released(ord("M"))) {
-		var _plane = instance_create_depth(0, 0, 0, obj_plane);
-		_plane.startRunX = mortarXstart;
-		_plane.startRunY = mortarYstart;
-		_plane.endRunX = mouse_x;
-		_plane.endRunY = mouse_y;
-		_plane.getRoute();
-		mortaring = 0;
-	}
-}
+postCreate();

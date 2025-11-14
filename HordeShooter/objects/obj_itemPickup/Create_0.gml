@@ -1,13 +1,15 @@
 sprite_index = spr_swordTemplate;
 
-damage = -20;
+image_angle = 270;
 
 range = 30;
 
 itemInfo = -1;
 
+pickupDelay = 45;
+
 pickUp = function(receiver) { 
-	script_equipItem() receiver
+	script_equipItem(itemInfo, receiver);
 	
 	audio_play_sound(snd_Blap, 0, 0, 1, undefined, random_range(.8, 1.25));
 	

@@ -1,1 +1,1 @@
-draw_sprite_ext(sprite_index, image_index, x, y, image_xscale * dcos(current_time * .35), .9 + dsin(current_time * .35 + 180) * .1, 0, c_white, 1);
+draw_sprite_ext(sprite_index, image_index, x, y, image_xscale * (.9 + dcos(current_time * .6) * .1), image_yscale * (.9 + dsin(current_time * .6) * .1), 0, c_white, 1);

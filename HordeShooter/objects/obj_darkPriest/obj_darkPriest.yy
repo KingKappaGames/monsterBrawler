@@ -34,7 +34,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_monkRun",
+    "path":"sprites/spr_monkRun/spr_monkRun.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }
