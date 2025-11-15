@@ -13,7 +13,7 @@ heightHitRange = 9999;
 
 hitDurationMin = 0;
 
-radius = 190;
+radius = 200;
 
 sprite_index = spr_thunderCloud;
 

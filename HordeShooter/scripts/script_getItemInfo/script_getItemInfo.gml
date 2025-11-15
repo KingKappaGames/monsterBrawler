@@ -115,9 +115,9 @@ function script_getItemInfo(itemIndex) {
 			hitFunc = undefined;
 			itemMeleDamage = 1;
 			itemMagicDamage = 1;
-			itemKnockback = 1;
+			itemKnockback = 1.75;
 			itemKnockbackHeight = 1;
-			itemStun = 1.5;
+			itemStun = 1.75;
 		} else if(itemIndex == E_item.woodenCane) {
 			sprite = spr_swordCane;
 			hitFunc = undefined;

@@ -15,7 +15,8 @@ alwaysBurning = true;
 #region animations
 useSkeletonAnimations = true;
 
-	item = script_getItemInfo(choose(E_item.branch, E_item.hammer, E_item.broadSword, E_item.blackPoker));
+	item = undefined;
+	script_equipItem(script_getItemInfo(choose(E_item.branch, E_item.hammer, E_item.broadSword, E_item.blackPoker)),, false);
 	skeletonBasicItem = item.sprite;
 	skeletonBasicHandRightSprite = spr_handDemon;
 	skeletonBasicHandLeftSprite = spr_handDemon;

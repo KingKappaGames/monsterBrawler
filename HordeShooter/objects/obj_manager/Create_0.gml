@@ -87,16 +87,17 @@ global.skeletonRigData = [
 
 #region allegiances
 
-#macro allegianceCount 7
+#macro allegianceCount 8
 
 enum E_allegiance {
-	player = 0, 
-	barbarian = 1,
-	knight = 2, 
-	eskimo = 3,
-	demon = 4,
-	swamp = 5,
-	desert = 6,
+	fightEveryone,
+	player, 
+	barbarian,
+	knight, 
+	eskimo,
+	demon,
+	swamp,
+	desert,
 }
 
 global.allegianceGrid = ds_grid_create(allegianceCount, allegianceCount); // each faction x each faction, gives the result of each combination
@@ -108,9 +109,13 @@ for(var _x = 0; _x < allegianceCount; _x++) {
 	}
 }
 
+for(var _fightEveryoneI = 0; _fightEveryoneI < allegianceCount; _fightEveryoneI++) {
+	ds_grid_set(_grid, E_allegiance.fightEveryone, _fightEveryoneI, 0); // they fight everyone bro (except themselves) (how to make things that fight themselves too, just override the self allegiance liking further down ig)
+}
+
 ds_grid_set(_grid, E_allegiance.player, E_allegiance.barbarian, .2); // cascade the relations down the allegiance index
 ds_grid_set(_grid, E_allegiance.player, E_allegiance.knight, 1);
-ds_grid_set(_grid, E_allegiance.player, E_allegiance.eskimo, .6);
+ds_grid_set(_grid, E_allegiance.player, E_allegiance.eskimo, .4);
 ds_grid_set(_grid, E_allegiance.player, E_allegiance.demon, 0);
 ds_grid_set(_grid, E_allegiance.player, E_allegiance.swamp, .35);
 ds_grid_set(_grid, E_allegiance.player, E_allegiance.desert, .4);
@@ -121,7 +126,7 @@ ds_grid_set(_grid, E_allegiance.barbarian, E_allegiance.demon, .4);
 ds_grid_set(_grid, E_allegiance.barbarian, E_allegiance.swamp, .4);
 ds_grid_set(_grid, E_allegiance.barbarian, E_allegiance.desert, .2);
 
-ds_grid_set(_grid, E_allegiance.knight, E_allegiance.eskimo, .7);
+ds_grid_set(_grid, E_allegiance.knight, E_allegiance.eskimo, .45);
 ds_grid_set(_grid, E_allegiance.knight, E_allegiance.demon, 0);
 ds_grid_set(_grid, E_allegiance.knight, E_allegiance.swamp, .35);
 ds_grid_set(_grid, E_allegiance.knight, E_allegiance.desert, .4);
@@ -184,6 +189,16 @@ enum E_biome {
 RoomLoader.DataInit(rm_mapPlaza);
 RoomLoader.DataInit(rm_mapField);
 RoomLoader.DataInit(rm_mapForest);
+RoomLoader.DataInit(rm_mapDesertPits);
+RoomLoader.DataInit(rm_mapDesertPlain);
+RoomLoader.DataInit(rm_mapDesertOpen);
+RoomLoader.DataInit(rm_mapFieldOpen);
+RoomLoader.DataInit(rm_mapIceFlats);
+RoomLoader.DataInit(rm_mapIceOpen);
+RoomLoader.DataInit(rm_mapIcePit);
+RoomLoader.DataInit(rm_mapVillage);
+RoomLoader.DataInit(rm_mapVolcanoFlat);
+RoomLoader.DataInit(rm_mapHayFields);
 
 mapSeed = irandom(100000000);
 

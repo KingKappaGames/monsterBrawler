@@ -6,7 +6,7 @@ function script_getBiomeRooms(biome, returnRandom = false) {
 	if(biome == E_biome.grass) {
 		_roomSet = [rm_mapField, rm_mapFieldOpen, rm_mapForest, rm_mapFieldOpen, rm_mapFieldOpen, rm_mapFieldOpen, rm_mapFieldOpen];
 	} else if(biome == E_biome.village) {
-		_roomSet = [rm_mapVillage];
+		_roomSet = [rm_mapVillage, rm_mapHayFields];
 	} else if(biome == E_biome.lava) {
 		_roomSet = [rm_mapPlaza, rm_mapVolcanoFlat];
 	} else if(biome == E_biome.ice) {

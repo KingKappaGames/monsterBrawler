@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":4,
   "parent":{
-    "name":"knight pieces",
-    "path":"folders/Sprites/humanSpriteSets/bodyPieces/knight pieces.yy",
+    "name":"REFERENCE_SPRITE_SETS",
+    "path":"folders/Sprites/humanSpriteSets/REFERENCE_SPRITE_SETS.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

@@ -9,7 +9,8 @@ meleeDamage = 5;
 useSkeletonAnimations = true;
 
 	//skeletonBasicItem = choose(spr_swordBlackPoker, spr_swordFantasy, spr_swordSpear);//choose(spr_swordFantasy, spr_swordBranch, spr_swordBlackPoker, spr_swordIce);
-	item = script_getItemInfo(choose(E_item.branch, E_item.hammer, E_item.broadSword, E_item.baton, E_item.woodenClub));
+	item = undefined;
+	script_equipItem(script_getItemInfo(choose(E_item.hammer, E_item.broadSword, E_item.baton, E_item.woodenClub, E_item.woodenCane, E_item.woodenSpear)),, false);
 	skeletonBasicItem = item.sprite;
 	skeletonBasicHandRightSprite = spr_flameMonsterHandRight;
 	skeletonBasicHandLeftSprite = spr_flameMonsterHandRight;

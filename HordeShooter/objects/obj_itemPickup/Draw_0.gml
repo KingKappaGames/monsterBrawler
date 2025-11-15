@@ -1,1 +1,3 @@
-draw_sprite_ext(sprite_index, image_index, x, y, image_xscale * (.9 + dcos(current_time * .6) * .1), image_yscale * (.9 + dsin(current_time * .6) * .1), 0, c_white, 1);
+if(duration > 210 || duration % 30 <= 15) {
+	draw_sprite_ext(sprite_index, image_index, x, y, image_xscale * (.9 + dcos(current_time * .6) * .1), image_yscale * (.9 + dsin(current_time * .6) * .1), 0, c_white, 1);
+}

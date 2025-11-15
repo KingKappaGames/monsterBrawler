@@ -35,10 +35,11 @@ allegiance = E_allegiance.player;
 useSkeletonAnimations = true;
 
 //skeletonBasicItem = choose(spr_swordBranch, spr_swordHammer, spr_swordIce, spr_swordSpear);
-	item = script_getItemInfo(E_item.branch);
+	item = undefined;
+	script_equipItem(script_getItemInfo(E_item.toyHammer),, false);
 	skeletonBasicItem = item.sprite;
-	skeletonBasicHandRightSprite = spr_headGlove;
-	skeletonBasicHandLeftSprite = spr_headGlove;
+	skeletonBasicHandRightSprite = spr_handGlove;
+	skeletonBasicHandLeftSprite = spr_handGlove;
 	skeletonBasicHeadSprite = spr_eskimoHead;
 	skeletonBasicBodySprite = spr_eskimoBody;
 
@@ -272,7 +273,7 @@ SM.add("melee", {
 			}
 		} else if(stateTimer == round(stateTimerMax * .5)) {
 			var _mouseDir = point_direction(x, y, mouse_x, mouse_y);
-			script_createMeleeAttack(meleeAttackType, x + lengthdir_x(20, _mouseDir), y + lengthdir_y(20, _mouseDir), _mouseDir, height,,,, irandom_range(meleeDamage * .8, meleeDamage * 1.2),,,, meleeHitFunc);
+			script_createMeleeAttack(meleeAttackType, x + lengthdir_x(20, _mouseDir), y + lengthdir_y(20, _mouseDir), _mouseDir, height,,,, irandom_range(meleeDamage * .8, meleeDamage * 1.2), knockback, knockbackHeight, stun, meleeHitFunc);
 		}
     },
 	leave: function() {
@@ -282,7 +283,7 @@ SM.add("melee", {
 
 SM.add("magicBasic", {
 	enter: function(durationMult = 1) {
-		var _duration = 14 * durationMult;
+		var _duration = 36 * durationMult;
 		
 		script_setEventTimer(_duration);
 		
@@ -310,7 +311,7 @@ SM.add("magicBasic", {
 
 SM.add("magicShot", {
 	enter: function(durationMult = 1) {
-		var _duration = 18 * durationMult;
+		var _duration = 32 * durationMult;
 		
 		script_setEventTimer(_duration);
 		
@@ -338,7 +339,7 @@ SM.add("magicShot", {
 
 SM.add("magicBurst", {
 	enter: function(durationMult = 1) {
-		var _duration = 21 * durationMult;
+		var _duration = 32 * durationMult;
 		
 		script_setEventTimer(_duration);
 		
@@ -525,7 +526,7 @@ weaponControls = function() {
 		if(InputCheck(INPUT_VERB.MAGIC)) {
 			SM.change("magicShot");
 		} else if(InputCheck(INPUT_VERB.BURST)) {
-			SM.change("melee",,, "burst");
+			SM.change("magicBurst");
 		} else {
 			SM.change("magicBasic");
 		}
@@ -533,7 +534,7 @@ weaponControls = function() {
 		if(InputCheck(INPUT_VERB.MAGIC)) {
 			SM.change("melee",,, "magic");
 		} else if(InputCheck(INPUT_VERB.BURST)) {
-			SM.change("magicBurst");
+			SM.change("melee",,, "burst");
 		} else {
 			SM.change("melee",,, "basic");
 		}

@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":4,
   "parent":{
-    "name":"eskimo",
-    "path":"folders/Sprites/humanSpriteSets/bodyPieces/eskimo.yy",
+    "name":"flame monster pieces",
+    "path":"folders/Sprites/humanSpriteSets/bodyPieces/flame monster pieces.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

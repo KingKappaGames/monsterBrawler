@@ -8,6 +8,8 @@ itemInfo = -1;
 
 pickupDelay = 45;
 
+duration = 600;
+
 pickUp = function(receiver) { 
 	script_equipItem(itemInfo, receiver);
 	

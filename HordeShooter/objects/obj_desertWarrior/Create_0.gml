@@ -11,7 +11,9 @@ alwaysBurning = false;
 useSkeletonAnimations = true;
 
 	skeletonBasicItem = choose(spr_swordBranch, spr_swordFantasy);//choose(spr_swordFantasy, spr_swordBranch, spr_swordBlackPoker, spr_swordIce);
-	item = script_getItemInfo(choose(E_item.branch, E_item.hammer, E_item.broadSword, E_item.baton, E_item.woodenClub));
+	item = undefined;
+	script_equipItem(script_getItemInfo(choose(E_item.branch, E_item.hammer, E_item.broadSword, E_item.baton, E_item.woodenClub)),, false);
+
 	skeletonBasicItem = item.sprite;
 	skeletonBasicHandRightSprite = spr_flameMonsterHandLeft;
 	skeletonBasicHandLeftSprite = spr_flameMonsterHandRight;

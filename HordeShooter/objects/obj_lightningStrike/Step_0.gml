@@ -1,6 +1,6 @@
 event_inherited();
 
-if(global.timer % 10 == 0) {
+if(duration == round(durationMax) * .5) {
 	if(instance_exists(target)) {
 		target.takeDamage(damage, 0, knockback, knockbackHeight, stun);
 		x = target.x;

@@ -1,6 +1,10 @@
-function script_equipItem(itemInfo, receiver = id) {
+function script_equipItem(itemInfo, receiver = id, updateSkeleton = true) {
 	with(receiver) {
-		script_createItemPickup(receiver.x, receiver.y, receiver.item.index); // drop old item
+		if(dropItem) {
+			script_createItemPickup(x, y, item.index); // drop old item
+		}
+		
+		dropItem = true;
 		
 		item = itemInfo;
 		

@@ -89,6 +89,8 @@ trailPartColor = c_white;
 
 #region animations
 	useSkeletonAnimations = false;
+
+	dropItem = false; // if picked up an item they should drop it every time, other wise just randomly drop items
 	
 	skeletonRigData = global.skeletonRigData;
 
@@ -321,7 +323,7 @@ SM.add("melee", {
 		} else if(stateTimer == round(stateTimerMax * .5)) {
 			if(instance_exists(agroId)) {
 				var _attackDir = point_direction(x, y, agroId.x, agroId.y);
-				script_createMeleeAttack(meleeAttackType, x + lengthdir_x(20, _attackDir), y + lengthdir_y(20, _attackDir), _attackDir, height,,,, irandom_range(meleeDamage * .8, meleeDamage * 1.2),,,, meleeHitFunc);
+				script_createMeleeAttack(meleeAttackType, x + lengthdir_x(20, _attackDir), y + lengthdir_y(20, _attackDir), _attackDir, height,,,, irandom_range(meleeDamage * .8, meleeDamage * 1.2), knockback, knockbackHeight, stun, meleeHitFunc);
 			} else {
 				SM.change("idle");
 			}
@@ -345,7 +347,7 @@ SM.add("attack", {
 		} else if(stateTimer == round(stateTimerMax * .5)) {
 			if(point_distance(x, y, agroId.x, agroId.y) < 60) {
 				var _attackDir = point_direction(x, y, agroId.x, agroId.y);
-				script_createMeleeAttack(obj_attackMeleeSwing, x + lengthdir_x(20, _attackDir), y + lengthdir_y(20, _attackDir), _attackDir, height,,,, irandom_range(4, 6));
+				script_createMeleeAttack(obj_attackMeleeSwing, x + lengthdir_x(20, _attackDir), y + lengthdir_y(20, _attackDir), _attackDir, height,,,, irandom_range(4, 6), knockback, knockbackHeight, stun);
 				//var _lethal = agroId.takeDamage(irandom_range(3, 4), point_direction(x, y, agroId.x, agroId.y), random_range(4, 10), random(7));
 				
 				//if(_lethal) {
@@ -393,10 +395,10 @@ SM.add("die", {
 		if(stateTimer <= 0) {
 			audio_play_sound(deathSound, 0, 0);
 			script_disintegrateObject(,, sprite_width / 4, sprite_height / 4);
-			if(irandom(10) == 0) {
-				script_createPickup(x, y + 5, obj_pickup);
-			} else if(irandom(10) == 0) {
+			if(dropItem || irandom(10) == 0) {
 				script_createItemPickup(x, y + 5, item.index);
+			} else if(irandom(10) == 0) {
+				script_createPickup(x, y + 5, obj_pickup);
 			}
 			instance_destroy();
 		}
@@ -556,6 +558,8 @@ takeDamage = function(damage, direction, force, heightForce, stun = undefined, m
 		
 		part_type_speed(global.partStarMini, 3.5, 5.5, -.15, 0);
 		OWP_createPartExt(global.partStarMini, x, y, 2 + damage,, 10, 10, 1);
+		
+		hitEffects(damage, direction, force);
 	}
 	
 	stun ??= power(damage + force, 1);
@@ -578,6 +582,13 @@ takeDamage = function(damage, direction, force, heightForce, stun = undefined, m
 	} else {
 		return false;
 	}
+}
+
+hitEffects = function(damage, direction, force) {
+	hitFlash = max(hitFlash, 7);
+		
+	part_type_speed(global.partStarMini, 3.5, 5.5, -.15, 0);
+	OWP_createPartExt(global.partStarMini, x, y, 2 + damage,, 10, 10, 1);
 }
 
 calculateStats = function() {

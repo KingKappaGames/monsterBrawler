@@ -2,7 +2,7 @@ if(duration > 0) {
 	duration--;
 	
 	if(duration > hitDurationMin) {
-		if(global.timer % 3 == 0) {
+		if(duration % 3 == 0) {
 			
 			ds_list_clear(hitList);
 		
