@@ -30,7 +30,7 @@ if(autoSpawn) {
 		} else if(irandom(26) == 0 && instance_number(obj_barbarian) > 10) {
 			script_spawnCreature(obj_priest, irandom_range(1, 5),,, true); // spawn powerful unit to offset battle
 		} else {
-			script_spawnCreature(choose(obj_barbarian, obj_knight, obj_eskimo, obj_demon, obj_jungleWarrior, obj_desertWarrior, obj_desertShamans, obj_scarecrow), irandom_range(1, 5),,, true);
+			script_spawnCreature(choose(obj_barbarian, obj_knight, obj_eskimo, obj_demon, obj_jungleWarrior, obj_desertWarrior, obj_desertShamans, obj_scarecrow, obj_skeleton, obj_lizard), irandom_range(1, 5),,, true);
 		}
 	}
 }

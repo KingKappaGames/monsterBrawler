@@ -35,7 +35,7 @@ magicBurst = obj_bullet;
 magicRadial = obj_radiantAttack;
 magicJump = obj_radiantAttack;
 magicCall = obj_thunderCloud;
-magicSummon = obj_priest; // huh? How did i get here - the priest
+magicSummon = obj_skeleton; // huh? How did i get here - the priest
 
 meleeHitFunc = function(target, self) {
 	
