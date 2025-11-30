@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__ppf_NormalmapRenderer",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__ppf_NormalmapRenderer",
+  "parent":{
+    "name":"NormalMaps",
+    "path":"folders/Extensions/PostProcessingFX/Core/Modules/NormalMaps.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -386,7 +386,7 @@ SM.add("magicRadial", {
 				SM.change("idle");
 			}
 		} else if(stateTimer == round(stateTimerMax * .5)) {
-			script_createAttackRadiant(magicRadial, x, y, 0,, 10, 32, 110, .66, c_blue,,, random_range(magicDamage * .8, magicDamage * 1.25));
+			script_createAttackRadiant(magicRadial, x, y, 0,, 7, 32, 180, .66, c_white,,, random_range(magicDamage * .8, magicDamage * 1.25));
 		}
     },
 	leave: function() {

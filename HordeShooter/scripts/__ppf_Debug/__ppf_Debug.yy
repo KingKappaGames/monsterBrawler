@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__ppf_Debug",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__ppf_Debug",
+  "parent":{
+    "name":"Debug",
+    "path":"folders/Extensions/PostProcessingFX/Core/Modules/Debug.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

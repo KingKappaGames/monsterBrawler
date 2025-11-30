@@ -1,4 +1,4 @@
-global.sysManager = id;
+global.OWPmanager = id;
 
 #macro OWPshowDebug false // set this to true to enable debug display and middle click particles, false to have it compile out of the project, since it's a macro the debug code won't even be in the compiled game when it's false, no need to "clean it up" it's already literally no lag at all, aren't compilers neat
 

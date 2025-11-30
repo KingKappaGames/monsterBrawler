@@ -1,0 +1,12 @@
+{
+  "$GMShader":"",
+  "%Name":"__ppf_shRenderTextureOverlay",
+  "name":"__ppf_shRenderTextureOverlay",
+  "parent":{
+    "name":"Individual",
+    "path":"folders/Extensions/PostProcessingFX/Core/Shaders/Render/Individual.yy",
+  },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
+}

@@ -1,0 +1,12 @@
+{
+  "$GMShader":"",
+  "%Name":"__ppf_shRenderColorGrading",
+  "name":"__ppf_shRenderColorGrading",
+  "parent":{
+    "name":"Shared",
+    "path":"folders/Extensions/PostProcessingFX/Core/Shaders/Render/Shared.yy",
+  },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
+}

@@ -164,6 +164,24 @@ for(var _sameToSameI = 0; _sameToSameI < allegianceCount; _sameToSameI++) {
 }
 #endregion
 
+#region ppx
+application_surface_draw_enable(false);
+
+ppxRenderer = new PPFX_Renderer();
+global.ppx = ppxRenderer;
+
+var _effects = [
+	new FX_Shockwaves(true, .3, .3),
+	new FX_Bloom(true, 4, .96, 1, 2, c_white)
+];
+
+mainProfile = new PPFX_Profile("Main", _effects);
+
+ppxRenderer.ProfileLoad(mainProfile);
+
+shockwavesRenderer = new PPFX_NormalmapRenderer(ppxRenderer); // you also need a shockwave renderer apparently
+#endregion
+
 #region gmRoomLoader stuff
 
 #macro roomSize 1800
@@ -186,19 +204,8 @@ enum E_biome {
 	biomeCount = 9
 }
 
-RoomLoader.DataInit(rm_mapPlaza);
-RoomLoader.DataInit(rm_mapField);
-RoomLoader.DataInit(rm_mapForest);
-RoomLoader.DataInit(rm_mapDesertPits);
-RoomLoader.DataInit(rm_mapDesertPlain);
-RoomLoader.DataInit(rm_mapDesertOpen);
-RoomLoader.DataInit(rm_mapFieldOpen);
-RoomLoader.DataInit(rm_mapIceFlats);
-RoomLoader.DataInit(rm_mapIceOpen);
-RoomLoader.DataInit(rm_mapIcePit);
-RoomLoader.DataInit(rm_mapVillage);
-RoomLoader.DataInit(rm_mapVolcanoFlat);
-RoomLoader.DataInit(rm_mapHayFields);
+var _blacklist = [rm_general];
+RoomLoader.DataInitAll(_blacklist);
 
 mapSeed = irandom(100000000);
 

@@ -1,0 +1,12 @@
+{
+  "$GMShader":"",
+  "%Name":"__ppf_shAreaMask",
+  "name":"__ppf_shAreaMask",
+  "parent":{
+    "name":"Misc",
+    "path":"folders/Extensions/PostProcessingFX/Core/Shaders/Misc.yy",
+  },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
+}

@@ -12,7 +12,7 @@ function OWP_createPartExt(part, xx, yy, quantity, createDepth = undefined, plac
 	
 	quantity /= createdPerBatch;
 	
-	with(global.sysManager) { 
+	with(global.OWPmanager) { 
 		var _x, _y, _depth, _placeDir, _placeDist, _layer;
 		
 		repeat(quantity) {
@@ -58,7 +58,7 @@ function OWP_createPartExtColor(part, xx, yy, quantity, color = undefined, creat
 	
 	quantity /= createdPerBatch;
 	
-	with(global.sysManager) { 
+	with(global.OWPmanager) { 
 		var _x, _y, _depth, _placeDir, _placeDist, _layer;
 		
 		repeat(quantity) {
@@ -100,7 +100,7 @@ function OWP_createPartExtColor(part, xx, yy, quantity, color = undefined, creat
 function OWP_createPart(part, xx, yy, quantity, color = undefined, createDepth = -yy){ 
 	//gml_pragma("forceinline");
 	
-	with(global.sysManager) { 
+	with(global.OWPmanager) { 
 		var _layer = (currentSysEdge + ((-createDepth) - previousEdgeY) div sysSpacing) % sysCount;
 		if(_layer < 0) {
 			_layer += sysCount;

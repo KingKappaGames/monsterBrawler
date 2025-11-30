@@ -1,1 +1,1 @@
-draw_circle_colour(x, y, radius, image_blend, image_blend, true);
+draw_circle_colour(x, y, radius, image_blend, image_blend, false);
